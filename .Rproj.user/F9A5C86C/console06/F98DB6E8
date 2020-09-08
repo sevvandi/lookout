@@ -1,0 +1,16 @@
+[0m[0K]0;:/c/Users/Sevvandi/Documents/repos/lookout[?25l
+[0;32mSevvandi@Prushtaya [0;35m [0;33m~/Documents/repos/lookout[0m[0K
+$[0K[3G[?25h[?25l$ g[0K[?25hi[0Kt[0K[7G[?25l$ git a[0K[?25hd[0Kd[0K[11G[?25l$ git add .[0K[?25h[?25l
+[0K[?25hfatal: not a git repository (or any of the parent directories): .git[0K[?25l
+[0K[?25h[?25l
+[0;32mSevvandi@Prushtaya [0;35m [0;33m~/Documents/repos/lookout[0m[0K
+$[0K[3G[?25h[?25l$ git init[0K[?25h[?25l
+[0K[?25hInitialized empty Git repository in C:/Users/Sevvandi/Documents/repos/lookout/.g[0Ki[?25l
+t/[0K
+[0K[?25h[?25l
+[0;32mSevvandi@Prushtaya [0;35m [0;33m~/Documents/repos/lookout[0;36m (master)[0m[0K
+$[0K[3G[?25h[?25l$ git remote add origin https://github.com/sevvandi/lookout.git[0K[?25h[?25l
+[0K[?25h[?25l
+[0;32mSevvandi@Prushtaya [0;35m [0;33m~/Documents/repos/lookout[0;36m (master)[0m[0K
+$[0K[3G[?25h[?25l$ g[0K[?25hi[0Kt[0K[7G[?25l$ git a[0K[?25hd[0Kd[0K[11G[?25l$ git add .[0K[?25h[?25l
+[0K[?25h
