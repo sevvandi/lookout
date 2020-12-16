@@ -72,4 +72,38 @@ Total 27 (delta 1), reused 0 (delta 0)[0K
 [0;32mSevvandi@Prushtaya [0;35m [0;33m~/Documents/repos/lookout[0;36m (master)[0m[0K
 ]0;:/c/Users/Sevvandi/Documents/repos/lookout[?25l
 [0;32mSevvandi@Prushtaya [0;35m [0;33m~/Documents/repos/lookout[0;36m (master)[0m[0K
-$[0K[3G[?25h[?25l$ g[0K[3G[?25h[4G[?25l$ gi[0K[?25ht[0K[7G[?25l$ git a[0K[?25hd[0Kd[0K[11G[?25l$ git add .[0K[?25h
+$[0K[3G[?25h[?25l$ g[0K[3G[?25h[4G[?25l$ gi[0K[?25ht[0K[7G[?25l$ git a[0K[?25hd[0Kd[0K[11G[?25l$ git add .[0K[?25h[?25l
+[0K[?25hwarning: LF will be replaced by CRLF in .Rproj.user/F9A5C86C/sources/prop/FA4B3706[0K.[?25l
+[0K
+The file will have its original line endings in your working directory.[0K
+warning: LF will be replaced by CRLF in .Rproj.user/F9A5C86C/sources/prop/INDEX.[0K
+The file will have its original line endings in your working directory.[0K
+[0K[?25h[?25l
+[0;32mSevvandi@Prushtaya [0;35m [0;33m~/Documents/repos/lookout[0;36m (master)[0m[0K
+$[0K[3G[?25h[?25l$ g[0K[?25hi[0Kt[0K[7G[?25l$ git c[0K[7G[?25h[8G[?25l$ git co[0K[?25hm[0Km[0Ki[0Kt[0K[14G[?25l$ git commit -[0K[?25hm[0K[17G[?25l$ git commit -m "[0K[?25ha[0Kd[0Kd[0K[22G[?25l$ git commit -m "add u[0K[?25ht[0Ki[0Kl[0Ks[0K"[0K[?25l
+[0K[?25h[master 68e648e] add utils[0K[?25l
+ 11 files changed, 85 insertions(+), 79 deletions(-)[0K
+ rewrite .Rproj.user/F9A5C86C/console06/INDEX001 (100%)[0K
+ delete mode 100644 .Rproj.user/F9A5C86C/sources/s-456D9ED8/ED16360E[0K
+ delete mode 100644 .Rproj.user/F9A5C86C/sources/s-456D9ED8/ED16360E-contents[0K
+ delete mode 100644 .Rproj.user/F9A5C86C/sources/s-456D9ED8/F1B79C8D[0K
+ delete mode 100644 .Rproj.user/F9A5C86C/sources/s-456D9ED8/F1B79C8D-contents[0K
+ delete mode 100644 .Rproj.user/F9A5C86C/sources/s-456D9ED8/lock_file[0K
+ create mode 100644 .gitignore[0K
+ create mode 100644 R/utils.R[0K
+[0K[?25h[?25l
+[0;32mSevvandi@Prushtaya [0;35m [0;33m~/Documents/repos/lookout[0;36m (master)[0m[0K
+$[0K[3G[?25h[?25l$ g[0K[?25hi[0Kt[0K[7G[?25l$ git p[0K[?25hu[0Ks[0Kh[0K[12G[?25l$ git push o[0K[?25hr[0K[?25li[0K[14G[?25h[15G[?25l$ git push orig[0K[?25hi[0Kn[0K[19G[?25l$ git push origin m[0K[?25ha[0Ks[0Kt[0Ke[0Kr[0K[?25l
+[0K[?25hEnumerating objects: 25, done.[0K[?25l
+Counting objects: 100% (25/25), done.[0K
+Delta compression using up to 4 threads.[0K
+Compressing objects: 100% (12/12), done.[0K
+Writing objects: 100% (14/14), 2.45 KiB | 627.00 KiB/s, done.[0K
+Total 14 (delta 2), reused 0 (delta 0)[0K
+[0K[?25h[?25lremote: Resolving deltas:   0% (0/2)[0K[1G[?25hremote: Resolving deltas: 100% (2/2), completed with 2 local objects.[0K[?25l
+[0K[?25hTo https://github.com/sevvandi/lookout.git[0K[?25l
+   5f3a0c5..68e648e  master -> master[0K
+[0K[?25h[?25l
+[0;32mSevvandi@Prushtaya [0;35m [0;33m~/Documents/repos/lookout[0;36m (master)[0m[0K
+$[0K[3G[?25h[?25l$ g[0K[?25hi[0Kt[0K[7G[?25l$ git add .[0K
+[0K[?25h
