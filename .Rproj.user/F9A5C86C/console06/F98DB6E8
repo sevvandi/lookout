@@ -542,4 +542,427 @@ Status: OK[0K
 $[0K[3G[?25h[?25l$ c[0K[?25hed[0K[7G[6G[?25l$ ce[0K[?25h[?25l$ c[0K[?25hd[0K[6G[?25l$ cd l[0K[?25ho[0Ko[0Kk[0Kout[0K[?25l
 [0K[?25h]0;:/c/Users/Sevvandi/Documents/repos/lookout[?25l
 [0;32mSevvandi@Prushtaya [0;35m [0;33m~/Documents/repos/lookout[0;36m (master)[0m[0K[21G[?25h[?25l
-$[0K[3G[?25h[?25l$ g[0K[?25hi[0Kt[0K[7G[?25l$ git a[0K[?25hd[0Kd[0K[11G[?25l$ git add .[0K[?25h
+$[0K[3G[?25h[?25l$ g[0K[?25hi[0Kt[0K[7G[?25l$ git a[0K[?25hd[0Kd[0K[11G[?25l$ git add .[0K[?25h[?25l
+[0K[?25hwarning: LF will be replaced by CRLF in .Rproj.user/F9A5C86C/sources/prop/INDEX.[0K[?25l
+The file will have its original line endings in your working directory.[0K
+warning: LF will be replaced by CRLF in NAMESPACE.[0K
+The file will have its original line endings in your working directory.[0K
+[0K[?25hwarning: LF will be replaced by CRLF in man/lookoutliers.Rd.[0K[?25l
+The file will have its original line endings in your working directory.[0K
+warning: LF will be replaced by CRLF in man/persisting_outliers_over_alpha.Rd.[0K
+The file will have its original line endings in your working directory.[0K
+[0K[?25h[?25l
+[0;32mSevvandi@Prushtaya [0;35m [0;33m~/Documents/repos/lookout[0;36m (master)[0m[0K
+$[0K[3G[?25h[?25l$ g[0K[?25hi[0Kt[0K[7G[?25l$ git c[0K[?25ho[0Km[0Km[0Ki[0Kt[0K[14G[?25l$ git commit -[0K[?25hm[0K[17G[?25l$ git commit -m "[0K[?25ha[0Kd[0Kd[0K[22G[?25l$ git commit -m "add p[0K[?25he[0Kr[0Ks[0Ki[0Ks[0Kt[0Ki[0Kn[0Kg[0K[33G[?25l$ git commit -m "add persisting o[0K[33G[?25h[34G[?25l$ git commit -m "add persisting ou[0K[?25ht[0Kl[0Ki[0Ke[0Kr[0Ks[0K[42G[?25l$ git commit -m "add persisting outliers o[0K[?25hv[0Ke[0Kr[0K[47G[?25l$ git commit -m "add persisting outliers over a[0K[?25hl[0Kp[0Kh[0Ka[0K[53G[?25l$ git commit -m "add persisting outliers over alpha f[0K[?25hu[0Kn[0Kc[0Kt[0Ki[0Ko[0Kn[0Ka[0Kl[0Ki[0Kt[0Ky[0K"[0K[?25l
+[0K[?25h[master a97eff9] add persisting outliers over alpha functionality[0K[?25l
+ 7 files changed, 322 insertions(+), 5 deletions(-)[0K
+ create mode 100644 R/outlier_persistence.R[0K
+ create mode 100644 man/persisting_outliers_over_alpha.Rd[0K
+[0K[?25h[?25l
+[0;32mSevvandi@Prushtaya [0;35m [0;33m~/Documents/repos/lookout[0;36m (master)[0m[0K
+$[0K[3G[?25h[?25l$ g[0K[?25hi[0Kt[0K[7G[?25l$ git c[0K[?25ho[0Km[0Km[0Ki[0Kt[0K[?25l$ git commi[0K[?25h[?25l$ git comm[0K[?25h[?25l$ git com[0K[?25h[?25l$ git co[0K[?25h[?25l$ git c[0K[?25h[?25l$ git[0K[7G[?25h[?25l$ git p[0K[?25hu[0Ks[0Kh[0K[12G[?25l$ git push o[0K[?25hr[0Ki[0Kg[0Ki[0Kn[0K[19G[?25l$ git push origin m[0K[?25ha[0Ks[0Kt[0Ke[0Kr[0K\[0K[?25l
+>[0K[3G[?25h[?25l
+[0K[?25h[?25l
+[0;32mSevvandi@Prushtaya [0;35m [0;33m~/Documents/repos/lookout[0;36m (master)[0m[0K
+$[0K[3G[?25h[?25l$ git push origin master\[0K[?25h[?25l$ git push origin master[0K[?25h[?25l
+[0K[?25hEnumerating objects: 29, done.[0K[?25l
+Counting objects: 100% (29/29), done.[0K
+Delta compression using up to 4 threads.[0K
+Compressing objects: 100% (15/15), done.[0K
+Writing objects: 100% (16/16), 5.04 KiB | 1.01 MiB/s, done.[0K
+Total 16 (delta 7), reused 0 (delta 0)[0K
+[0K[?25hremote: Resolving deltas: 100% (7/7), completed with 7 local objects.[0K[?25l
+[0K[?25hTo https://github.com/sevvandi/lookout.git[0K[?25l
+   72fa5ac..a97eff9  master -> master[0K
+[0K[?25h[?25l
+[0;32mSevvandi@Prushtaya [0;35m [0;33m~/Documents/repos/lookout[0;36m (master)[0m[0K
+$[0K[3G[?25h[?25l$ c[0K[?25h[?25ld[0K[4G[?25h[5G[6G[?25l$ cd .[0K[?25h.[0K[?25l
+[0K[?25h]0;:/c/Users/Sevvandi/Documents/repos[?25l
+[0;32mSevvandi@Prushtaya [0;35m [0;33m~/Documents/repos[0m[0K
+$[0K[3G[?25h[?25l$ R[0K[?25h[5G[?25l$ R C[0K[?25hM[0KD[0K[9G[?25l$ R CMD b[0K[?25hu[0Ki[0Kl[0Kd[0K[15G[?25l$ R CMD build l[0K[?25ho[0Ko[0Kk[0Ko[0K[?25lu[0K[20G[?25h[21G[?25l$ R CMD build lookout[0K[?25h[?25l
+[0K[?25h* checking for file 'lookout/DESCRIPTION' ... OK[0K[?25l
+[0K[?25h* preparing 'lookout':[0K[?25l
+* c[0K[1G[?25h* checking DESCRIPTION meta-information ... OK[0K[?25l
+[0K[?25h* checking for LF line-endings in source and make files and shell scripts[0K[?25l
+* checking for empty or unneeded di[0K[33G[?25h[?25l* checking for empty or unneeded directories[0K
+* building 'lookout_0.0.0.9000.tar.gz'[0K
+[0K[?25h[?25l
+[0K[?25h[?25l
+[0;32mSevvandi@Prushtaya [0;35m [0;33m~/Documents/repos[0m[0K
+$[0K[3G[?25h[?25l$ R CMD build lookout[0K[?25h[?25l$ cd ..[0K[22G[?25h[8G[?25l$ git push origin master[0K[?25h\[0K[?25l$ git commit -m "add persisting outliers over alpha functionality"[0K[?25h[?25l$ git add .[0K[67G[?25h[12G[?25l$ cd lookout[0K[12G[?25h[13G[?25l$ R CMD check lookout_0.0.0.9000.tar.gz[0K[41G[?25h[?25l
+[0K[?25h[?25l* using log directory 'C:/Users/Sevvandi/[0K[40G[?25h[?25l* using log directory 'C:/Users/Sevvandi/Documents/repos/lookout.Rcheck'[0K
+[0K[?25h* using R version 3.6.1 (2019-07-05)[0K[?25l
+* using pl[0K[8G[?25h[?25l* using platform: x86_64-w64-mingw32 (64-bit)[0K
+[0K[?25h* using session charset: ISO8859-1[0K[?25l
+[0K[?25h* checking for file 'lookout/DESCRIPTION' ... OK[0K[?25l
+* checking extension type ... Package[0K
+* this is package 'lookout' version '0.0.0.9000'[0K
+[0K[?25h* package encoding: UTF-8[0K[?25l
+* checking package namespace information ... OK[0K
+* checking package dependencies ...[0K[?25h OK[0K[?25l
+* checking if this is a source package ... OK[0K
+* checking if there is a namespace ... O[0K[39G[?25h[?25l* checking if there is a namespace ... OK[0K
+[0K[?25h* checking for executable files ...[0K[?25l O[0K[36G[?25h[?25l* checking for executable files ... OK[0K
+* checking for hidden files and[0K[29G[?25h[?25l* checking for hidden files and directories ... OK[0K
+* checking for portable file names[0K[34G[?25h[?25l* checking for portable file names ... OK[0K
+* checking whether package 'lookout' can be installed ...[0K[?25h OK[0K[?25l
+* checking installed package size ...[0K[?25h OK[0K[?25l
+* checking package directory ... OK[0K
+* checking DESCRIPTION meta-information ...[0K[?25h OK[0K[?25l
+* checking top-level fil[0K[22G[?25h[?25l* checking top-level files ... OK[0K
+* checking for[0K[14G[?25h[?25l* checking for left-over files ... OK[0K
+* checking[0K[9G[?25h[?25l* checking index information ... OK[0K
+* checking package subdirectories ...[0K[?25h OK[0K[?25l
+* checking R files for non-ASCII characters ...[0K[?25h OK[0K[?25l
+* checking R files for syntax errors ...[0K[?25h OK[0K[?25l
+* checking whether the package can be lo[0K[38G[?25h[?25l* checking whether the package can be loaded ...[0K[?25h OK[0K[?25l
+* checking whe[0K[13G[?25h[?25l* checking whether the package can be loaded with stated d[0K[56G[?25h[?25l* checking whether the package can be loaded with stated dependencies ...[0K[?25h OK[0K[?25l
+* checking whether t[0K[18G[?25h[?25l* checking whether the package can be unloaded cleanly ...[0K[?25h OK[0K[?25l
+* checking whet[0K[13G[?25h[?25l* checking whether the namespace can be loaded with stated depend[0K[63G[?25h[?25l* checking whether the namespace can be loaded with stated dependencies ...[0K[?25h OK[0K[?25l
+* checking whether the namespace can be unloaded cleanly ...[0K[?25h OK[0K[?25l
+* checking loading[0K[16G[?25h[?25l* checking loading without being on the library search path ...[0K[?25h OK[0K[?25l
+* checking dependencies in R code ...[0K[?25h OK[0K[?25l
+* checking S3 generic/method consistency ...[0K[?25h OK[0K[?25l
+* checking rep[0K[13G[?25h[?25l* checking replacement functions ...[0K[?25h OK[0K[?25l
+* checking foreign functio[0K[24G[?25h[?25l* checking foreign function calls ...[0K[?25h OK[0K[?25l
+* checking R code for possible problems ...[0K[?25h NOTE[0K[?25l
+plot_outlier_barcode: no visible binding for global variable[0K[58G[?25h[?25lplot_outlier_barcode: no visible binding for global variable 'y'[0K
+plot_outlier_barcode: no visible binding for global variable 'x'[0K
+plot_outlier_barcode: no visible binding for global variable 'outlier'[0K
+Undefined global functions or variables:[0K
+  outlier x y[0K
+* checking Rd[0K[12G[?25h[?25l* checking Rd files ...[0K[?25h OK[0K[?25l
+* checking Rd metadata ...[0K[?25h OK[0K[?25l
+* checking Rd cross-re[0K[20G[?25h[?25l* checking Rd cross-references ...[0K[?25h OK[0K[?25l
+* checking for[0K[13G[?25h[?25l* checking for missing documentation entries ...[0K[48G[?25h[49G[?25l* checking for missing documentation entries ... OK[0K
+* checking for code/documentation[0K[32G[?25h[?25l* checking for code/documentation mismatches ...[0K[?25h OK[0K[?25l
+* checking Rd \usage sections ...[0K[?25h OK[0K[?25l
+* ch[0K[2G[?25h[?25l* checking Rd contents ...[0K[?25h OK[0K[?25l
+* checking for unstated dependencies in exa[0K[41G[?25h[?25l* checking for unstated dependencies in examples ...[0K[?25h OK[0K[?25l
+* checking examples .[0K[19G[?25h[?25l* checking examples ...[0K[?25h OK[0K[?25l
+* checking PDF version of manual ...[0K[?25h OK[0K[?25l
+* DONE[0K
+[0K
+Status: 1 NOTE[0K
+See[0K
+  'C:/User[0K[8G[?25h[?25l  'C:/Users/Sevvandi/Documents/repos/lookout.Rcheck/00check.log'[0K
+for details.[0K
+[0K
+[0K[?25h[?25l
+[0K[?25h[?25l
+[0;32mSevvandi@Prushtaya [0;35m [0;33m~/Documents/repos[0m[0K
+$[0K[3G[?25h[?25l
+[0K[?25h[?25l
+[0;32mSevvandi@Prushtaya [0;35m [0;33m~/Documents/repos[0m[0K
+$[0K[3G[?25h[?25l$ R CMD check lookout_0.0.0.9000.tar.gz[0K[41G[?25h[?25l$ R CMD build lookout[0K[?25h[?25l
+[0K[?25h* checking for file 'lookout/DESCRIPTION' ... OK[0K[?25l
+[0K[?25h* preparing 'lookout':[0K[?25l
+* checking DESCRIPTION meta-information ... OK[0K
+[0K[?25h* checking for LF line-endings in source and make files and shell scripts[0K[?25l
+[0K[?25h* checking for empty or unneeded directories[0K[?25l
+* building 'lookout_0.0.0.9000.tar.gz'[0K
+[0K[?25h[?25l
+[0K[?25h[?25l
+[0;32mSevvandi@Prushtaya [0;35m [0;33m~/Documents/repos[0m[0K
+$[0K[3G[?25h[?25l$ R CMD build lookout[0K[?25h[?25l$ R CMD check lookout_0.0.0.9000.tar.gz[0K[41G[?25h[?25l
+[0K[?25h[?25l* using log directory 'C:/Users/Sevvandi/Do[0K[41G[?25h[?25l* using log directory 'C:/Users/Sevvandi/Documents/repos/lookout.Rcheck'[0K
+* usin[0K[5G[?25h[?25l* using R version 3.6.1 (2019-07-05)[0K
+* using platform[0K[15G[?25h[?25l* using platform: x86_64-w64-mingw32 (64-bit)[0K
+* using session charset: ISO8859-1[0K
+[0K[?25h[?25l* checking for file 'lookout/DESCRIPTION' ... OK[0K[46G[?25h[?25l
+* check[0K[5G[?25h[?25l* checking extension type ... Package[0K[?25h[?25l
+* this is package 'lookout' version '0.0.0.9000'[0K
+* package encoding: UTF-8[0K
+* checking package namespace information ... OK[0K
+* chec[0K[4G[?25h[?25l* checking package dependencies ...[0K[?25h ERROR[0K[?25l
+Namespace dependency not required: 'rlang'[0K
+[0K
+See section 'The DESCRIPTION file' in the 'Writing R Extensions'[0K
+manual.[0K
+* DONE[0K[4G[?25h[?25l
+[0K
+Status: 1 ERROR[0K
+See[0K
+  'C:/Users/Sevvandi/Documents/repos/lookout.Rcheck/00check.log'[0K
+for details.[0K
+[0K
+[0K[?25h[?25l
+[0;32mSevvandi@Prushtaya [0;35m [0;33m~/Documents/repos[0m[0K
+$[0K[3G[?25h[?25l$ R CMD check lookout_0.0.0.9000.tar.gz[0K[3G[?25h[41G[?25l$ R CMD .9000.tar.gz[0K[41G[?25h[?25l$ R CMD build lookout[0K[?25h[?25l
+[0K[?25h[?25l* checking for file 'lookout/DESCRIPTION' ... O[0K[46G[?25h[?25l* checking for file 'lookout/DESCRIPTION' ... OK[0K
+[0K[?25h* preparing 'lookout':[0K[?25l
+* checking DESCRIPTION meta-information ...[0K[?25h OK[0K[?25l
+[0K[?25h* checking for LF line-endings in source and make files and shell scripts[0K[?25l
+* checking for empty or unneeded directories[0K
+[0K[?25h* building 'lookout_0.0.0.9000.tar.gz'[0K[?25l
+[0K[?25h[?25l
+[0K[?25h[?25l
+[0;32mSevvandi@Prushtaya [0;35m [0;33m~/Documents/repos[0m[0K
+$[0K[3G[?25h[?25l$ R CMD build lookout[0K[?25h[?25l$ R CMD check lookout_0.0.0.9000.tar.gz[0K[41G[?25h[?25l
+[0K[?25h[?25l* using log direct[0K[16G[?25h[?25l* using log directory 'C:/Users/Sevvandi/Documents/re[0K[51G[?25h[?25l* using log directory 'C:/Users/Sevvandi/Documents/repos/lookout.Rcheck'[0K
+* using R ver[0K[11G[?25h[?25l* using R version 3.6.1 (2019-07-05)[0K
+* using platform: x86_64-w64-min[0K[30G[?25h[?25l* using platform: x86_64-w64-mingw32 (64-bit)[0K
+* using session charset: ISO8859-1[0K
+[0K[?25h[?25l* chec[0K[1G[?25h* checking for file 'lookout/DESCRIPTION' ... OK[0K[?25l
+* checking extension type ...[0K[?25h Package[0K[?25l
+* this is package 'lookout' version '0.0.0.9000'[0K
+* package encoding: UTF-8[0K
+* checking package namespace information ...[0K[?25h OK[0K[?25l
+* checking package dependencies ...[0K[?25h ERROR[0K[?25l
+Namespace dependency not required: 'rlang'[0K
+[0K
+See section 'The DESCRIPTION file' in the 'Writing R Extensions'[0K
+manual.[0K
+* DONE[0K
+[0K
+Status: 1 ERROR[0K
+See[0K
+  'C:/Users/Sev[0K[13G[?25h[?25l  'C:/Users/Sevvandi/Documents/repos/lookout.Rcheck/00check.log'[0K
+for details.[0K
+[0K
+[0K[?25h[?25l
+[0;32mSevvandi@Prushtaya [0;35m [0;33m~/Documents/repos[0m[0K
+$[0K[3G[?25h[?25l$ [A[0K[?25h[?25l$ R CMD check lookout_0.0.0.9000.tar.gz[0K[41G[?25h[?25l$ R CMD build lookout[0K[?25h[?25l
+[0K[?25h[?25l* checking for file 'lookout/DESCR[0K[32G[?25h[?25l* checking for file 'lookout/DESCRIPTION' ... OK[0K
+[0K[?25h* preparing 'lookout':[0K[?25l
+* checking DESCRIPTION meta-information ... OK[0K
+[0K[?25h* checking for LF line-endings in source and make files and shell scripts[0K[?25l
+* checking for empty or unneeded directories[0K
+[0K[?25h* building 'lookout_0.0.0.9000.tar.gz'[0K[?25l
+[0K[?25h[?25l
+[0K[?25h[?25l
+[0;32mSevvandi@Prushtaya [0;35m [0;33m~/Documents/repos[0m[0K
+$[0K[3G[?25h[?25l$ R CMD build lookout[0K[?25h[?25l$ R CMD check lookout_0.0.0.9000.tar.gz[0K[41G[?25h[?25l
+[0K[?25h[?25l* using log directory 'C:/Users/Sevvan[0K[36G[?25h[?25l* using log directory 'C:/Users/Sevvandi/Documents/repos/lookout.Rcheck'[0K
+* using R version[0K[16G[?25h[?25l* using R version 3.6.1 (2019-07-05)[0K
+* using platform: x86_64-w64-mingw32 (64-bit)[0K
+* using session[0K[17G[?25h[?25l* using session charset: ISO8859-1[0K
+[0K[?25h* checking for file 'lookout/DESCRIPTION' ... OK[0K[?25l
+* checking extension type ... Package[0K
+* this is[0K[8G[?25h[?25l* this is package 'lookout' version '0.0.0.9000'[0K
+* package encoding: UTF-8[0K
+* checking package namespace information ... OK[0K
+* checking package dependencies ...[0K[?25h[?25l ERR[0K[38G[?25h[?25l* checking package dependencies ... ERROR[0K
+Namespace dependency not required: 'rlang'[0K
+[0K
+See section 'The DESCRIPTION file' in the 'Writing R Extensions'[0K
+manual.[0K
+* DONE[0K
+[0K
+Status: 1 ERROR[0K
+See[0K
+  'C:/Users/Sevvandi/Documen[0K[27G[?25h[?25l  'C:/Users/Sevvandi/Documents/repos/lookout.Rcheck/00check.log'[0K
+for details.[0K
+[0K
+[0K[?25h[?25l
+[0;32mSevvandi@Prushtaya [0;35m [0;33m~/Documents/repos[0m[0K
+$[0K[3G[?25h[?25l$ R CMD check lookout_0.0.0.9000.tar.gz[0K[41G[?25h[?25l$ R CMD build lookout[0K[?25h[?25l
+[0K[?25h* checking for file 'lookout/DESCRIPTION' ...[0K OK[0K[?25l
+[0K[?25h[?25l* preparing 'lookout':[0K[11G[?25h[?25l
+* checking DESCRIPTION meta-information ... OK[0K
+[0K[?25h[?25l* checking for LF l[0K[18G[?25h[?25l* checking for LF line-endings in source and make files and shell scripts[0K
+* checking for empty or unneeded directories[0K
+[0K[?25h* building 'lookout_0.0.0.9000.tar.gz'[0K[?25l
+[0K[?25h[?25l
+[0K[?25h[?25l
+[0;32mSevvandi@Prushtaya [0;35m [0;33m~/Documents/repos[0m[0K
+$[0K[3G[?25h[?25l$ R CMD build lookout[0K[?25h[?25l$ R CMD check lookout_0.0.0.9000.tar.gz[0K[41G[?25h[?25l
+[0K[?25h[?25l* using log directory 'C:/Users/Sevvan[0K[36G[?25h[?25l* using log directory 'C:/Users/Sevvandi/Documents/repos/lookout.Rcheck'[0K
+* using R vers[0K[14G[?25h[?25l* using R version 3.6.1 (2019-07-05)[0K
+* using platform: x86_64-w64-mingw32 (64-bit)[0K
+*[0K[?25h using session charset: ISO8859-1[0K[?25l
+[0K[?25h* checking for file 'lookout/DESCRIPTION' ... OK[0K[?25l
+* checking extension type ... Package[0K
+* this is package 'lookout' version '0.0.0.9000'[0K
+* package encoding: UTF-8[0K
+* checking package namespace information[0K[39G[?25h[?25l* checking package namespace information ... OK[0K
+* checking package dependencies ...[0K[?25h ERROR[0K[?25l
+Namespace dependency not required: 'rlang'[0K
+[0K
+See sec[0K[5G[?25h[?25lSee section 'The DESCRIPTION file' in the 'Writing R Extensions'[0K
+manual.[0K
+* DONE[0K
+[0K
+Status: 1 ERROR[0K
+See[0K
+  'C:/Users/Sevvandi/Documents/repos/lookout.Rcheck/00check.log'[0K
+for det[0K[6G[?25h[?25lfor details.[0K
+[0K
+[0K[?25h[?25l
+[0;32mSevvandi@Prushtaya [0;35m [0;33m~/Documents/repos[0m[0K
+$[0K[3G[?25h[?25l$ R CMD check lookout_0.0.0.9000.tar.gz[0K[41G[?25h[?25l$ R CMD build lookout[0K[?25h[?25l$ R CMD check lookout_0.0.0.9000.tar.gz[0K[41G[?25h[?25l$ R CMD build lookout[0K[?25h[?25l
+[0K[?25h* checking for file 'lookout/DESCRIPTION' ... OK[0K[?25l
+[0K[?25h* preparing 'lookout':[0K[?25l
+* checking DESCRIPTION meta-information ...[0K[?25h OK[0K[?25l
+[0K[?25h* checking for LF line-endings in source and make files and shell scripts[0K[?25l
+* checking for empty or unneeded directories[0K
+* build[0K[5G[?25h[?25l* building 'lookout_0.0.0.9000.tar.gz'[0K
+[0K
+[0K[?25h[?25l
+[0;32mSevvandi@Prushtaya [0;35m [0;33m~/Documents/repos[0m[0K
+$[0K[3G[?25h[?25l$ R CMD build lookout[0K[?25h[?25l$ R CMD check lookout_0.0.0.9000.tar.gz[0K[41G[?25h[?25l
+[0K[?25h[?25l* using log directory 'C:/Users/Sevvandi/Documents/re[0K[51G[?25h[?25l* using log directory 'C:/Users/Sevvandi/Documents/repos/lookout.Rcheck'[0K
+* using R versi[0K[13G[?25h[?25l* using R version 3.6.1 (2019-07-05)[0K
+* using platform: x86_64-w64-mingw[0K[34G[?25h[?25l* using platform: x86_64-w64-mingw32 (64-bit)[0K
+* using session charset: ISO8859-1[0K
+[0K[?25h* checking for file 'lookout/DESCRIPTION' ... OK[0K[?25l
+* checking extension type ... Package[0K
+* this is package 'lookout' version '0.0.0.9000'[0K
+* package encoding: UTF-8[0K
+[0K[?25h* checking package namespace information ... OK[0K[?25l
+* checking package dependencies ...[0K[?25h ERROR[0K[?25l
+Namespace dependency not required: 'rlang'[0K
+[0K
+See section 'The DESCRIPTION file' in the 'Writing R Extensions'[0K
+manual.[0K
+* DONE[0K
+[0K
+Status: 1 ERROR[0K
+See[0K[3G[?25h[?25l
+  'C:/Users/Sevvandi/Documents/repos/lookout.Rcheck/00check.log'[0K
+for details.[0K
+[0K
+[0K[?25h[?25l
+[0;32mSevvandi@Prushtaya [0;35m [0;33m~/Documents/repos[0m[0K
+$[0K[3G[?25h[?25l$ R CMD check lookout_0.0.0.9000.tar.gz[0K[41G[?25h[?25l$ R CMD build lookout[0K[?25h[?25l
+[0K[?25h* checking for file 'lookout/DESCRIPTION' ... OK[0K[?25l
+[0K[?25h* preparing 'lookout':[0K[?25l
+* checking DESCRIPTI[0K[18G[?25h[?25l* checking DESCRIPTION meta-information ... OK[0K
+[0K[?25h* checking for LF line-endings in source and make files and shell scripts[0K[?25l
+* checking for empty or unneeded directories[0K
+[0K[?25h* building 'lookout_0.0.0.9000.tar.gz'[0K[?25l
+[0K[?25h[?25l
+[0K[?25h[?25l
+[0;32mSevvandi@Prushtaya [0;35m [0;33m~/Documents/repos[0m[0K
+$[0K[3G[?25h[?25l$ R CMD build lookout[0K[?25h[?25l$ R CMD check lookout_0.0.0.9000.tar.gz[0K[41G[?25h[?25l
+[0K[?25h[?25l* using log directory 'C:/Users/Sevvandi[0K[38G[?25h[?25l* using log directory 'C:/Users/Sevvandi/Documents/repos/lookout.Rcheck'[0K
+* using R[0K[7G[?25h[?25l* using R version 3.6.1 (2019-07-05)[0K
+* using[0K[7G[?25h[?25l* using platform: x86_64-w64-mingw32 (64-bit)[0K
+* using[0K[5G[?25h[?25l* using session charset: ISO8859-1[0K
+[0K[?25h* checking for file 'lookout/DESCRIPTION' ... OK[0K[?25l
+* checking extension type ... Package[0K
+* th[0K[2G[?25h[?25l* this is package 'lookout' version '0.0.0.9000'[0K
+* package encoding: UTF-8[0K
+* checking package namespace information ...[0K[?25h OK[0K[?25l
+* checking package dependencies ...[0K[?25h OK[0K[?25l
+* checking if this is a sou[0K[26G[?25h[?25l* checking if this is a source package ... OK[0K
+* checking if there is a namespace ... OK[0K
+[0K[?25h* checking for executable files ...[0K OK[0K[?25l
+* checking for hidden files a[0K[27G[?25h[?25l* checking for hidden files and directories ... OK[0K
+*[0K[1G[?25h* checking for portable file names ... OK[0K[?25l
+* checking w[0K[10G[?25h[?25l* checking whether package 'lookout' can be installed ...[0K[?25h OK[0K[?25l
+* checking installed package size ...[0K[?25h OK[0K[?25l
+* checking package directory ... OK[0K
+* chec[0K[5G[?25h[?25l* checking DESCRIPTION meta-information ...[0K[?25h OK[0K[?25l
+* checking top-level files ... OK[0K
+* checking for left-over files ...[0K[?25h OK[0K[?25l
+* checking index information ... OK[0K
+* checking package subdirectories ...[0K[?25h OK[0K[?25l
+* checking R files for non-ASCII characters ...[0K[?25h OK[0K[?25l
+* checking R files for syntax errors ...[0K[?25h OK[0K[?25l
+* checking whether the package can be loaded ...[0K[?25h OK[0K[?25l
+* checking whether the package can be loaded with stated dependencies ...[0K[?25h OK[0K[?25l
+* checking whether the package can be unloaded cleanly ...[0K[?25h OK[0K[?25l
+* checking w[0K[10G[?25h[?25l* checking whether the namespace can be loaded with st[0K[53G[?25h[?25l* checking whether the namespace can be loaded with stated dependencies ...[0K[?25h OK[0K[?25l
+* checking whether the namespace can be unloaded cleanly ...[0K[?25h OK[0K[?25l
+* checking loading without being on the library search path ...[0K[?25h OK[0K[?25l
+* checking dependencies in R code ...[0K[?25h NOTE[0K[?25l
+Namespace in Imports field not imported from: 'dplyr'[0K
+  All declared Imports should be used.[0K
+* checking S3 generic/method consistency ...[0K[?25h OK[0K[?25l
+* checking replacement functions ...[0K[?25h OK[0K[?25l
+* checking foreign function calls ...[0K[?25h OK[0K[?25l
+* checking R c[0K[12G[?25h[?25l* checking R code for possible problems ...[0K[?25h OK[0K[?25l
+* checking Rd files ...[0K[?25h OK[0K[?25l
+* checking Rd metadata ...[0K[?25h OK[0K[?25l
+* checking Rd cross-references ...[0K[?25h OK[0K[?25l
+* checking for missing documentation entries ...[0K[?25h OK[0K[?25l
+* checking for code/documentation mismatches ...[0K[?25h OK[0K[?25l
+* checking Rd \usage sections ...[0K[?25h OK[0K[?25l
+* checking Rd contents ...[0K[?25h OK[0K[?25l
+* checking for unstated dependencies in examples ...[0K[?25h OK[0K[?25l
+* checking examples ...[0K[?25h OK[0K[?25l
+* checking PDF version of manual ...[0K[?25h OK[0K[?25l
+*[0K[1G[?25h* DONE[0K[?25l
+[0K
+Status: 1 NOTE[0K
+See[0K[?25h[?25l
+  'C:/Users/Sevvandi/Documents/repos/lookout.Rcheck/00[0K[53G[?25h[?25l  'C:/Users/Sevvandi/Documents/repos/lookout.Rcheck/00check.log'[0K
+for details.[0K
+[0K
+[0K
+[0K[?25h[?25l
+[0;32mSevvandi@Prushtaya [0;35m [0;33m~/Documents/repos[0m[0K
+$[0K[3G[?25h[?25l$ R CMD check lookout_0.0.0.9000.tar.gz[0K[41G[?25h[?25l$ R CMD build lookout[0K[?25h[?25l
+[0K[?25h* checking for file 'lookout/DESCRIPTION' ... OK[0K[?25l
+[0K[?25h* preparing 'lookout':[0K[?25l
+[0K[?25h* checking DESCRIPTION meta-information ... OK[0K[?25l
+[0K[?25h* checking for LF line-endings in source and make files and shell scripts[0K[?25l
+* checking for empty or unneeded directories[0K
+[0K[?25h* building 'lookout_0.0.0.9000.tar.gz'[0K[?25l
+[0K[?25h[?25l
+[0K[?25h[?25l
+[0;32mSevvandi@Prushtaya [0;35m [0;33m~/Documents/repos[0m[0K
+$[0K[3G[?25h[?25l$ R CMD build lookout[0K[?25h[?25l$ R CMD check lookout_0.0.0.9000.tar.gz[0K[41G[?25h[?25l
+[0K[?25h[?25l* using log directory 'C[0K[22G[?25h[?25l* using log directory 'C:/Users/Sevvandi/Documents/repos/lo[0K[57G[?25h[?25l* using log directory 'C:/Users/Sevvandi/Documents/repos/lookout.Rcheck'[0K
+* using R version 3.6.1 (2019-07-05)[0K[34G[?25h[?25l
+* using platform: x86_64-w64-mingw32 (64-bit)[0K
+* using[0K[5G[?25h[?25l* using session charset: ISO8859-1[0K
+[0K[?25h* checking for file 'lookout/DESCRIPTION' ... OK[0K[?25l
+* checking extension type ... Package[0K
+* this is package 'lookout'[0K[25G[?25h[?25l* this is package 'lookout' version '0.0.0.9000'[0K
+* package encoding: UTF-8[0K
+* checking package namespace information ... OK[0K
+* checking package[0K[17G[?25h[?25l* checking package dependencies ...[0K[?25h OK[0K[?25l
+* checking if this is a sourc[0K[28G[?25h[?25l* checking if this is a source package ... OK[0K
+* checking if there is a namespace ... OK[0K
+[0K[?25h* checking for executable files ...[0K OK[0K[?25l
+* checking for hidden files and directories ... OK[0K
+[0K[?25h* checking for portable file names ... OK[0K[?25l
+[0K[?25h* checking whether package 'lookout' can be installed ...[0K OK[0K[?25l
+* checking installed package size ...[0K[?25h[?25l OK[0K[38G[?25h[?25l
+* checking package directory ... O[0K[?25hK[0K[?25l
+* checking DESCRIPTION meta-information ..[0K[41G[?25h[?25l* checking DESCRIPTION meta-information ...[0K[?25h OK[0K[?25l
+* checking top-level files ... OK[0K
+* checki[0K[7G[?25h[?25l* checking for left-over files ... OK[0K
+* checking i[0K[10G[?25h[?25l* checking index information ... OK[0K
+* checking package subdirectories ...[0K[?25h OK[0K[?25l
+* checking R files for non-ASCII characters ...[0K[?25h OK[0K[?25l
+* checking R files for syntax errors ...[0K[?25h OK[0K[?25l
+* checking whether the package can be loaded ...[0K[?25h OK[0K[?25l
+* checking whether the package can be loaded with stated dependencies ...[0K[?25h OK[0K[?25l
+* checking whether the package can be unloaded cleanly ...[0K[?25h OK[0K[?25l
+* checking whether the namespace can be loaded with stated dependencies ...[0K[?25h OK[0K[?25l
+* checking whether the namespace can be unloaded cleanly ...[0K[?25h OK[0K[?25l
+* checking loading[0K[16G[?25h[?25l* checking loading without being on the library sea[0K[50G[?25h[?25l* checking loading without being on the library search path ...[0K[?25h OK[0K[?25l
+* checking dependencies in R code ...[0K[?25h OK[0K[?25l
+* checking S3[0K[12G[?25h[?25l* checking S3 generic/method consistency ...[0K[?25h OK[0K[?25l
+* checking rep[0K[12G[?25h[?25l* checking replacement functions ...[0K[?25h OK[0K[?25l
+* checking foreign function calls[0K[31G[?25h[?25l* checking foreign function calls ...[0K[?25h OK[0K[?25l
+* checking R code for possible problems ...[0K[?25h OK[0K[?25l
+* checking Rd[0K[12G[?25h[?25l* checking Rd files ...[0K[?25h OK[0K[?25l
+* checking Rd metadata ...[0K[?25h OK[0K[?25l
+* checking Rd cross-references ...[0K[?25h OK[0K[?25l
+* checking for missing documentation entries ...[0K[?25h OK[0K[?25l
+* checking for code/documentation mismatches ...[0K[?25h OK[0K[?25l
+* checking Rd \usage[0K[18G[?25h[?25l* checking Rd \usage sections ...[0K[?25h OK[0K[?25l
+* checking Rd[0K[12G[?25h[?25l* checking Rd contents ...[0K[?25h OK[0K[?25l
+* checking for[0K[12G[?25h[?25l* checking for unstated dependencies in examples ...[0K[?25h OK[0K[?25l
+* checking examples ...[0K[?25h OK[0K[?25l
+*[0K[1G[?25h* checking PDF version of manual ...[0K OK[0K[?25l
+* DONE[0K
+[0K
+Status: OK[0K
+[0K
+[0K[?25h[?25l
+[0;32mSevvandi@Prushtaya [0;35m [0;33m~/Documents/repos[0m[0K
+$[0K[3G[?25h[?25l$ c[0K[?25hd[0K[6G[?25l$ cd l[0K[?25ho[0Ko[0K[?25lkout[0K[9G[?25h[13G[?25l
+[0K[?25h]0;:/c/Users/Sevvandi/Documents/repos/lookout[?25l
+[0;32mSevvandi@Prushtaya [0;35m [0;33m~/Documents/repos/lookout[0;36m (master)[0m[0K
+$[0K[3G[?25h[?25l$ g[0K[3G[?25h[4G[?25l$ gi[0K[4G[?25h[5G[?25l$ git[0K[?25h[7G[?25l$ git a[0K[?25hd[0Kd[0K[11G[?25l$ git add .[0K[?25h[?25l
+[0K[?25herror: open(".Rproj.user/F9A5C86C/console06/F98DB6E8"): Permission denied[0K[?25l
+error: unable to index file .Rproj.user/F9A5C86C/console06/F98DB6E8[0K
+fatal: updating files failed[0K
+[0K[?25h[?25l
+[0;32mSevvandi@Prushtaya [0;35m [0;33m~/Documents/repos/lookout[0;36m (master)[0m[0K
+$[0K[3G[?25h[?25l$ git add .[0K[?25h

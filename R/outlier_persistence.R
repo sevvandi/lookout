@@ -52,7 +52,6 @@ persisting_outliers_over_alpha <- function(X, alpha_min=0.01, alpha_max=0.1, ste
   bw_vals <- seq(qq_st, qq_en, length.out=num_steps)
   output <- array(0, dim=c(dim(X)[1], num_steps, num_alpha))
 
-  ## INSERT  START
   q_thres <- quantile(death_radi, probs=0.5)
   dr_thres <- death_radi[death_radi >= q_thres]
   dr_thres_diff <- diff(dr_thres)
@@ -65,7 +64,6 @@ persisting_outliers_over_alpha <- function(X, alpha_min=0.01, alpha_max=0.1, ste
   para2 <- lookoutobj1$gpd[2]
   paras <- c(para1, para2)
 
-  ## INSERT END
 
   for(i in 1:length(bw_vals)){
     lookoutobj <- lookoutliers_fixed_gpd(X, alpha=0.05, unitize=FALSE, bw=bw_vals[i], gpd=paras)

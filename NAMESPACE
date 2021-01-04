@@ -2,5 +2,6 @@
 
 export(lookoutliers)
 export(persisting_outliers_over_alpha)
+export(plot_outlier_barcode)
 importFrom(stats,dist)
 importFrom(stats,quantile)

@@ -21,4 +21,7 @@ RoxygenNote: 7.1.1
 Imports: 
     TDAstats,
     evd,
-    RANN
+    RANN,
+    ggplot2,
+    tidyr
+  
