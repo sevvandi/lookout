@@ -3,5 +3,6 @@
 export(lookoutliers)
 export(persisting_outliers_over_alpha)
 export(plot_outlier_barcode)
+export(plot_outlier_barcode_over_alpha)
 importFrom(stats,dist)
 importFrom(stats,quantile)
