@@ -308,4 +308,61 @@ $[0K[3G[?25h[?25l$ g[0K[?25hi[0Kt[0K[7G[?25l$ git a[0K[?25hd[0Kd
 [0K[?25h]0;:/c/Users/Sevvandi/Documents/repos/lookout[?25l
 [0;32mSevvandi@Prushtaya [0;35m [0;33m~/Documents/repos/lookout[0;36m (master)[0m[0K
 $[0K[3G[?25h[?25l$ g[0K[?25hi[0Kt[0K[7G[?25l$ git a[0K[?25hd[0Kd[0K[11G[?25l$ git add .[0K[?25h[?25l
-[0K[?25h
+[0K[?25hwarning: LF will be replaced by CRLF in .Rproj.user/F9A5C86C/sources/prop/B86AB3BC[0K.[?25l
+[0K
+The file will have its original line endings in your working directory.[0K
+warning: LF will be replaced by CRLF in .Rproj.user/F9A5C86C/sources/prop/FA4B3706[0K.
+[0K
+The file will have its original line endings in your working directory.[0K
+[0K[?25hwarning: LF will be replaced by CRLF in .Rproj.user/F9A5C86C/sources/prop/INDEX.[0K[?25l
+The file will have its original line endings in your working directory.[0K
+warning: LF will be replaced by CRLF in NAMESPACE.[0K
+The file will have its original line endings in your working directory.[0K
+[0K[?25hwarning: LF will be replaced by CRLF in man/lookoutliers.Rd.[0K[?25l
+The file will have its original line endings in your working directory.[0K
+[0K[?25h[?25l
+[0;32mSevvandi@Prushtaya [0;35m [0;33m~/Documents/repos/lookout[0;36m (master)[0m[0K
+$[0K[3G[?25h[?25l$ g[0K[3G[?25h[4G[?25l$ gi[0K[?25ht[0K[7G[?25l$ git c[0K[?25ho[0Km[0Km[0Ki[0Kt[0K[14G[?25l$ git commit -[0K[14G[?25h[15G[?25l$ git commit -m[0K[15G[?25h[16G[17G[?25l$ git commit -m "[0K[?25h[?25la[0K[18G[?25h[19G[?25l$ git commit -m "ad[0K[?25hd[0K[22G[?25l$ git commit -m "add l[0K[?25ho[0Ko[0Kk[0Ko[0Ku[0Kt[0Kl[0Ki[0Ke[0Kr[0Ks[0K[35G[?25l$ git commit -m "add lookoutliers r[0K[?25he[0Kl[0Kat[0Ke[0Kd[0K[43G[?25l$ git commit -m "add lookoutliers related f[0K[?25hu[0Kn[0Kc[0Kt[0Ki[0Ko[0Kn[0Ks[0K"[0K[?25l
+[0K[?25h[master 1f0b694] add lookoutliers related functions[0K[?25l
+ 11 files changed, 462 insertions(+), 36 deletions(-)[0K
+ rewrite .Rproj.user/F9A5C86C/console06/INDEX001 (85%)[0K
+ delete mode 100644 R/hello.R[0K
+ create mode 100644 R/loookoutliers.R[0K
+ delete mode 100644 man/hello.Rd[0K
+ create mode 100644 man/lookoutliers.Rd[0K
+[0K[?25h[?25l
+[0;32mSevvandi@Prushtaya [0;35m [0;33m~/Documents/repos/lookout[0;36m (master)[0m[0K
+$[0K[3G[?25h[?25l$ g[0K[?25hi[0Kt[0K[7G[?25l$ git p[0K[?25hu[0Ks[0Kh[0K[12G[?25l$ git push o[0K[?25hr[0Ki[0Kg[0Ki[0Kn[0K[19G[?25l$ git push origin m[0K[?25ha[0Ks[0Kt[0Ke[0Kr[0K[?25l
+[0K[?25hEnumerating objects: 33, done.[0K[?25l
+Counting objects: 100% (33/33), done.[0K
+Delta compression using up to 4 threads.[0K
+Compressing objects: 100% (16/16), done.[0K
+Writing objects:  33% (6/18)[0K[1G[?25hWriting objects: 100% (18/18), 7.68 KiB | 1.28 MiB/s, done.[0K[?25l
+Total 18 (delta 3), reused 0 (delta 0)[0K
+[0K[?25hremote: Resolving deltas: 100% (3/3), completed with 3 local objects.[0K[?25l
+[0K[?25hTo https://github.com/sevvandi/lookout.git[0K[?25l
+   aae2d02..1f0b694  master -> master[0K
+[0K[?25h[?25l
+[0;32mSevvandi@Prushtaya [0;35m [0;33m~/Documents/repos/lookout[0;36m (master)[0m[0K
+$[0K[3G[?25h[?25l$ g[0K[?25hi[0Kt[0K[7G[?25l$ git a[0K[?25hd[0Kd[0K[11G[?25l$ git add .[0K[?25h[?25l
+[0K[?25hwarning: LF will be replaced by CRLF in .Rproj.user/F9A5C86C/sources/prop/INDEX.[0K[?25l
+The file will have its original line endings in your working directory.[0K
+[0K[?25h[?25l
+[0;32mSevvandi@Prushtaya [0;35m [0;33m~/Documents/repos/lookout[0;36m (master)[0m[0K
+$[0K[3G[?25h[?25l$ c[0K[?25hd[0K[?25l$ c[0K[?25h[?25l$[0K[3G[?25h[?25l$ g[0K[?25hi[0Kt[0K[7G[?25l$ git c[0K[?25ho[0Km[0Km[0Ki[0Kt[0K[14G[?25l$ git commit -[0K[?25h[16G[?25l$ git commit - m[0K[?25h"[0Ka[0Kd[0Kd[0K[22G[21G[?25l$ git commit - m"ad[0K[21G[?25h[20G[?25l$ git commit - m"a[0K[20G[?25h[19G[?25l$ git commit - m"[0K[?25h[?25l$ git commit - m[0K[?25h[?25l$ git commit -[0K[16G[?25h[15G[?25l$ git commit[0K[14G[?25h[?25l$ git commit -[0K[?25hm[0K[17G[?25l$ git commit -m "[0K[?25ha[0Kd[0Kd[0K[22G[?25l$ git commit -m "add t[0K[?25hr[0Ka[0Kv[0Ki[0Ks[0K"[0K[?25l
+[0K[?25hREADME.md is out of date; please re-knit README.Rmd[0K[?25l
+use 'git commit --no-verify' to override this check[0K
+[0K[?25h[?25l
+[0;32mSevvandi@Prushtaya [0;35m [0;33m~/Documents/repos/lookout[0;36m (master)[0m[0K
+$[0K[3G[?25h[?25l$ git commit -m "add travis"[0K[?25h[?25l
+[0K[?25hREADME.Rmd and README.md should be both staged[0K[?25l
+use 'git commit --no-verify' to override this check[0K
+[0K[?25h[?25l
+[0;32mSevvandi@Prushtaya [0;35m [0;33m~/Documents/repos/lookout[0;36m (master)[0m[0K
+$[0K[3G[?25h[?25l$ g[0K[?25hi[0Kt[0K[7G[?25l$ git a[0K[7G[?25h[8G[?25l$ git ad[0K[?25hd[0K[11G[?25l$ git add .[0K[?25h[?25l
+[0K[?25herror: open(".Rproj.user/F9A5C86C/console06/F98DB6E8"): Permission denied[0K[?25l
+error: unable to index file .Rproj.user/F9A5C86C/console06/F98DB6E8[0K
+fatal: updating files failed[0K
+[0K[?25h[?25l
+[0;32mSevvandi@Prushtaya [0;35m [0;33m~/Documents/repos/lookout[0;36m (master)[0m[0K
+$[0K[3G[?25h[?25l$ git add .[0K[?25h
