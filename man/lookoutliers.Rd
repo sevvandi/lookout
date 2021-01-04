@@ -2,7 +2,7 @@
 % Please edit documentation in R/loookoutliers.R
 \name{lookoutliers}
 \alias{lookoutliers}
-\title{Identifies outliers using lookout}
+\title{Identifies outliers using the algorithm lookout.}
 \usage{
 lookoutliers(X, alpha = 0.05, unitize = TRUE, bw = NULL)
 }
@@ -25,7 +25,7 @@ A list with the following components:
 \item{\code{gpd}}{The fitted GPD parameters.}
 }
 \description{
-This function identifies outliers using lookout, an outlier detection method that uses leave-one-out kernel density estimates and generalized Pareto distributions to find outliers.
+This function identifies outliers using the algorithm lookout, an outlier detection method that uses leave-one-out kernel density estimates and generalized Pareto distributions to find outliers.
 }
 \examples{
 set.seed(1)

@@ -1,6 +1,6 @@
-#' Identifies outliers using lookout
+#' Identifies outliers using the algorithm lookout.
 #'
-#' This function identifies outliers using lookout, an outlier detection method that uses leave-one-out kernel density estimates and generalized Pareto distributions to find outliers.
+#' This function identifies outliers using the algorithm lookout, an outlier detection method that uses leave-one-out kernel density estimates and generalized Pareto distributions to find outliers.
 #'
 #' @param X The input data in a dataframe, matrix or tibble format.
 #' @param alpha The level of significance. Default is \code{0.0.05}.
