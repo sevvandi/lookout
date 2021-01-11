@@ -20,11 +20,10 @@ This function plots outlier persistence for a given significance level. using th
 \examples{
 set.seed(1)
 x1 <- cbind.data.frame(rnorm(500), rnorm(500))
-x2 <- cbind.data.frame(rnorm(5, mean=10, sd=0.2), rnorm(5, mean=10, sd=0.2))
+x2 <- cbind.data.frame(rnorm(5, mean = 10, sd = 0.2), rnorm(5, mean = 10, sd = 0.2))
 colnames(x1) <- colnames(x2) <- c("x", "y")
 X <- rbind.data.frame(x1, x2)
-plot(X, pch=19)
-outnew <- persisting_outliers_over_alpha(X, unitize=FALSE)
-plot_outlier_barcode(outnew, alpha=0.05)
-
+plot(X, pch = 19)
+outnew <- persisting_outliers_over_alpha(X, unitize = FALSE)
+plot_outlier_barcode(outnew, alpha = 0.05)
 }

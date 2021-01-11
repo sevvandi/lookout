@@ -30,10 +30,9 @@ This function identifies outliers using the algorithm lookout, an outlier detect
 \examples{
 set.seed(1)
 x1 <- cbind.data.frame(rnorm(500), rnorm(500))
-x2 <- cbind.data.frame(rnorm(5, mean=10, sd=0.2), rnorm(5, mean=10, sd=0.2))
+x2 <- cbind.data.frame(rnorm(5, mean = 10, sd = 0.2), rnorm(5, mean = 10, sd = 0.2))
 colnames(x1) <- colnames(x2) <- c("x", "y")
 X <- rbind.data.frame(x1, x2)
-plot(X, pch=19)
+plot(X, pch = 19)
 out <- lookoutliers(X)
-
 }
