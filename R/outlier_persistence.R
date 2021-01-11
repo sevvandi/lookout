@@ -20,64 +20,56 @@
 #' @examples
 #' set.seed(1)
 #' x1 <- cbind.data.frame(rnorm(500), rnorm(500))
-#' x2 <- cbind.data.frame(rnorm(5, mean=10, sd=0.2), rnorm(5, mean=10, sd=0.2))
+#' x2 <- cbind.data.frame(rnorm(5, mean = 10, sd = 0.2), rnorm(5, mean = 10, sd = 0.2))
 #' colnames(x1) <- colnames(x2) <- c("x", "y")
 #' X <- rbind.data.frame(x1, x2)
-#' plot(X, pch=19)
-#' outnew <- persisting_outliers_over_alpha(X, unitize=FALSE)
+#' plot(X, pch = 19)
+#' outnew <- persisting_outliers_over_alpha(X, unitize = FALSE)
 #' @export
 
-persisting_outliers_over_alpha <- function(X, alpha_min=0.01, alpha_max=0.1, step=0.01, st_qq = 0.9, en_sc= sqrt(5), unitize=TRUE, num_steps = 20){
+persisting_outliers_over_alpha <- function(X, alpha_min = 0.01, alpha_max = 0.1, step = 0.01, st_qq = 0.9,
+                                           en_sc = sqrt(5), unitize = TRUE, num_steps = 20) {
   X <- as.data.frame(X)
-  num_cols <- dim(X)[2]
-
-  num_alpha <- (alpha_max-alpha_min)/step + 1
-  alpha_seq <- seq(from=alpha_min, to=alpha_max, by=step)
-  dd <- num_cols
-  if(unitize){
-    for(col in 1:dd){
-      X[ ,col] <- (X[ ,col] - min(X[ ,col]) )/(max(X[ ,col]) - min(X[ ,col]))
-    }
+  num_cols <- NCOL(X)
+  num_alpha <- (alpha_max - alpha_min) / step + 1
+  alpha_seq <- seq(from = alpha_min, to = alpha_max, by = step)
+  if (unitize) {
+    X <- unitize(X)
   }
-  if(num_cols==1){
-    distx <- dist(X)
-    phom <- TDAstats::calculate_homology(distx, format="distmat")
-  }else{
-    phom <- TDAstats::calculate_homology(X, dim=0)
+  if (num_cols == 1L) {
+    phom <- TDAstats::calculate_homology(dist(X), format = "distmat")
+  } else {
+    phom <- TDAstats::calculate_homology(X, dim = 0)
   }
 
-  death_radi <- phom[ ,3]
+  death_radi <- phom[, 3L]
   qq_st <- quantile(death_radi, probs = st_qq)
-  qq_en <- max(death_radi)*en_sc
-  bw_vals <- seq(qq_st, qq_en, length.out=num_steps)
-  output <- array(0, dim=c(dim(X)[1], num_steps, num_alpha))
+  qq_en <- max(death_radi) * en_sc
+  bw_vals <- seq(qq_st, qq_en, length.out = num_steps)
+  output <- array(0, dim = c(dim(X)[1], num_steps, num_alpha))
 
-  q_thres <- quantile(death_radi, probs=0.5)
+  q_thres <- quantile(death_radi, probs = 0.5)
   dr_thres <- death_radi[death_radi >= q_thres]
   dr_thres_diff <- diff(dr_thres)
   max_persist_ind <- which.max(dr_thres_diff)
   ind1 <- min(which(death_radi >= q_thres))
-  ind <- max_persist_ind + ind1 -1
-  bw_fixed <- death_radi[ind]*sqrt(5)
-  lookoutobj1 <- lookoutliers(X, alpha=0.05, unitize=FALSE, bw=bw_fixed)
-  para1 <- lookoutobj1$gpd[1]
-  para2 <- lookoutobj1$gpd[2]
-  paras <- c(para1, para2)
+  ind <- max_persist_ind + ind1 - 1L
+  bw_fixed <- death_radi[ind] * sqrt(5)
+  lookoutobj1 <- lookoutliers(X, alpha = 0.05, unitize = FALSE, bw = bw_fixed)
+  paras <- lookoutobj1$gpd[1:2]
 
-
-  for(i in 1:length(bw_vals)){
-    lookoutobj <- lookoutliers_fixed_gpd(X, alpha=0.05, unitize=FALSE, bw=bw_vals[i], gpd=paras)
-    for(j in 1:num_alpha){
+  for (i in seq_along(bw_vals)) {
+    lookoutobj <- lookoutliers_fixed_gpd(X, alpha = 0.05, unitize = FALSE, bw = bw_vals[i], gpd = paras)
+    for (j in seq(num_alpha)) {
       outinds <- which(lookoutobj$outlier_probability < alpha_seq[j])
       output[outinds, i, j] <- 1
     }
   }
 
-
-  out <- list()
-  out$out <- output
-  out$bw <- bw_vals
-  out$gpdparas <- paras
-  out$lookoutbw <- bw_fixed
-  return(out)
+  list(
+    out = output,
+    bw = bw_vals,
+    gpdparas = paras,
+    lookoutbw = bw_fixed
+  )
 }
