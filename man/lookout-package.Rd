@@ -2,7 +2,6 @@
 % Please edit documentation in R/lookout-package.R
 \docType{package}
 \name{lookout-package}
-\alias{lookout}
 \alias{lookout-package}
 \title{lookout: Leave One Out Kernel Density Estimates for Outlier Detection}
 \description{
