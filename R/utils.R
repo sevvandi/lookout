@@ -12,7 +12,7 @@ nsphere <- function(n = 3L, r = 1L, npts = 3145L) {
 
 # Unitize each column of X
 unitize <- function(X) {
-  for (col in NCOL(X)) {
+  for (col in 1:NCOL(X)) {
     maxcol <- max(X[, col])
     mincol <- min(X[, col])
     X[, col] <- (X[, col] - mincol) / (maxcol - mincol)
