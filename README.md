@@ -3,6 +3,11 @@
 
 # lookout
 
+<!-- badges: start -->
+
+[![R-CMD-check](https://github.com/sevvandi/lookout/workflows/R-CMD-check/badge.svg)](https://github.com/sevvandi/lookout/actions)
+<!-- badges: end -->
+
 **lookout** identifies outliers in data using leave-one-out kernel
 density estimates and extreme value theory. The bandwidth for kernel
 density estimates is computed using persistent homology, a technique in
