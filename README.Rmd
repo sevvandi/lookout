@@ -16,10 +16,12 @@ knitr::opts_chunk$set(
 # lookout
 
 <!-- badges: start -->
-  [![Travis build status](https://travis-ci.org/sevvandi/lookout.svg?branch=master)](https://travis-ci.org/sevvandi/lookout)
+[![R-CMD-check](https://github.com/sevvandi/lookout/workflows/R-CMD-check/badge.svg)](https://github.com/sevvandi/lookout/actions)
 <!-- badges: end -->
 
-The goal of lookout is to ...
+**lookout** identifies outliers in data using leave-one-out kernel density estimates and extreme value theory. The bandwidth for kernel density estimates is computed  using persistent homology, a technique in topological data analysis. Using  peak-over-threshold method, a generalized Pareto distribution is fitted to the log of leave-one-out kde values to identify outliers. 
+
+See [Kandanaarachchi and Hyndman (2021)](https://robjhyndman.com/publications/lookout/) for the underlying methodology.
 
 ## Installation
 
@@ -35,27 +37,14 @@ And the development version from [GitHub](https://github.com/) with:
 # install.packages("devtools")
 devtools::install_github("sevvandi/lookout")
 ```
+
 ## Example
 
-This is a basic example which shows you how to solve a common problem:
-
-```{r example}
-#library(lookout)
-## basic example code
+```{r}
+library(lookout)
+lo <- lookout(faithful)
+lo
+autoplot(lo)
+persistence <- persisting_outliers(faithful)
+autoplot(persistence)
 ```
-
-What is special about using `README.Rmd` instead of just `README.md`? You can include R chunks like so:
-
-```{r cars}
-summary(cars)
-```
-
-You'll still need to render `README.Rmd` regularly, to keep `README.md` up-to-date.
-
-You can also embed plots, for example:
-
-```{r pressure, echo = FALSE}
-plot(pressure)
-```
-
-In that case, don't forget to commit and push the resulting figure files, so they display on GitHub!

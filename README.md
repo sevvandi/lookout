@@ -5,11 +5,19 @@
 
 <!-- badges: start -->
 
-[![Travis build
-status](https://travis-ci.org/sevvandi/lookout.svg?branch=master)](https://travis-ci.org/sevvandi/lookout)
+[![R-CMD-check](https://github.com/sevvandi/lookout/workflows/R-CMD-check/badge.svg)](https://github.com/sevvandi/lookout/actions)
 <!-- badges: end -->
 
-The goal of lookout is to …
+**lookout** identifies outliers in data using leave-one-out kernel
+density estimates and extreme value theory. The bandwidth for kernel
+density estimates is computed using persistent homology, a technique in
+topological data analysis. Using peak-over-threshold method, a
+generalized Pareto distribution is fitted to the log of leave-one-out
+kde values to identify outliers.
+
+See [Kandanaarachchi and Hyndman
+(2021)](https://robjhyndman.com/publications/lookout/) for the
+underlying methodology.
 
 ## Installation
 
@@ -29,33 +37,26 @@ devtools::install_github("sevvandi/lookout")
 
 ## Example
 
-This is a basic example which shows you how to solve a common problem:
-
 ``` r
-#library(lookout)
-## basic example code
+library(lookout)
+lo <- lookout(faithful)
+lo
+#> Leave-out-out KDE outliers using lookout algorithm
+#> 
+#> Call: lookout(X = faithful)
+#> 
+#>   Outliers Probability
+#> 1       24  0.01371435
+#> 2      149  0.00000000
+#> 3      211  0.00000000
+autoplot(lo)
 ```
 
-What is special about using `README.Rmd` instead of just `README.md`?
-You can include R chunks like so:
+<img src="man/figures/README-unnamed-chunk-2-1.png" width="100%" />
 
 ``` r
-summary(cars)
-#>      speed           dist       
-#>  Min.   : 4.0   Min.   :  2.00  
-#>  1st Qu.:12.0   1st Qu.: 26.00  
-#>  Median :15.0   Median : 36.00  
-#>  Mean   :15.4   Mean   : 42.98  
-#>  3rd Qu.:19.0   3rd Qu.: 56.00  
-#>  Max.   :25.0   Max.   :120.00
+persistence <- persisting_outliers(faithful)
+autoplot(persistence)
 ```
 
-You’ll still need to render `README.Rmd` regularly, to keep `README.md`
-up-to-date.
-
-You can also embed plots, for example:
-
-<img src="man/figures/README-pressure-1.png" width="100%" />
-
-In that case, don’t forget to commit and push the resulting figure
-files, so they display on GitHub\!
+<img src="man/figures/README-unnamed-chunk-2-2.png" width="100%" />
