@@ -4,3 +4,6 @@
 ^\.travis\.yml$
 ^README\.Rmd$
 ^\.github$
+^_pkgdown\.yml$
+^docs$
+^pkgdown$

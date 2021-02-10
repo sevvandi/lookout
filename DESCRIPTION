@@ -24,4 +24,7 @@ Imports:
     RANN,
     ggplot2,
     tidyr
-  
+Suggests: 
+    knitr,
+    rmarkdown
+URL: https://sevvandi.github.io/lookout/

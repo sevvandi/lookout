@@ -54,9 +54,15 @@ autoplot(lo)
 
 <img src="man/figures/README-unnamed-chunk-2-1.png" width="100%" />
 
+Next we look at outlier persistence. The outlier persistence plot shows
+the outliers that persist over a range of bandwidth values for different
+levels of significance. The strength is inversely proportional to the
+level of significance. If the level of significance \(\alpha=0.01\),
+then the strength is 10 and if \(\alpha=0.1\) then the strength is 1.
+
 ``` r
 persistence <- persisting_outliers(faithful)
 autoplot(persistence)
 ```
 
-<img src="man/figures/README-unnamed-chunk-2-2.png" width="100%" />
+<img src="man/figures/README-unnamed-chunk-3-1.png" width="100%" />
