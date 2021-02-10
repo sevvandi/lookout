@@ -15,7 +15,9 @@ unitize <- function(X) {
   for (col in 1:NCOL(X)) {
     maxcol <- max(X[, col])
     mincol <- min(X[, col])
-    X[, col] <- (X[, col] - mincol) / (maxcol - mincol)
+    if(maxcol!= mincol){
+      X[, col] <- (X[, col] - mincol) / (maxcol - mincol)
+    }
   }
   X
 }
