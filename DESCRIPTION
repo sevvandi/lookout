@@ -1,7 +1,7 @@
 Package: lookout
 Type: Package
 Title: Leave One Out Kernel Density Estimates for Outlier Detection
-Version: 0.0.0.9000
+Version: 0.1.0
 Authors@R: c(
   person("Sevvandi", "Kandanaarachchi", email = "sevvandik@gmail.com",
   role = c("aut", "cre"), comment = c(ORCID = "0000-0002-0337-0395")),
