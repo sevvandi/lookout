@@ -109,8 +109,8 @@ lookde <- function(x, bandwidth) {
 
   # Epanechnikov kernel density estimate
   dist <- RANN::nn2(x, k = nn)$nn.dists
-  dist[dist > bandwidth] <- bandwidth
-  phat <- 0.75 / (nn*bandwidth) * rowSums(1-(dist/bandwidth)^2)
+  dist[dist > bandwidth] <- NA_real_
+  phat <- 0.75 / (nn*bandwidth) * rowSums(1-(dist/bandwidth)^2, na.rm=TRUE)
 
   # leave one out
   kdevalsloo <- 0.75 / ((nn - 1) * (bandwidth))
