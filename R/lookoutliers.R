@@ -109,13 +109,11 @@ find_tda_bw <- function(X) {
 lookde <- function(x, bandwidth) {
   x <- as.matrix(x)
   nn <- NROW(x)
-  nnobj <- RANN::nn2(x, k = nn)
-  phat <- numeric(nn)
-  for (kk in seq(nn)) {
-    inds <- which(nnobj$nn.dists[kk, ] < bandwidth)
-    kdevals <- 0.75/(nn*bandwidth) * (1-nnobj$nn.dists[kk, inds]^2/bandwidth^2)
-    phat[kk] <- sum(kdevals)
-  }
+
+  # Epanechnikov kernel density estimate
+  dist <- RANN::nn2(x, k = nn)$nn.dists
+  dist[dist > bandwidth] <- NA_real_
+  phat <- 0.75 / (nn*bandwidth) * rowSums(1-(dist/bandwidth)^2, na.rm=TRUE)
 
   # leave one out
   kdevalsloo <- 0.75 / ((nn - 1) * (bandwidth))
