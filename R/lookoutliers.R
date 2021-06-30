@@ -16,6 +16,7 @@
 #' @return A list with the following components:
 #' \item{\code{outliers}}{The set of outliers.}
 #' \item{\code{outlier_probability}}{The GPD probability of the data.}
+#' \item{\code{outlier_scores}}{The outlier scores of the data.}
 #' \item{\code{bandwidth}}{The bandwdith selected using persistent homology. }
 #' \item{\code{kde}}{The kernel density estimate values.}
 #' \item{\code{lookde}}{The leave-one-out kde values.}
@@ -74,6 +75,7 @@ lookout <- function(X, alpha = 0.05, unitize = TRUE, bw = NULL, gpd = NULL) {
   # probabilities of leave-one-out kernel density estimates
   potlookde <- evd::pgpd(-log(kdeobj$lookde), loc = qq,
     scale = gpd[1], shape = gpd[2], lower.tail = FALSE)
+  outscores <- 1 - potlookde
   # select outliers according to threshold
   outliers <- which(potlookde < alpha)
   dfout <- cbind.data.frame(outliers, potlookde[outliers])
@@ -83,6 +85,7 @@ lookout <- function(X, alpha = 0.05, unitize = TRUE, bw = NULL, gpd = NULL) {
     data = origX,
     outliers = dfout,
     outlier_probability = potlookde,
+    outlier_scores = outscores,
     bandwidth = bandwidth,
     kde = kdeobj$kde,
     lookde = kdeobj$lookde,
