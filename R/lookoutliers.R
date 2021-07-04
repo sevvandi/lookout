@@ -33,7 +33,7 @@
 #' lo
 #' autoplot(lo)
 #' @export lookout
-#' @importFrom stats dist quantile
+#' @importFrom stats dist quantile median
 lookout <- function(X, alpha = 0.05, unitize = TRUE, bw = NULL, gpd = NULL) {
   # Prepare X matrix
   origX <- X
@@ -102,8 +102,11 @@ find_tda_bw <- function(X) {
     phom <- TDAstats::calculate_homology(X, dim = 0)
   }
   death_radi <- phom[, 3L]
-  dr_thres_diff <- diff(death_radi)
-  return(death_radi[which.max(dr_thres_diff)])
+  # Added so that very small death radi are not chosen
+  med_radi <- median(death_radi)
+  death_radi_upper <- death_radi[death_radi > med_radi]
+  dr_thres_diff <- diff(death_radi_upper)
+  return(death_radi_upper[which.max(dr_thres_diff)])
 }
 
 lookde <- function(x, bandwidth) {
