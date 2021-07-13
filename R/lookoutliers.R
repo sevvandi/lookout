@@ -104,7 +104,7 @@ find_tda_bw <- function(X) {
   death_radi <- phom[, 3L]
   # Added so that very small death radi are not chosen
   med_radi <- median(death_radi)
-  death_radi_upper <- death_radi[death_radi > med_radi]
+  death_radi_upper <- death_radi[death_radi >= med_radi]
   dr_thres_diff <- diff(death_radi_upper)
   return(death_radi_upper[which.max(dr_thres_diff)])
 }
