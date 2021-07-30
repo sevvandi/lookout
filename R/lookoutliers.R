@@ -5,7 +5,7 @@
 #' generalized Pareto distributions to find outliers.
 #'
 #' @param X The input data in a dataframe, matrix or tibble format.
-#' @param alpha The level of significance. Default is \code{0.0.05}.
+#' @param alpha The level of significance. Default is \code{0.05}.
 #' @param unitize An option to normalize the data. Default is \code{TRUE},
 #'   which normalizes each column to \code{[0,1]}.
 #' @param bw Bandwidth parameter. Default is \code{NULL} as the bandwidth is

@@ -9,7 +9,7 @@ lookout(X, alpha = 0.05, unitize = TRUE, bw = NULL, gpd = NULL)
 \arguments{
 \item{X}{The input data in a dataframe, matrix or tibble format.}
 
-\item{alpha}{The level of significance. Default is \code{0.0.05}.}
+\item{alpha}{The level of significance. Default is \code{0.05}.}
 
 \item{unitize}{An option to normalize the data. Default is \code{TRUE},
 which normalizes each column to \code{[0,1]}.}
