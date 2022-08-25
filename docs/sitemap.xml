@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url>
+    <loc>/404.html</loc>
+  </url>
+  <url>
+    <loc>/authors.html</loc>
+  </url>
+  <url>
+    <loc>/index.html</loc>
+  </url>
+  <url>
+    <loc>/reference/autoplot.lookoutliers.html</loc>
+  </url>
+  <url>
+    <loc>/reference/autoplot.persistingoutliers.html</loc>
+  </url>
+  <url>
+    <loc>/reference/index.html</loc>
+  </url>
+  <url>
+    <loc>/reference/lookout-package.html</loc>
+  </url>
+  <url>
+    <loc>/reference/lookout.html</loc>
+  </url>
+  <url>
+    <loc>/reference/lookout_ts.html</loc>
+  </url>
+  <url>
+    <loc>/reference/persisting_outliers.html</loc>
+  </url>
+  <url>
+    <loc>/reference/reexports.html</loc>
+  </url>
+</urlset>

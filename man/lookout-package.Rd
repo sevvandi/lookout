@@ -5,13 +5,9 @@
 \alias{lookout-package}
 \title{lookout: Leave One Out Kernel Density Estimates for Outlier Detection}
 \description{
-\if{html}{\figure{logo.png}{options: align='right' alt='logo' width='120'}}
+\if{html}{\figure{logo.png}{options: style='float: right' alt='logo' width='120'}}
 
-Outlier detection using leave-one-out kernel density estimates and
-    extreme value theory. The bandwidth for kernel density estimates is computed 
-    using persistent homology, a technique in topological data analysis. Using 
-    peak-over-threshold method, a generalized Pareto distribution is fitted to
-    the log of leave-one-out kde values to identify outliers.
+Outlier detection using leave-one-out kernel density estimates and extreme value theory. The bandwidth for kernel density estimates is computed using persistent homology, a technique in topological data analysis. Using peak-over-threshold method, a generalized Pareto distribution is fitted to the log of leave-one-out kde values to identify outliers.
 }
 \seealso{
 Useful links:
