@@ -12,6 +12,8 @@
 #'   found using Persistent Homology.
 #' @param gpd Generalized Pareto distribution parameters. If `NULL` (the
 #' default), these are estimated from the data.
+#' @param fast If set to \code{TRUE}, makes the computation faster by sub-setting
+#'   the data for the bandwidth calculation.
 #'
 #' @return A list with the following components:
 #' \item{\code{outliers}}{The set of outliers.}
@@ -34,7 +36,12 @@
 #' autoplot(lo)
 #' @export lookout
 #' @importFrom stats dist quantile median
-lookout <- function(X, alpha = 0.05, unitize = TRUE, bw = NULL, gpd = NULL) {
+lookout <- function(X,
+                    alpha = 0.05,
+                    unitize = TRUE,
+                    bw = NULL,
+                    gpd = NULL,
+                    fast = TRUE) {
   # Prepare X matrix
   origX <- X
   X <- as.matrix(X)
@@ -44,13 +51,13 @@ lookout <- function(X, alpha = 0.05, unitize = TRUE, bw = NULL, gpd = NULL) {
 
   # Find bandwidth and scale for Epanechnikov kernel
   if (is.null(bw)) {
-    bandwidth <- find_tda_bw(X) * sqrt(5)
+    bandwidth <- find_tda_bw(X, fast = fast) * sqrt(5)
   } else {
     bandwidth <- bw
   }
 
   # find kde and lookde estimates
-  kdeobj <- lookde(X, bandwidth = bandwidth)
+  kdeobj <- lookde(X, bandwidth = bandwidth, fast = fast)
   log_dens <- -log(kdeobj$kde)
 
   # find POT GPD parameters, threshold 0.90
@@ -94,12 +101,20 @@ lookout <- function(X, alpha = 0.05, unitize = TRUE, bw = NULL, gpd = NULL) {
   ), class='lookoutliers')
 }
 
-find_tda_bw <- function(X) {
+find_tda_bw <- function(X, fast) {
   X <- as.matrix(X)
+
+  # select a subset of X for tda computation
+  if(fast){
+    Xsub <- subset_for_tda(X)
+  }else{
+    Xsub <- X
+  }
+
   if (NCOL(X) == 1L) {
-    phom <- TDAstats::calculate_homology(dist(X), format = "distmat")
+    phom <- TDAstats::calculate_homology(dist(Xsub), format = "distmat")
   } else {
-    phom <- TDAstats::calculate_homology(X, dim = 0)
+    phom <- TDAstats::calculate_homology(Xsub, dim = 0)
   }
   death_radi <- phom[, 3L]
   # Added so that very small death radi are not chosen
@@ -109,12 +124,20 @@ find_tda_bw <- function(X) {
   return(death_radi_upper[which.max(dr_thres_diff)])
 }
 
-lookde <- function(x, bandwidth) {
+lookde <- function(x, bandwidth, fast) {
   x <- as.matrix(x)
   nn <- NROW(x)
 
+  if(fast){
+    # To make the nearest neighbour distance computation faster
+    # select a kk different to nn as follows
+    kk <- min(max(ceiling(nn/200), 100), nn, 500)
+  }else{
+    kk <- nn
+  }
+
   # Epanechnikov kernel density estimate
-  dist <- RANN::nn2(x, k = nn)$nn.dists
+  dist <- RANN::nn2(x, k = kk)$nn.dists
   dist[dist > bandwidth] <- NA_real_
   phat <- 0.75 / (nn*bandwidth) * rowSums(1-(dist/bandwidth)^2, na.rm=TRUE)
 
@@ -123,4 +146,37 @@ lookde <- function(x, bandwidth) {
   lookde <- nn * phat / (nn - 1) - kdevalsloo
 
   list(x = x, kde = phat, lookde = pmax(lookde, 0))
+}
+
+
+subset_for_tda <- function(X){
+  # Leader algorithm in HDoutliers
+  # Inserted from HDoutliers function getHDmembers
+  # We cannot call that function because the algorithm only comes to
+  # effect if the number of rows are greater than 10000
+  # And we have used RANN::nn2, which is a faster algorithm.
+
+  X <- as.matrix(X)
+
+  n <- nrow(X)
+  p <- ncol(X)
+  radius <- 0.1/(log(n)^(1/p))
+  members <- rep(list(NULL), n)
+  exemplars <- 1
+  members[[1]] <- 1
+
+  for (i in 2:n) {
+    KNN <- RANN::nn2(data = X[c(exemplars,i), , drop = F],
+                     query = X[i, , drop = F], k = 2)
+    m <- KNN$nn.idx[1, 2]
+    d <- KNN$nn.dists[1, 2]
+    if (d < radius) {
+      l <- exemplars[m]
+      members[[l]] <- c(members[[l]], i)
+      next
+    }
+    exemplars <- c(exemplars, i)
+    members[[i]] <- i
+  }
+  X[exemplars, ]
 }

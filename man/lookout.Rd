@@ -4,7 +4,7 @@
 \alias{lookout}
 \title{Identifies outliers using the algorithm lookout.}
 \usage{
-lookout(X, alpha = 0.05, unitize = TRUE, bw = NULL, gpd = NULL)
+lookout(X, alpha = 0.05, unitize = TRUE, bw = NULL, gpd = NULL, fast = TRUE)
 }
 \arguments{
 \item{X}{The input data in a dataframe, matrix or tibble format.}
@@ -19,6 +19,9 @@ found using Persistent Homology.}
 
 \item{gpd}{Generalized Pareto distribution parameters. If `NULL` (the
 default), these are estimated from the data.}
+
+\item{fast}{If set to \code{TRUE}, makes the computation faster by sub-setting
+the data for the bandwidth calculation.}
 }
 \value{
 A list with the following components:

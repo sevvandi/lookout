@@ -51,7 +51,7 @@ autoplot.lookoutliers <- function(object, columns=1:2, ...) {
       ggplot2::geom_point(ggplot2::aes(col=outliers)) +
       ggplot2::labs(x=varnames[columns[1L]], y=..yvar) +
       ggplot2::scale_color_manual(values=c(`TRUE` = "red", `FALSE`="black")) +
-      ggplot2::guides(color = FALSE)
+      ggplot2::guides(color = "none")
   if(NCOL(object$data) == 1L) {
     p <- p + ggplot2::scale_y_continuous(breaks=NULL)
   }

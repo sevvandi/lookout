@@ -19,7 +19,7 @@ generalized Pareto distributions to find outliers."><meta property="og:image" co
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">lookout</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.1.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.1.3</span>
       </span>
     </div>
 
@@ -48,7 +48,7 @@ generalized Pareto distributions to find outliers.</p>
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">lookout</span><span class="op">(</span><span class="va">X</span>, alpha <span class="op">=</span> <span class="fl">0.05</span>, unitize <span class="op">=</span> <span class="cn">TRUE</span>, bw <span class="op">=</span> <span class="cn">NULL</span>, gpd <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">lookout</span><span class="op">(</span><span class="va">X</span>, alpha <span class="op">=</span> <span class="fl">0.05</span>, unitize <span class="op">=</span> <span class="cn">TRUE</span>, bw <span class="op">=</span> <span class="cn">NULL</span>, gpd <span class="op">=</span> <span class="cn">NULL</span>, fast <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -74,6 +74,11 @@ found using Persistent Homology.</p></dd>
 <dt>gpd</dt>
 <dd><p>Generalized Pareto distribution parameters. If `NULL` (the
 default), these are estimated from the data.</p></dd>
+
+
+<dt>fast</dt>
+<dd><p>If set to <code>TRUE</code>, makes the computation faster by sub-setting
+the data for the bandwidth calculation.</p></dd>
 
 </dl></div>
     <div id="value">
@@ -119,16 +124,14 @@ default), these are estimated from the data.</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Call: lookout(X = X)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   Outliers Probability</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1       15  0.04826324</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2      291  0.04585693</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3      501  0.02193117</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4      502  0.02529435</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5      503  0.02575264</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6      504  0.02340327</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 7      505  0.02300294</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1      357  0.04351975</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2      501  0.03125198</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3      502  0.03133038</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4      503  0.03135005</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5      504  0.03125261</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6      505  0.03119314</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/autoplot.html" class="external-link">autoplot</a></span><span class="op">(</span><span class="va">lo</span><span class="op">)</span></span></span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>`guides(&lt;scale&gt; = FALSE)` is deprecated. Please use `guides(&lt;scale&gt; = "none")` instead.</span>
 <span class="r-plt img"><img src="lookout-1.png" alt="" width="700" height="433"></span>
 </code></pre></div>
     </div>
