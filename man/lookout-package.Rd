@@ -24,5 +24,10 @@ Authors:
   \item Rob Hyndman \email{rob.hyndman@monash.edu} (\href{https://orcid.org/0000-0002-2140-5352}{ORCID})
 }
 
+Other contributors:
+\itemize{
+  \item Chris Fraley \email{fraley@u.washington.edu} [contributor]
+}
+
 }
 \keyword{internal}

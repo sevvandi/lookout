@@ -6,7 +6,8 @@ Authors@R: c(
   person("Sevvandi", "Kandanaarachchi", email = "sevvandik@gmail.com",
   role = c("aut", "cre"), comment = c(ORCID = "0000-0002-0337-0395")),
   person("Rob", "Hyndman", email = "rob.hyndman@monash.edu",
-  role = c("aut"), comment = c(ORCID = "0000-0002-2140-5352")) 
+  role = c("aut"), comment = c(ORCID = "0000-0002-2140-5352")),
+  person("Chris", "Fraley", role = "ctb", email = "fraley@u.washington.edu") 
  )
 Maintainer: Sevvandi Kandanaarachchi <sevvandik@gmail.com>
 Description: Outlier detection using leave-one-out kernel density estimates and
