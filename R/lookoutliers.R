@@ -35,7 +35,7 @@
 #' lo
 #' autoplot(lo)
 #' @export lookout
-#' @importFrom stats dist quantile median
+#' @importFrom stats dist quantile median sd
 lookout <- function(X,
                     alpha = 0.05,
                     unitize = TRUE,
@@ -160,18 +160,24 @@ subset_for_tda <- function(X){
 
   n <- nrow(X)
   p <- ncol(X)
-  radius <- 0.1/(log(n)^(1/p))
+
+  Xu <- unitize(X)
+
+  sds <- apply(Xu, 2, sd)
+  sd_radius <- sqrt(sum(sds^2))
+  radius <- min(0.1/(log(n)^(1/p)), sd_radius)
   members <- rep(list(NULL), n)
   exemplars <- 1
   members[[1]] <- 1
 
   for (i in 2:n) {
-    KNN <- RANN::nn2(data = X[c(exemplars,i), , drop = F],
-                     query = X[i, , drop = F], k = 2)
+    KNN <- RANN::nn2(data = Xu[c(exemplars,i), , drop = F],
+                     query = Xu[i, , drop = F], k = 2)
     m <- KNN$nn.idx[1, 2]
     d <- KNN$nn.dists[1, 2]
     if (d < radius) {
-      l <- exemplars[m]
+      curr <- length(exemplars)
+      l <- exemplars[curr]
       members[[l]] <- c(members[[l]], i)
       next
     }
