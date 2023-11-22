@@ -101,28 +101,6 @@ lookout <- function(X,
   ), class='lookoutliers')
 }
 
-find_tda_bw <- function(X, fast) {
-  X <- as.matrix(X)
-
-  # select a subset of X for tda computation
-  if(fast){
-    Xsub <- subset_for_tda(X)
-  }else{
-    Xsub <- X
-  }
-
-  if (NCOL(X) == 1L) {
-    phom <- TDAstats::calculate_homology(dist(Xsub), format = "distmat")
-  } else {
-    phom <- TDAstats::calculate_homology(Xsub, dim = 0)
-  }
-  death_radi <- phom[, 3L]
-  # Added so that very small death radi are not chosen
-  med_radi <- median(death_radi)
-  death_radi_upper <- death_radi[death_radi >= med_radi]
-  dr_thres_diff <- diff(death_radi_upper)
-  return(death_radi_upper[which.max(dr_thres_diff)])
-}
 
 lookde <- function(x, bandwidth, fast) {
   x <- as.matrix(x)
