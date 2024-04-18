@@ -4,7 +4,15 @@
 \alias{lookout}
 \title{Identifies outliers using the algorithm lookout.}
 \usage{
-lookout(X, alpha = 0.05, unitize = TRUE, bw = NULL, gpd = NULL, fast = TRUE)
+lookout(
+  X,
+  alpha = 0.05,
+  unitize = TRUE,
+  bw = NULL,
+  gpd = NULL,
+  fast = TRUE,
+  bw_para = 0.95
+)
 }
 \arguments{
 \item{X}{The input data in a dataframe, matrix or tibble format.}
@@ -22,6 +30,11 @@ default), these are estimated from the data.}
 
 \item{fast}{If set to \code{TRUE}, makes the computation faster by sub-setting
 the data for the bandwidth calculation.}
+
+\item{bw_para}{Parameter for bandwidth calculation. Default is \code{0.95}.
+If set to 1, then the bandwidth corresponds to the maximum Rips death radi
+difference. If set to 0.95, then the bandwidth corresponds to the 95th
+quantile of Rips death radi. Other probabilities can be used.}
 }
 \value{
 A list with the following components:
@@ -47,5 +60,6 @@ X <- rbind(
 )
 lo <- lookout(X)
 lo
+# extra test comment.
 autoplot(lo)
 }

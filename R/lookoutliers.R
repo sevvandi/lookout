@@ -14,6 +14,10 @@
 #' default), these are estimated from the data.
 #' @param fast If set to \code{TRUE}, makes the computation faster by sub-setting
 #'   the data for the bandwidth calculation.
+#' @param bw_para Parameter for bandwidth calculation. Default is \code{0.95}.
+#'   If set to 1, then the bandwidth corresponds to the maximum Rips death radi
+#'   difference. If set to 0.95, then the bandwidth corresponds to the 95th
+#'   quantile of Rips death radi. Other probabilities can be used.
 #'
 #' @return A list with the following components:
 #' \item{\code{outliers}}{The set of outliers.}
@@ -42,7 +46,13 @@ lookout <- function(X,
                     unitize = TRUE,
                     bw = NULL,
                     gpd = NULL,
-                    fast = TRUE) {
+                    fast = TRUE,
+                    bw_para = 0.95) {
+  # bw_para needs to be between 0 and 1
+  if (bw_para < 0 || bw_para > 1) {
+    stop("bw_para should be between 0 and 1.")
+  }
+
   # Prepare X matrix
   origX <- X
   X <- as.matrix(X)
@@ -52,7 +62,7 @@ lookout <- function(X,
 
   # Find bandwidth and scale for Epanechnikov kernel
   if (is.null(bw)) {
-    bandwidth <- find_tda_bw(X, fast = fast) * sqrt(5)
+    bandwidth <- find_tda_bw(X, fast = fast, bw_para) * sqrt(5)
   } else {
     bandwidth <- bw
   }
