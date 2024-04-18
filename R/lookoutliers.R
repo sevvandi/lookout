@@ -33,6 +33,7 @@
 #' )
 #' lo <- lookout(X)
 #' lo
+#' # extra test comment.
 #' autoplot(lo)
 #' @export lookout
 #' @importFrom stats dist quantile median sd
