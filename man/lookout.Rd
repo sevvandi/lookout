@@ -11,7 +11,8 @@ lookout(
   bw = NULL,
   gpd = NULL,
   fast = TRUE,
-  bw_para = 0.95
+  bw_para = 0.95,
+  shape_zero = TRUE
 )
 }
 \arguments{
@@ -35,6 +36,9 @@ the data for the bandwidth calculation.}
 If set to 1, then the bandwidth corresponds to the maximum Rips death radi
 difference. If set to 0.95, then the bandwidth corresponds to the 95th
 quantile of Rips death radi. Other probabilities can be used.}
+
+\item{shape_zero}{If set to true, the shape parameter in the GPD would be
+set to zero resulting in a Gumbell distribution. Default is \code{TRUE}.}
 }
 \value{
 A list with the following components:
@@ -60,6 +64,5 @@ X <- rbind(
 )
 lo <- lookout(X)
 lo
-# extra test comment.
 autoplot(lo)
 }

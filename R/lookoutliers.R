@@ -18,6 +18,8 @@
 #'   If set to 1, then the bandwidth corresponds to the maximum Rips death radi
 #'   difference. If set to 0.95, then the bandwidth corresponds to the 95th
 #'   quantile of Rips death radi. Other probabilities can be used.
+#' @param shape_zero If set to true, the shape parameter in the GPD would be
+#'   set to zero resulting in a Gumbell distribution. Default is \code{TRUE}.
 #'
 #' @return A list with the following components:
 #' \item{\code{outliers}}{The set of outliers.}
@@ -37,7 +39,6 @@
 #' )
 #' lo <- lookout(X)
 #' lo
-#' # extra test comment.
 #' autoplot(lo)
 #' @export lookout
 #' @importFrom stats dist quantile median sd
@@ -47,7 +48,8 @@ lookout <- function(X,
                     bw = NULL,
                     gpd = NULL,
                     fast = TRUE,
-                    bw_para = 0.95) {
+                    bw_para = 0.95,
+                    shape_zero = TRUE) {
   # bw_para needs to be between 0 and 1
   if (bw_para < 0 || bw_para > 1) {
     stop("bw_para should be between 0 and 1.")
@@ -85,9 +87,15 @@ lookout <- function(X,
     }
   }
 
-  if(is.null(gpd)) {
-    M1 <- evd::fpot(log_dens, qq, std.err = FALSE)
-    gpd <- M1$estimate[1L:2L]
+  if(is.null(gpd)){
+    if(shape_zero){
+      # Shape is set to zero
+      M1 <- evd::fpot(log_dens, qq, shape = 0, std.err = FALSE)
+      gpd <- c(M1$estimate, 0)
+    }else{
+      M1 <- evd::fpot(log_dens, qq, std.err = FALSE)
+      gpd <- M1$estimate[1L:2L]
+    }
   }
   # for these Generalized Pareto distribution parameters, compute the
   # probabilities of leave-one-out kernel density estimates
