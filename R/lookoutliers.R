@@ -6,8 +6,10 @@
 #'
 #' @param X The input data in a dataframe, matrix or tibble format.
 #' @param alpha The level of significance. Default is \code{0.05}.
-#' @param unitize An option to normalize the data. Default is \code{TRUE},
-#'   which normalizes each column to \code{[0,1]}.
+#' @param unitize An option to normalize the data. If set to \code{TRUE},
+#'   it normalizes each column to \code{[0,1]}. Default is \code{FALSE}.
+#' @param normalise_mv If set to \code{TRUE}, the data is normalised
+#'   using \code{weird::mvscale}. Default is \code{TRUE}.
 #' @param bw Bandwidth parameter. Default is \code{NULL} as the bandwidth is
 #'   found using Persistent Homology.
 #' @param gpd Generalized Pareto distribution parameters. If `NULL` (the
@@ -44,7 +46,8 @@
 #' @importFrom stats dist quantile median sd
 lookout <- function(X,
                     alpha = 0.05,
-                    unitize = TRUE,
+                    unitize = FALSE,
+                    normalise_mv = TRUE,
                     bw = NULL,
                     gpd = NULL,
                     fast = TRUE,
@@ -60,6 +63,10 @@ lookout <- function(X,
   X <- as.matrix(X)
   if (unitize) {
     X <- unitize(X)
+  }
+
+  if(normalise_mv){
+    X <- transform_normal(X)
   }
 
   # Find bandwidth and scale for Epanechnikov kernel

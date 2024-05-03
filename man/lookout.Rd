@@ -7,7 +7,8 @@
 lookout(
   X,
   alpha = 0.05,
-  unitize = TRUE,
+  unitize = FALSE,
+  normalise_mv = TRUE,
   bw = NULL,
   gpd = NULL,
   fast = TRUE,
@@ -20,8 +21,11 @@ lookout(
 
 \item{alpha}{The level of significance. Default is \code{0.05}.}
 
-\item{unitize}{An option to normalize the data. Default is \code{TRUE},
-which normalizes each column to \code{[0,1]}.}
+\item{unitize}{An option to normalize the data. If set to \code{TRUE},
+it normalizes each column to \code{[0,1]}. Default is \code{FALSE}.}
+
+\item{normalise_mv}{If set to \code{TRUE}, the data is normalised
+using \code{weird::mvscale}. Default is \code{TRUE}.}
 
 \item{bw}{Bandwidth parameter. Default is \code{NULL} as the bandwidth is
 found using Persistent Homology.}

@@ -24,7 +24,9 @@ Imports:
     evd,
     RANN,
     ggplot2,
-    tidyr
+    tidyr,
+    bestNormalize,
+    weird
 Suggests: 
     knitr,
     rmarkdown
