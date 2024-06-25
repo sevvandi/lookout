@@ -24,8 +24,8 @@ lookout(
 \item{unitize}{If \code{TRUE}, the data is standardized so that
 each column is in the range \code{[0,1]}. Default is \code{FALSE}.}
 
-\item{normalize_mv}{If \code{TRUE}, the data is transformed to be
-closer to normally distributed using \code{weird::mvscale}. Default is \code{TRUE}.}
+\item{normalize_mv}{If \code{TRUE} (default), the data is transformed to be
+closer to normally distributed using \code{weird::mvscale}.}
 
 \item{bw}{Bandwidth parameter. If \code{NULL} (default), the bandwidth is
 found using Persistent Homology.}
@@ -33,8 +33,8 @@ found using Persistent Homology.}
 \item{gpd}{Generalized Pareto distribution parameters. If `NULL` (the
 default), these are estimated from the data.}
 
-\item{fast}{If \code{TRUE} (default), makes the computation faster by sub-setting
-the data for the bandwidth calculation.}
+\item{fast}{If \code{TRUE} (default), makes the computation faster by
+sub-setting the data for the bandwidth calculation.}
 
 \item{bw_para}{Parameter for bandwidth calculation. Default is \code{0.95}.
 If set to 1, then the bandwidth corresponds to the maximum Rips death radii

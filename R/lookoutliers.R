@@ -8,14 +8,14 @@
 #' @param alpha The level of significance. Default is \code{0.05}.
 #' @param unitize If \code{TRUE}, the data is standardized so that
 #' each column is in the range \code{[0,1]}. Default is \code{FALSE}.
-#' @param normalize_mv If \code{TRUE}, the data is transformed to be
-#' closer to normally distributed using \code{weird::mvscale}. Default is \code{TRUE}.
+#' @param normalize_mv If \code{TRUE} (default), the data is transformed to be
+#' closer to normally distributed using \code{weird::mvscale}.
 #' @param bw Bandwidth parameter. If \code{NULL} (default), the bandwidth is
 #'   found using Persistent Homology.
 #' @param gpd Generalized Pareto distribution parameters. If `NULL` (the
 #' default), these are estimated from the data.
-#' @param fast If \code{TRUE} (default), makes the computation faster by sub-setting
-#'   the data for the bandwidth calculation.
+#' @param fast If \code{TRUE} (default), makes the computation faster by
+#' sub-setting the data for the bandwidth calculation.
 #' @param bw_para Parameter for bandwidth calculation. Default is \code{0.95}.
 #'   If set to 1, then the bandwidth corresponds to the maximum Rips death radii
 #'   difference. If set to 0.95, then the bandwidth corresponds to the 95th
@@ -148,7 +148,7 @@ lookde <- function(x, bandwidth, fast) {
   # Epanechnikov kernel density estimate
   dist <- RANN::nn2(x, k = kk)$nn.dists
   dist[dist > bandwidth] <- NA_real_
-  phat <- 0.75 / (nn * bandwidth) * rowSums(1 - (dist / bandwidth)^2, na.rm = TRUE)
+  phat <- 0.75 / (nn*bandwidth) * rowSums(1 - (dist/bandwidth)^2, na.rm = TRUE)
 
   # leave one out
   kdevalsloo <- 0.75 / ((nn - 1) * (bandwidth))
@@ -181,8 +181,8 @@ subset_for_tda <- function(X) {
 
   for (i in 2:n) {
     KNN <- RANN::nn2(
-      data = Xu[c(exemplars, i), , drop = F],
-      query = Xu[i, , drop = F], k = 2
+      data = Xu[c(exemplars, i), , drop = FALSE],
+      query = Xu[i, , drop = FALSE], k = 2
     )
     m <- KNN$nn.idx[1, 2]
     d <- KNN$nn.dists[1, 2]
