@@ -8,7 +8,7 @@
 #' @param alpha The level of significance. Default is \code{0.05}.
 #' @param unitize An option to normalize the data. If set to \code{TRUE},
 #'   it normalizes each column to \code{[0,1]}. Default is \code{FALSE}.
-#' @param normalise_mv If set to \code{TRUE}, the data is normalised
+#' @param normalize_mv If set to \code{TRUE}, the data is normalized
 #'   using \code{weird::mvscale}. Default is \code{TRUE}.
 #' @param bw Bandwidth parameter. Default is \code{NULL} as the bandwidth is
 #'   found using Persistent Homology.
@@ -47,7 +47,7 @@
 lookout <- function(X,
                     alpha = 0.05,
                     unitize = FALSE,
-                    normalise_mv = TRUE,
+                    normalize_mv = TRUE,
                     bw = NULL,
                     gpd = NULL,
                     fast = TRUE,
@@ -65,7 +65,7 @@ lookout <- function(X,
     X <- unitize(X)
   }
 
-  if(normalise_mv){
+  if(normalize_mv){
     X <- transform_normal(X)
   }
 

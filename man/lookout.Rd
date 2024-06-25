@@ -8,7 +8,7 @@ lookout(
   X,
   alpha = 0.05,
   unitize = FALSE,
-  normalise_mv = TRUE,
+  normalize_mv = TRUE,
   bw = NULL,
   gpd = NULL,
   fast = TRUE,
@@ -24,7 +24,7 @@ lookout(
 \item{unitize}{An option to normalize the data. If set to \code{TRUE},
 it normalizes each column to \code{[0,1]}. Default is \code{FALSE}.}
 
-\item{normalise_mv}{If set to \code{TRUE}, the data is normalised
+\item{normalize_mv}{If set to \code{TRUE}, the data is normalized
 using \code{weird::mvscale}. Default is \code{TRUE}.}
 
 \item{bw}{Bandwidth parameter. Default is \code{NULL} as the bandwidth is
