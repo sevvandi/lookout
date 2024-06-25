@@ -4,24 +4,24 @@
 #' detection method that uses leave-one-out kernel density estimates and
 #' generalized Pareto distributions to find outliers.
 #'
-#' @param X The input data in a dataframe, matrix or tibble format.
+#' @param X The numerical input data in a data.frame, matrix or tibble format.
 #' @param alpha The level of significance. Default is \code{0.05}.
-#' @param unitize An option to normalize the data. If set to \code{TRUE},
-#'   it normalizes each column to \code{[0,1]}. Default is \code{FALSE}.
-#' @param normalize_mv If set to \code{TRUE}, the data is normalized
-#'   using \code{weird::mvscale}. Default is \code{TRUE}.
-#' @param bw Bandwidth parameter. Default is \code{NULL} as the bandwidth is
+#' @param unitize If \code{TRUE}, the data is standardized so that
+#' each column is in the range \code{[0,1]}. Default is \code{FALSE}.
+#' @param normalize_mv If \code{TRUE}, the data is transformed to be
+#' closer to normally distributed using \code{weird::mvscale}. Default is \code{TRUE}.
+#' @param bw Bandwidth parameter. If \code{NULL} (default), the bandwidth is
 #'   found using Persistent Homology.
 #' @param gpd Generalized Pareto distribution parameters. If `NULL` (the
 #' default), these are estimated from the data.
-#' @param fast If set to \code{TRUE}, makes the computation faster by sub-setting
+#' @param fast If \code{TRUE} (default), makes the computation faster by sub-setting
 #'   the data for the bandwidth calculation.
 #' @param bw_para Parameter for bandwidth calculation. Default is \code{0.95}.
-#'   If set to 1, then the bandwidth corresponds to the maximum Rips death radi
+#'   If set to 1, then the bandwidth corresponds to the maximum Rips death radii
 #'   difference. If set to 0.95, then the bandwidth corresponds to the 95th
-#'   quantile of Rips death radi. Other probabilities can be used.
-#' @param shape_zero If set to true, the shape parameter in the GPD would be
-#'   set to zero resulting in a Gumbell distribution. Default is \code{TRUE}.
+#'   quantile of Rips death radii. Other probabilities can be used.
+#' @param shape_zero If \code{TRUE} (default), the shape parameter in the GPD is
+#'   set to zero resulting in a Gumbel distribution. Default is \code{TRUE}.
 #'
 #' @return A list with the following components:
 #' \item{\code{outliers}}{The set of outliers.}
@@ -34,10 +34,14 @@
 #'
 #' @examples
 #' X <- rbind(
-#'   data.frame(x = rnorm(500),
-#'              y = rnorm(500)),
-#'   data.frame(x = rnorm(5, mean = 10, sd = 0.2),
-#'              y = rnorm(5, mean = 10, sd = 0.2))
+#'   data.frame(
+#'     x = rnorm(500),
+#'     y = rnorm(500)
+#'   ),
+#'   data.frame(
+#'     x = rnorm(5, mean = 10, sd = 0.2),
+#'     y = rnorm(5, mean = 10, sd = 0.2)
+#'   )
 #' )
 #' lo <- lookout(X)
 #' lo
@@ -64,8 +68,7 @@ lookout <- function(X,
   if (unitize) {
     X <- unitize(X)
   }
-
-  if(normalize_mv){
+  if (normalize_mv) {
     X <- transform_normal(X)
   }
 
@@ -94,20 +97,22 @@ lookout <- function(X,
     }
   }
 
-  if(is.null(gpd)){
-    if(shape_zero){
+  if (is.null(gpd)) {
+    if (shape_zero) {
       # Shape is set to zero
       M1 <- evd::fpot(log_dens, qq, shape = 0, std.err = FALSE)
       gpd <- c(M1$estimate, 0)
-    }else{
+    } else {
       M1 <- evd::fpot(log_dens, qq, std.err = FALSE)
       gpd <- M1$estimate[1L:2L]
     }
   }
   # for these Generalized Pareto distribution parameters, compute the
   # probabilities of leave-one-out kernel density estimates
-  potlookde <- evd::pgpd(-log(kdeobj$lookde), loc = qq,
-    scale = gpd[1], shape = gpd[2], lower.tail = FALSE)
+  potlookde <- evd::pgpd(-log(kdeobj$lookde),
+    loc = qq,
+    scale = gpd[1], shape = gpd[2], lower.tail = FALSE
+  )
   outscores <- 1 - potlookde
   # select outliers according to threshold
   outliers <- which(potlookde < alpha)
@@ -124,7 +129,7 @@ lookout <- function(X,
     lookde = kdeobj$lookde,
     gpd = gpd,
     call = match.call()
-  ), class='lookoutliers')
+  ), class = "lookoutliers")
 }
 
 
@@ -132,18 +137,18 @@ lookde <- function(x, bandwidth, fast) {
   x <- as.matrix(x)
   nn <- NROW(x)
 
-  if(fast){
+  if (fast) {
     # To make the nearest neighbour distance computation faster
     # select a kk different to nn as follows
-    kk <- min(max(ceiling(nn/200), 100), nn, 500)
-  }else{
+    kk <- min(max(ceiling(nn / 200), 100), nn, 500)
+  } else {
     kk <- nn
   }
 
   # Epanechnikov kernel density estimate
   dist <- RANN::nn2(x, k = kk)$nn.dists
   dist[dist > bandwidth] <- NA_real_
-  phat <- 0.75 / (nn*bandwidth) * rowSums(1-(dist/bandwidth)^2, na.rm=TRUE)
+  phat <- 0.75 / (nn * bandwidth) * rowSums(1 - (dist / bandwidth)^2, na.rm = TRUE)
 
   # leave one out
   kdevalsloo <- 0.75 / ((nn - 1) * (bandwidth))
@@ -153,7 +158,7 @@ lookde <- function(x, bandwidth, fast) {
 }
 
 
-subset_for_tda <- function(X){
+subset_for_tda <- function(X) {
   # Leader algorithm in HDoutliers
   # Inserted from HDoutliers function getHDmembers
   # We cannot call that function because the algorithm only comes to
@@ -169,14 +174,16 @@ subset_for_tda <- function(X){
 
   sds <- apply(Xu, 2, sd)
   sd_radius <- sqrt(sum(sds^2))
-  radius <- min(0.1/(log(n)^(1/p)), sd_radius)
+  radius <- min(0.1 / (log(n)^(1 / p)), sd_radius)
   members <- rep(list(NULL), n)
   exemplars <- 1
   members[[1]] <- 1
 
   for (i in 2:n) {
-    KNN <- RANN::nn2(data = Xu[c(exemplars,i), , drop = F],
-                     query = Xu[i, , drop = F], k = 2)
+    KNN <- RANN::nn2(
+      data = Xu[c(exemplars, i), , drop = F],
+      query = Xu[i, , drop = F], k = 2
+    )
     m <- KNN$nn.idx[1, 2]
     d <- KNN$nn.dists[1, 2]
     if (d < radius) {

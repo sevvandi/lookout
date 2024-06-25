@@ -17,32 +17,32 @@ lookout(
 )
 }
 \arguments{
-\item{X}{The input data in a dataframe, matrix or tibble format.}
+\item{X}{The numerical input data in a data.frame, matrix or tibble format.}
 
 \item{alpha}{The level of significance. Default is \code{0.05}.}
 
-\item{unitize}{An option to normalize the data. If set to \code{TRUE},
-it normalizes each column to \code{[0,1]}. Default is \code{FALSE}.}
+\item{unitize}{If \code{TRUE}, the data is standardized so that
+each column is in the range \code{[0,1]}. Default is \code{FALSE}.}
 
-\item{normalize_mv}{If set to \code{TRUE}, the data is normalized
-using \code{weird::mvscale}. Default is \code{TRUE}.}
+\item{normalize_mv}{If \code{TRUE}, the data is transformed to be
+closer to normally distributed using \code{weird::mvscale}. Default is \code{TRUE}.}
 
-\item{bw}{Bandwidth parameter. Default is \code{NULL} as the bandwidth is
+\item{bw}{Bandwidth parameter. If \code{NULL} (default), the bandwidth is
 found using Persistent Homology.}
 
 \item{gpd}{Generalized Pareto distribution parameters. If `NULL` (the
 default), these are estimated from the data.}
 
-\item{fast}{If set to \code{TRUE}, makes the computation faster by sub-setting
+\item{fast}{If \code{TRUE} (default), makes the computation faster by sub-setting
 the data for the bandwidth calculation.}
 
 \item{bw_para}{Parameter for bandwidth calculation. Default is \code{0.95}.
-If set to 1, then the bandwidth corresponds to the maximum Rips death radi
+If set to 1, then the bandwidth corresponds to the maximum Rips death radii
 difference. If set to 0.95, then the bandwidth corresponds to the 95th
-quantile of Rips death radi. Other probabilities can be used.}
+quantile of Rips death radii. Other probabilities can be used.}
 
-\item{shape_zero}{If set to true, the shape parameter in the GPD would be
-set to zero resulting in a Gumbell distribution. Default is \code{TRUE}.}
+\item{shape_zero}{If \code{TRUE} (default), the shape parameter in the GPD is
+set to zero resulting in a Gumbel distribution. Default is \code{TRUE}.}
 }
 \value{
 A list with the following components:
@@ -61,10 +61,14 @@ generalized Pareto distributions to find outliers.
 }
 \examples{
 X <- rbind(
-  data.frame(x = rnorm(500),
-             y = rnorm(500)),
-  data.frame(x = rnorm(5, mean = 10, sd = 0.2),
-             y = rnorm(5, mean = 10, sd = 0.2))
+  data.frame(
+    x = rnorm(500),
+    y = rnorm(500)
+  ),
+  data.frame(
+    x = rnorm(5, mean = 10, sd = 0.2),
+    y = rnorm(5, mean = 10, sd = 0.2)
+  )
 )
 lo <- lookout(X)
 lo
