@@ -8,8 +8,10 @@
 #' @param alpha The level of significance. Default is \code{0.05}.
 #' @param unitize If \code{TRUE}, the data is standardized so that
 #' each column is in the range \code{[0,1]}. Default is \code{FALSE}.
-#' @param normalize_mv If \code{TRUE} (default), the data is transformed to be
-#' closer to normally distributed using \code{weird::mvscale}.
+#' @param normalize If \code{TRUE} (default), each column of the data is
+#' transformed to be closer to a standard normal distribution, and the data
+#' is rotated so that the columns are pairwise uncorrelated. This is done
+#' robustly using \code{\link{weird}{mvscale}}.
 #' @param bw Bandwidth parameter. If \code{NULL} (default), the bandwidth is
 #'   found using Persistent Homology.
 #' @param gpd Generalized Pareto distribution parameters. If `NULL` (the
@@ -51,7 +53,7 @@
 lookout <- function(X,
                     alpha = 0.05,
                     unitize = FALSE,
-                    normalize_mv = TRUE,
+                    normalize = TRUE,
                     bw = NULL,
                     gpd = NULL,
                     fast = TRUE,
@@ -68,7 +70,7 @@ lookout <- function(X,
   if (unitize) {
     X <- unitize(X)
   }
-  if (normalize_mv) {
+  if (normalize) {
     X <- transform_normal(X)
   }
 

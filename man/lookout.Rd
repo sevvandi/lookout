@@ -8,7 +8,7 @@ lookout(
   X,
   alpha = 0.05,
   unitize = FALSE,
-  normalize_mv = TRUE,
+  normalize = TRUE,
   bw = NULL,
   gpd = NULL,
   fast = TRUE,
@@ -24,8 +24,10 @@ lookout(
 \item{unitize}{If \code{TRUE}, the data is standardized so that
 each column is in the range \code{[0,1]}. Default is \code{FALSE}.}
 
-\item{normalize_mv}{If \code{TRUE} (default), the data is transformed to be
-closer to normally distributed using \code{weird::mvscale}.}
+\item{normalize}{If \code{TRUE} (default), each column of the data is
+transformed to be closer to a standard normal distribution, and the data
+is rotated so that the columns are pairwise uncorrelated. This is done
+robustly using \code{\link{weird}{mvscale}}.}
 
 \item{bw}{Bandwidth parameter. If \code{NULL} (default), the bandwidth is
 found using Persistent Homology.}
