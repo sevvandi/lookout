@@ -26,14 +26,9 @@ unitize <- function(X) {
 # Function to transform multivariate data X to have normal margins
 transform_normal <- function(X) {
   X <- as.matrix(X)
-  p <- NCOL(X)
-  n <- NROW(X)
-  for(i in seq(p)) {
+  for(i in seq(NCOL(X))) {
     X[,i] <- bestNormalize::yeojohnson(X[,i], lower=0, upper = 1, standardize = FALSE)$x.t
   }
-  if(p == 1) {
-    return(X[,1])
-  } else {
-    return(weird::mvscale(X))
-  }
+  X <- weird::mvscale(X)
+  return(X[,])
 }
