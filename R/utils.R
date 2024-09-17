@@ -31,6 +31,6 @@ transform_normal <- function(X) {
       lower = 0, upper = 1, standardize = FALSE
     )$x.t
   }
-  # X <- weird::mvscale(X)
+  X <- weird::mvscale(X, cov = NULL)
   return(X[, ])
 }
