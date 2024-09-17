@@ -27,7 +27,8 @@ find_tda_bw <- function(X, fast = TRUE, bw_para = 0.95) {
 
   # select a subset of X for tda computation
   if (fast) {
-    Xsub <- subset_for_tda(X)
+    inds <- subset_for_tda(X)
+    Xsub <- X[inds, ]
   } else {
     Xsub <- X
   }

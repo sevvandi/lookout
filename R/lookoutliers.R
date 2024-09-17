@@ -197,5 +197,6 @@ subset_for_tda <- function(X) {
     exemplars <- c(exemplars, i)
     members[[i]] <- i
   }
-  X[exemplars, ]
+  #X[exemplars, ]
+  exemplars
 }
