@@ -24,12 +24,17 @@ unitize <- function(X) {
 
 # Rob's function
 # Function to transform multivariate data X to have normal margins
-transform_normal <- function(X) {
+transform_normal <- function(X, transformation = c("YJ","BD")) {
+  transformation <- match.arg(transformation)
   X <- as.matrix(X)
   for (i in seq(NCOL(X))) {
-    X[, i] <- bestNormalize::yeojohnson(X[, i],
-      lower = 0, upper = 1, standardize = FALSE
-    )$x.t
+    if(transformation == "YJ") {
+      X[, i] <- bestNormalize::yeojohnson(X[, i],
+        lower = 0, upper = 1, standardize = FALSE
+      )$x.t
+    } else {
+      X[, i] <- bickeldoksum(X[, i])
+    }
   }
   X <- weird::mvscale(X, cov = NULL)
   return(X[, ])

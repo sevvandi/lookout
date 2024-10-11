@@ -24,7 +24,9 @@
 #'   quantile of Rips death radii. Other probabilities can be used.
 #' @param shape_zero If \code{TRUE} (default), the shape parameter in the GPD is
 #'   set to zero resulting in a Gumbel distribution. Default is \code{TRUE}.
-#'
+#' @param transformation Ignored if \code{normalize = FALSE}. Specifies
+#'  either \code{YJ} for a Yeo-Johnson transformation, or \code{BD} for a
+#'  Bickel-Doksum transformation
 #' @return A list with the following components:
 #' \item{\code{outliers}}{The set of outliers.}
 #' \item{\code{outlier_probability}}{The GPD probability of the data.}
@@ -58,7 +60,9 @@ lookout <- function(X,
                     gpd = NULL,
                     fast = TRUE,
                     bw_para = 0.95,
-                    shape_zero = TRUE) {
+                    shape_zero = TRUE,
+                    transformation = c("YJ","BD")) {
+  transformation <- match.arg(transformation)
   # bw_para needs to be between 0 and 1
   if (bw_para < 0 || bw_para > 1) {
     stop("bw_para should be between 0 and 1.")
@@ -71,7 +75,7 @@ lookout <- function(X,
     X <- unitize(X)
   }
   if (normalize) {
-    X <- transform_normal(X)
+    X <- transform_normal(X, transformation = transformation)
   }
 
   # Find bandwidth and scale for Epanechnikov kernel

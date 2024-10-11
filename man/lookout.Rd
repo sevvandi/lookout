@@ -13,7 +13,8 @@ lookout(
   gpd = NULL,
   fast = TRUE,
   bw_para = 0.95,
-  shape_zero = TRUE
+  shape_zero = TRUE,
+  transformation = c("YJ", "BD")
 )
 }
 \arguments{
@@ -45,6 +46,10 @@ quantile of Rips death radii. Other probabilities can be used.}
 
 \item{shape_zero}{If \code{TRUE} (default), the shape parameter in the GPD is
 set to zero resulting in a Gumbel distribution. Default is \code{TRUE}.}
+
+\item{transformation}{Ignored if \code{normalize = FALSE}. Specifies
+either \code{YJ} for a Yeo-Johnson transformation, or \code{BD} for a
+Bickel-Doksum transformation}
 }
 \value{
 A list with the following components:
