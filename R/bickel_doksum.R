@@ -24,7 +24,7 @@ bickeldoksum_trans <- function (x, lambda, eps = 0.001)
 {
   if (lambda < 0)
     x[x < 0] <- NA
-  if (abs(lambda) < eps)
+  if (abs(lambda) < eps & min(x) > 0)
     val <- log(x)
   else val <- (sign(x) * abs(x)^lambda - 1)/lambda
   val
