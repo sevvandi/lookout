@@ -54,15 +54,12 @@
 #' @importFrom stats dist quantile median sd
 lookout <- function(X,
                     alpha = 0.05,
-                    unitize = FALSE,
-                    normalize = TRUE,
+                    unitize = TRUE,
                     bw = NULL,
                     gpd = NULL,
-                    fast = TRUE,
+                    fast = FALSE,
                     bw_para = 0.95,
-                    shape_zero = TRUE,
-                    transformation = c("YJ","BD")) {
-  transformation <- match.arg(transformation)
+                    shape_zero = TRUE) {
   # bw_para needs to be between 0 and 1
   if (bw_para < 0 || bw_para > 1) {
     stop("bw_para should be between 0 and 1.")
@@ -73,9 +70,6 @@ lookout <- function(X,
   X <- as.matrix(X)
   if (unitize) {
     X <- unitize(X)
-  }
-  if (normalize) {
-    X <- transform_normal(X, transformation = transformation)
   }
 
   # Find bandwidth and scale for Epanechnikov kernel
