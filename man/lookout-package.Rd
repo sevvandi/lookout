@@ -13,6 +13,7 @@ Outlier detection using leave-one-out kernel density estimates and extreme value
 Useful links:
 \itemize{
   \item \url{https://sevvandi.github.io/lookout/}
+  \item Report bugs at \url{https://github.com/sevvandi/lookout/issues}
 }
 
 }

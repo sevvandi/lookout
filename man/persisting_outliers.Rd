@@ -29,11 +29,11 @@ which normalizes each column to \code{[0,1]}.}
 \value{
 A list with the following components:
 \item{\code{out}}{A 3D array of \code{N x num_steps x num_alpha} where
-\code{N} denotes the number of observations, num_steps denote the length
-  of the bandwidth sequence and num_alpha denotes the number of significance
-  levels. This is a binary array and the entries are set to 1 if that
-  observation is an outlier for that particular bandwidth and significance
-  level.}
+\code{N} denotes the number of observations, \code{num_steps} denote the
+length of the bandwidth sequence, and \code{num_alpha} denotes the number of
+significance levels. This is a binary array and the entries are set to 1 if
+that observation is an outlier for that particular bandwidth and significance
+level.}
 \item{\code{bw}}{The set of bandwidth values.}
 \item{\code{gpdparas}}{The GPD parameters used. }
 \item{\code{lookoutbw}}{The bandwidth chosen by the algorithm \code{lookout}
@@ -47,10 +47,14 @@ to find outliers.
 }
 \examples{
 X <- rbind(
-  data.frame(x = rnorm(500),
-             y = rnorm(500)),
-  data.frame(x = rnorm(5, mean = 10, sd = 0.2),
-             y = rnorm(5, mean = 10, sd = 0.2))
+  data.frame(
+    x = rnorm(500),
+    y = rnorm(500)
+  ),
+  data.frame(
+    x = rnorm(5, mean = 10, sd = 0.2),
+    y = rnorm(5, mean = 10, sd = 0.2)
+  )
 )
 plot(X, pch = 19)
 outliers <- persisting_outliers(X, unitize = FALSE)

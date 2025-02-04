@@ -12,12 +12,30 @@ nsphere <- function(n = 3L, r = 1L, npts = 3145L) {
 
 # Unitize each column of X
 unitize <- function(X) {
-  for (col in 1:NCOL(X)) {
+  for (col in seq_len(NCOL(X))) {
     maxcol <- max(X[, col])
     mincol <- min(X[, col])
-    if(maxcol!= mincol){
+    if (maxcol != mincol) {
       X[, col] <- (X[, col] - mincol) / (maxcol - mincol)
     }
   }
   X
 }
+
+# # Rob's function
+# # Function to transform multivariate data X to have normal margins
+# transform_normal <- function(X, transformation = c("YJ","BD")) {
+#   transformation <- match.arg(transformation)
+#   X <- as.matrix(X)
+#   for (i in seq(NCOL(X))) {
+#     if(transformation == "YJ") {
+#       X[, i] <- bestNormalize::yeojohnson(X[, i],
+#         lower = 0, upper = 1, standardize = FALSE
+#       )$x.t
+#     } else {
+#       X[, i] <- bickeldoksum(X[, i])
+#     }
+#   }
+#   X <- weird::mvscale(X, cov = NULL)
+#   return(X[, ])
+# }

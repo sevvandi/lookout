@@ -2,11 +2,10 @@
 #' @export
 
 print.persistingoutliers <- function(x, ...) {
-
   cat("Persistent outliers using lookout algorithm")
   cat("\n\nCall: ")
   print(x$call)
-  cat("\nLookout bandwidth: ", x$lookoutbw,"\n")
+  cat("\nLookout bandwidth: ", x$lookoutbw, "\n")
 }
 
 #' @method print lookoutliers

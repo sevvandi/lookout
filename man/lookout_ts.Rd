@@ -19,7 +19,7 @@ This is the time series implementation of lookout.
 }
 \examples{
 set.seed(1)
-x <- arima.sim(list(order = c(1,1,0), ar = 0.8), n = 200)
+x <- arima.sim(list(order = c(1, 1, 0), ar = 0.8), n = 200)
 x[50] <- x[50] + 10
 plot(x)
 lo <- lookout_ts(x)

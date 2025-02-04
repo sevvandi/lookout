@@ -4,13 +4,18 @@
 \alias{find_tda_bw}
 \title{Identifies bandwidth for outlier detection.}
 \usage{
-find_tda_bw(X, fast)
+find_tda_bw(X, fast = TRUE, bw_para = 0.95)
 }
 \arguments{
-\item{X}{The input data in a dataframe, matrix or tibble format.}
+\item{X}{The numerical input data in a data.frame, matrix or tibble format.}
 
-\item{fast}{If set to \code{TRUE}, makes the computation faster by sub-setting
-the data for the bandwidth calculation.}
+\item{fast}{If \code{TRUE} (default), makes the computation faster by
+sub-setting the data for the bandwidth calculation.}
+
+\item{bw_para}{Parameter for bandwidth calculation. Default is \code{0.95}.
+If set to 1, then the bandwidth corresponds to the maximum Rips death radii
+difference. If set to 0.95, then the bandwidth corresponds to the 95th
+quantile of Rips death radii. Other probabilities can be used.}
 }
 \value{
 The bandwidth
@@ -22,10 +27,14 @@ to find the badnwidth.
 }
 \examples{
 X <- rbind(
-  data.frame(x = rnorm(500),
-             y = rnorm(500)),
-  data.frame(x = rnorm(5, mean = 10, sd = 0.2),
-             y = rnorm(5, mean = 10, sd = 0.2))
+  data.frame(
+    x = rnorm(500),
+    y = rnorm(500)
+  ),
+  data.frame(
+    x = rnorm(5, mean = 10, sd = 0.2),
+    y = rnorm(5, mean = 10, sd = 0.2)
+  )
 )
 find_tda_bw(X, fast = TRUE)
 

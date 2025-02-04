@@ -16,11 +16,11 @@
 #'
 #' @return A list with the following components:
 #' \item{\code{out}}{A 3D array of \code{N x num_steps x num_alpha} where
-#' \code{N} denotes the number of observations, num_steps denote the length
-#'   of the bandwidth sequence and num_alpha denotes the number of significance
-#'   levels. This is a binary array and the entries are set to 1 if that
-#'   observation is an outlier for that particular bandwidth and significance
-#'   level.}
+#' \code{N} denotes the number of observations, \code{num_steps} denote the
+#' length of the bandwidth sequence, and \code{num_alpha} denotes the number of
+#' significance levels. This is a binary array and the entries are set to 1 if
+#' that observation is an outlier for that particular bandwidth and significance
+#' level.}
 #' \item{\code{bw}}{The set of bandwidth values.}
 #' \item{\code{gpdparas}}{The GPD parameters used. }
 #' \item{\code{lookoutbw}}{The bandwidth chosen by the algorithm \code{lookout}
@@ -28,10 +28,14 @@
 #'
 #' @examples
 #' X <- rbind(
-#'   data.frame(x = rnorm(500),
-#'              y = rnorm(500)),
-#'   data.frame(x = rnorm(5, mean = 10, sd = 0.2),
-#'              y = rnorm(5, mean = 10, sd = 0.2))
+#'   data.frame(
+#'     x = rnorm(500),
+#'     y = rnorm(500)
+#'   ),
+#'   data.frame(
+#'     x = rnorm(5, mean = 10, sd = 0.2),
+#'     y = rnorm(5, mean = 10, sd = 0.2)
+#'   )
 #' )
 #' plot(X, pch = 19)
 #' outliers <- persisting_outliers(X, unitize = FALSE)
@@ -39,7 +43,7 @@
 #' autoplot(outliers)
 #' @export
 
-persisting_outliers <- function(X, alpha = seq(0.01, 0.1, by=0.01),
+persisting_outliers <- function(X, alpha = seq(0.01, 0.1, by = 0.01),
                                 st_qq = 0.9, unitize = TRUE, num_steps = 20) {
   # Prepare X matrix
   X <- as.matrix(X)
@@ -72,8 +76,10 @@ persisting_outliers <- function(X, alpha = seq(0.01, 0.1, by=0.01),
   paras <- lookoutobj1$gpd[1:2]
   output <- array(0, dim = c(dim(X)[1], num_steps, length(alpha)))
   for (i in seq_along(bw_vals)) {
-    lookoutobj <- lookout(X, alpha = 0.05, unitize = FALSE,
-                               bw = bw_vals[i], gpd = paras)
+    lookoutobj <- lookout(X,
+      alpha = 0.05, unitize = FALSE,
+      bw = bw_vals[i], gpd = paras
+    )
     for (j in seq_along(alpha)) {
       outinds <- which(lookoutobj$outlier_probability < alpha[j])
       output[outinds, i, j] <- 1
@@ -88,5 +94,5 @@ persisting_outliers <- function(X, alpha = seq(0.01, 0.1, by=0.01),
     lookoutbw = bw_fixed,
     alpha = alpha,
     call = match.call()
-  ), class="persistingoutliers")
+  ), class = "persistingoutliers")
 }

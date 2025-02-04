@@ -10,21 +10,26 @@
 #'
 #' @examples
 #' X <- rbind(
-#'   data.frame(x = rnorm(500),
-#'              y = rnorm(500)),
-#'   data.frame(x = rnorm(5, mean = 10, sd = 0.2),
-#'              y = rnorm(5, mean = 10, sd = 0.2))
+#'   data.frame(
+#'     x = rnorm(500),
+#'     y = rnorm(500)
+#'   ),
+#'   data.frame(
+#'     x = rnorm(5, mean = 10, sd = 0.2),
+#'     y = rnorm(5, mean = 10, sd = 0.2)
+#'   )
 #' )
 #' find_tda_bw(X, fast = TRUE)
 #'
 #' @export
-find_tda_bw <- function(X, fast) {
+find_tda_bw <- function(X, fast = TRUE, bw_para = 0.95) {
   X <- as.matrix(X)
 
   # select a subset of X for tda computation
-  if(fast){
-    Xsub <- subset_for_tda(X)
-  }else{
+  if (fast) {
+    inds <- subset_for_tda(X)
+    Xsub <- X[inds, ]
+  } else {
     Xsub <- X
   }
 
@@ -37,9 +42,12 @@ find_tda_bw <- function(X, fast) {
   # Added so that very small death radi are not chosen
   med_radi <- median(death_radi)
   death_radi_upper <- death_radi[death_radi >= med_radi]
-  # dr_thres_diff <- diff(death_radi_upper)
-  # return(death_radi_upper[which.max(dr_thres_diff)])
-  qq <- quantile(death_radi_upper, probs = 0.95)
-  names(qq) <- NULL
-  return(qq)
+  if (bw_para == 1) {
+    dr_thres_diff <- diff(death_radi_upper)
+    return(death_radi_upper[which.max(dr_thres_diff)])
+  } else {
+    qq <- quantile(death_radi_upper, probs = bw_para)
+    names(qq) <- NULL
+    return(qq)
+  }
 }

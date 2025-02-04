@@ -1,4 +1,3 @@
-
 #' Plots outlier persistence for a range of significance levels.
 #'
 #' This function plots outlier persistence for a range of significance levels
@@ -29,8 +28,9 @@
 #' @export
 autoplot.persistingoutliers <- function(object, alpha = object$alpha, ...) {
   which_alpha <- (round(object$alpha, 4) %in% round(alpha, 4))
-  if(all(!which_alpha))
+  if (all(!which_alpha)) {
     stop("No specified alpha values available.")
+  }
   outwts <- apply(object$out[, , which_alpha, drop = FALSE], c(1, 2), sum)
   outwtsg <- cbind.data.frame(seq(NROW(outwts)), outwts)
   colnames(outwtsg)[1] <- "Observation"
@@ -46,18 +46,20 @@ autoplot.persistingoutliers <- function(object, alpha = object$alpha, ...) {
   dfl$Bandwidth <- object$bw[as.integer(dfl$bw)]
 
   # Colours
-  if(length(alpha) > 1) {
-    col_pal1 <- c("white", "#ffffcc", "#ffeda0", "#fed976", "#feb24c",
-                  "#fd8d3c", "#fc4e2a", "#e31a1c", "#bd0026", "#800026")
+  if (length(alpha) > 1) {
+    col_pal1 <- c(
+      "white", "#ffffcc", "#ffeda0", "#fed976", "#feb24c",
+      "#fd8d3c", "#fc4e2a", "#e31a1c", "#bd0026", "#800026"
+    )
   } else {
     col_pal1 <- c("white", "black")
   }
 
   Observation <- Bandwidth <- Strength <- NULL
   p <- ggplot2::ggplot(
-      dfl,
-      ggplot2::aes(x = Bandwidth, y = Observation, fill = Strength)
-    ) +
+    dfl,
+    ggplot2::aes(x = Bandwidth, y = Observation, fill = Strength)
+  ) +
     ggplot2::geom_raster() +
     ggplot2::scale_fill_gradientn(colours = col_pal1) +
     ggplot2::theme(
