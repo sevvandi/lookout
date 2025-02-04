@@ -8,10 +8,6 @@
 #' @param alpha The level of significance. Default is \code{0.05}.
 #' @param unitize If \code{TRUE}, the data is standardized so that
 #' each column is in the range \code{[0,1]}. Default is \code{FALSE}.
-#' @param normalize If \code{TRUE} (default), each column of the data is
-#' transformed to be closer to a standard normal distribution, and the data
-#' is rotated so that the columns are pairwise uncorrelated. This is done
-#' robustly using \code{\link{weird}{mvscale}}.
 #' @param bw Bandwidth parameter. If \code{NULL} (default), the bandwidth is
 #'   found using Persistent Homology.
 #' @param gpd Generalized Pareto distribution parameters. If `NULL` (the
@@ -24,9 +20,6 @@
 #'   quantile of Rips death radii. Other probabilities can be used.
 #' @param shape_zero If \code{TRUE} (default), the shape parameter in the GPD is
 #'   set to zero resulting in a Gumbel distribution. Default is \code{TRUE}.
-#' @param transformation Ignored if \code{normalize = FALSE}. Specifies
-#'  either \code{YJ} for a Yeo-Johnson transformation, or \code{BD} for a
-#'  Bickel-Doksum transformation
 #' @return A list with the following components:
 #' \item{\code{outliers}}{The set of outliers.}
 #' \item{\code{outlier_probability}}{The GPD probability of the data.}

@@ -7,14 +7,12 @@
 lookout(
   X,
   alpha = 0.05,
-  unitize = FALSE,
-  normalize = TRUE,
+  unitize = TRUE,
   bw = NULL,
   gpd = NULL,
-  fast = TRUE,
+  fast = FALSE,
   bw_para = 0.95,
-  shape_zero = TRUE,
-  transformation = c("YJ", "BD")
+  shape_zero = TRUE
 )
 }
 \arguments{
@@ -24,11 +22,6 @@ lookout(
 
 \item{unitize}{If \code{TRUE}, the data is standardized so that
 each column is in the range \code{[0,1]}. Default is \code{FALSE}.}
-
-\item{normalize}{If \code{TRUE} (default), each column of the data is
-transformed to be closer to a standard normal distribution, and the data
-is rotated so that the columns are pairwise uncorrelated. This is done
-robustly using \code{\link{weird}{mvscale}}.}
 
 \item{bw}{Bandwidth parameter. If \code{NULL} (default), the bandwidth is
 found using Persistent Homology.}
@@ -46,10 +39,6 @@ quantile of Rips death radii. Other probabilities can be used.}
 
 \item{shape_zero}{If \code{TRUE} (default), the shape parameter in the GPD is
 set to zero resulting in a Gumbel distribution. Default is \code{TRUE}.}
-
-\item{transformation}{Ignored if \code{normalize = FALSE}. Specifies
-either \code{YJ} for a Yeo-Johnson transformation, or \code{BD} for a
-Bickel-Doksum transformation}
 }
 \value{
 A list with the following components:
