@@ -54,10 +54,11 @@
 #' @importFrom stats dist quantile median sd
 lookout <- function(X,
                     alpha = 0.05,
-                    unitize = FALSE,
-                    normalize = TRUE,
+                    unitize = TRUE,
+                    normalize = FALSE,
                     bw = NULL,
                     gpd = NULL,
+                    weibullR = TRUE,
                     fast = TRUE,
                     bw_para = 0.95,
                     shape_zero = TRUE,
@@ -103,22 +104,35 @@ lookout <- function(X,
     }
   }
 
-  if (is.null(gpd)) {
-    if (shape_zero) {
-      # Shape is set to zero
-      M1 <- evd::fpot(log_dens, qq, shape = 0, std.err = FALSE)
-      gpd <- c(M1$estimate, 0)
-    } else {
-      M1 <- evd::fpot(log_dens, qq, std.err = FALSE)
-      gpd <- M1$estimate[1L:2L]
+  if(weibullR){
+    # We use the kde to estimate the Robust Weibull parameters
+    log_dens <- log_dens - min(log_dens) # to make the log_dens positive for Weibull
+    potlookde <- robust::weibullRob(log_dens)
+    gpd <- potlookde$estimate
+
+    potlookde <- stats::dweibull(-log(kdeobj$lookde),
+                                  scale = gpd[2], shape = gpd[1])
+
+  }else{
+    if (is.null(gpd)) {
+      if (shape_zero) {
+        # Shape is set to zero
+        M1 <- evd::fpot(log_dens, qq, shape = 0, std.err = FALSE)
+        gpd <- c(M1$estimate, 0)
+      } else {
+        M1 <- evd::fpot(log_dens, qq, std.err = FALSE)
+        gpd <- M1$estimate[1L:2L]
+      }
     }
+    # for these Generalized Pareto distribution parameters, compute the
+    # probabilities of leave-one-out kernel density estimates
+    potlookde <- evd::pgpd(-log(kdeobj$lookde),
+                           loc = qq,
+                           scale = gpd[1], shape = gpd[2], lower.tail = FALSE
+    )
   }
-  # for these Generalized Pareto distribution parameters, compute the
-  # probabilities of leave-one-out kernel density estimates
-  potlookde <- evd::pgpd(-log(kdeobj$lookde),
-    loc = qq,
-    scale = gpd[1], shape = gpd[2], lower.tail = FALSE
-  )
+
+
   outscores <- 1 - potlookde
   # select outliers according to threshold
   outliers <- which(potlookde < alpha)

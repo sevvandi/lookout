@@ -27,7 +27,9 @@ Imports:
     ggplot2,
     tidyr,
     bestNormalize,
-    weird
+    weird,
+    robust,
+    stats
 Suggests: 
     knitr,
     rmarkdown
