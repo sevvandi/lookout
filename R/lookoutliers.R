@@ -109,9 +109,11 @@ lookout <- function(X,
     log_dens <- log_dens - min(log_dens) # to make the log_dens positive for Weibull
     potlookde <- robust::weibullRob(log_dens)
     gpd <- potlookde$estimate
-
+    # robust::weibullRob shape is the given first followed by scale
+    # this is why scale = gpd[2] and scale = gpd[1]
     potlookde <- stats::dweibull(-log(kdeobj$lookde),
                                   scale = gpd[2], shape = gpd[1])
+
 
   }else{
     if (is.null(gpd)) {
