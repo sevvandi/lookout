@@ -106,13 +106,13 @@ lookout <- function(X,
 
   if(weibullR){
     # We use the kde to estimate the Robust Weibull parameters
-    log_dens <- log_dens - min(log_dens) # to make the log_dens positive for Weibull
-    potlookde <- robust::weibullRob(log_dens)
+    potlookde <- robust::weibullRob(log_dens[log_dens > qq] - qq)
     gpd <- potlookde$estimate
     # robust::weibullRob shape is the given first followed by scale
     # this is why scale = gpd[2] and scale = gpd[1]
-    potlookde <- stats::dweibull(-log(kdeobj$lookde),
-                                  scale = gpd[2], shape = gpd[1])
+    log_dens_loo <- -log(kdeobj$lookde)
+    potlookde <- stats::pweibull(log_dens_loo - qq,
+                                  scale = gpd[2], shape = gpd[1], lower.tail = FALSE)
 
 
   }else{
