@@ -22,8 +22,6 @@
 #'   If set to 1, then the bandwidth corresponds to the maximum Rips death radii
 #'   difference. If set to 0.95, then the bandwidth corresponds to the 95th
 #'   quantile of Rips death radii. Other probabilities can be used.
-#' @param shape_zero If \code{TRUE} (default), the shape parameter in the GPD is
-#'   set to zero resulting in a Gumbel distribution. Default is \code{TRUE}.
 #' @param transformation Ignored if \code{normalize = FALSE}. Specifies
 #'  either \code{YJ} for a Yeo-Johnson transformation, or \code{BD} for a
 #'  Bickel-Doksum transformation
@@ -58,12 +56,11 @@ lookout <- function(X,
                     normalize = FALSE,
                     bw = NULL,
                     gpd = NULL,
-                    weibullR = TRUE,
-                    fast = TRUE,
-                    bw_para = 0.95,
-                    shape_zero = TRUE,
+                    fast = NROW(X)>1000,
+                    bw_para = 0.98,
                     transformation = c("YJ","BD")) {
   transformation <- match.arg(transformation)
+
   # bw_para needs to be between 0 and 1
   if (bw_para < 0 || bw_para > 1) {
     stop("bw_para should be between 0 and 1.")
@@ -104,36 +101,23 @@ lookout <- function(X,
     }
   }
 
-  if(weibullR){
-    # We use the kde to estimate the Robust Weibull parameters
-    potlookde <- robust::weibullRob(log_dens[log_dens > qq] - qq)
-    gpd <- potlookde$estimate
-    # robust::weibullRob shape is the given first followed by scale
-    # this is why scale = gpd[2] and scale = gpd[1]
-    log_dens_loo <- -log(kdeobj$lookde)
-    potlookde <- stats::pweibull(log_dens_loo - qq,
-                                  scale = gpd[2], shape = gpd[1], lower.tail = FALSE)
 
-
-  }else{
-    if (is.null(gpd)) {
-      if (shape_zero) {
-        # Shape is set to zero
-        M1 <- evd::fpot(log_dens, qq, shape = 0, std.err = FALSE)
-        gpd <- c(M1$estimate, 0)
-      } else {
-        M1 <- evd::fpot(log_dens, qq, std.err = FALSE)
-        gpd <- M1$estimate[1L:2L]
-      }
+  if (is.null(gpd)) {
+    M1 <- evd::fpot(log_dens, qq, std.err = FALSE)
+    gpd <- M1$estimate[1L:2L]
+    if(gpd[2] > 0){
+      # This shows that shape is estimated to be positive.
+      # This should not be the case because log densities are bounded
+      M1 <- evd::fpot(log_dens, qq, shape = 0, std.err = FALSE)
+      gpd <- c(M1$estimate, 0)
     }
-    # for these Generalized Pareto distribution parameters, compute the
-    # probabilities of leave-one-out kernel density estimates
-    potlookde <- evd::pgpd(-log(kdeobj$lookde),
-                           loc = qq,
-                           scale = gpd[1], shape = gpd[2], lower.tail = FALSE
-    )
   }
-
+  # for these Generalized Pareto distribution parameters, compute the
+  # probabilities of leave-one-out kernel density estimates
+  potlookde <- evd::pgpd(-log(kdeobj$lookde),
+                         loc = qq,
+                         scale = gpd[1], shape = gpd[2], lower.tail = FALSE
+  )
 
   outscores <- 1 - potlookde
   # select outliers according to threshold

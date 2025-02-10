@@ -7,13 +7,12 @@
 lookout(
   X,
   alpha = 0.05,
-  unitize = FALSE,
-  normalize = TRUE,
+  unitize = TRUE,
+  normalize = FALSE,
   bw = NULL,
   gpd = NULL,
-  fast = TRUE,
+  fast = NROW(X) > 1000,
   bw_para = 0.95,
-  shape_zero = TRUE,
   transformation = c("YJ", "BD")
 )
 }
@@ -43,9 +42,6 @@ sub-setting the data for the bandwidth calculation.}
 If set to 1, then the bandwidth corresponds to the maximum Rips death radii
 difference. If set to 0.95, then the bandwidth corresponds to the 95th
 quantile of Rips death radii. Other probabilities can be used.}
-
-\item{shape_zero}{If \code{TRUE} (default), the shape parameter in the GPD is
-set to zero resulting in a Gumbel distribution. Default is \code{TRUE}.}
 
 \item{transformation}{Ignored if \code{normalize = FALSE}. Specifies
 either \code{YJ} for a Yeo-Johnson transformation, or \code{BD} for a
