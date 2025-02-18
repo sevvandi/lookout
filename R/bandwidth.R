@@ -22,7 +22,9 @@
 #' find_tda_bw(X, fast = TRUE)
 #'
 #' @export
-find_tda_bw <- function(X, fast = TRUE, bw_para = 0.95) {
+find_tda_bw <- function(X, fast = TRUE, bw_para = 0.95, bw_power = 1) {
+  stopifnot(bw_para > 0 & bw_para <= 1)
+  stopifnot(bw_power > 0 & bw_power <= 1)
   X <- as.matrix(X)
 
   # select a subset of X for tda computation
@@ -46,8 +48,7 @@ find_tda_bw <- function(X, fast = TRUE, bw_para = 0.95) {
     dr_thres_diff <- diff(death_radi_upper)
     return(death_radi_upper[which.max(dr_thres_diff)])
   } else {
-    qq <- quantile(death_radi_upper, probs = bw_para)
-    names(qq) <- NULL
-    return(qq)
+    prob <- 1 - (1 - bw_para) * length(death_radi_upper)^(bw_power - 1)
+    unname(quantile(death_radi_upper, probs = min(1,max(0, prob)), type = 8L))
   }
 }
