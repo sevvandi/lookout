@@ -28,7 +28,6 @@ Imports:
     tidyr,
     bestNormalize,
     weird,
-    robust,
     stats
 Suggests: 
     knitr,

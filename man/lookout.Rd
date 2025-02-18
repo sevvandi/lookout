@@ -12,8 +12,9 @@ lookout(
   bw = NULL,
   gpd = NULL,
   fast = NROW(X) > 1000,
-  bw_para = 0.95,
-  transformation = c("YJ", "BD")
+  bw_para = 0.98,
+  transformation = c("YJ", "BD"),
+  version = 2
 )
 }
 \arguments{
@@ -46,6 +47,8 @@ quantile of Rips death radii. Other probabilities can be used.}
 \item{transformation}{Ignored if \code{normalize = FALSE}. Specifies
 either \code{YJ} for a Yeo-Johnson transformation, or \code{BD} for a
 Bickel-Doksum transformation}
+
+\item{version}{Version of the algorithm. Default is 2, which is the newer version.}
 }
 \value{
 A list with the following components:

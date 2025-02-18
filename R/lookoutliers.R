@@ -25,6 +25,7 @@
 #' @param transformation Ignored if \code{normalize = FALSE}. Specifies
 #'  either \code{YJ} for a Yeo-Johnson transformation, or \code{BD} for a
 #'  Bickel-Doksum transformation
+#' @param version Version of the algorithm. Default is 2, which is the newer version.
 #' @return A list with the following components:
 #' \item{\code{outliers}}{The set of outliers.}
 #' \item{\code{outlier_probability}}{The GPD probability of the data.}
@@ -58,7 +59,8 @@ lookout <- function(X,
                     gpd = NULL,
                     fast = NROW(X)>1000,
                     bw_para = 0.98,
-                    transformation = c("YJ","BD")) {
+                    transformation = c("YJ","BD"),
+                    version = 2) {
   transformation <- match.arg(transformation)
 
   # bw_para needs to be between 0 and 1
@@ -105,7 +107,8 @@ lookout <- function(X,
   if (is.null(gpd)) {
     M1 <- evd::fpot(log_dens, qq, std.err = FALSE)
     gpd <- M1$estimate[1L:2L]
-    if(gpd[2] > 0){
+    if(gpd[2] > 0 & version == 2){
+      # This should only be done in the new lookout
       # This shows that shape is estimated to be positive.
       # This should not be the case because log densities are bounded
       M1 <- evd::fpot(log_dens, qq, shape = 0, std.err = FALSE)
