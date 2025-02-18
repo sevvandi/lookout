@@ -94,15 +94,18 @@ lookout <- function(X,
   qq <- quantile(log_dens, probs = min(0.9, 1 - alpha))
 
   # check if there are points above the quantile
-  len_over <- length(which(log_dens > qq))
-  if (len_over == 0L) {
-    rpts <- 1L
-    while (len_over == 0L) {
-      qq <- quantile(log_dens, probs = (0.9 - rpts * 0.05))
-      len_over <- length(which(log_dens > qq))
-      rpts <- rpts + 1L
-    }
+  if(!any(log_dens > qq)) {
+    stop("No points above the quantile for GPD estimation")
   }
+#  len_over <- length(which(log_dens > qq))
+#  if (len_over == 0L) {
+#    rpts <- 1L
+#    while (len_over == 0L) {
+#      qq <- quantile(log_dens, probs = (0.9 - rpts * 0.05))
+#      len_over <- length(which(log_dens > qq))
+#      rpts <- rpts + 1L
+#    }
+#  }
 
 
   if (is.null(gpd)) {
