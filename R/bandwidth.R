@@ -48,7 +48,10 @@ find_tda_bw <- function(X, fast = TRUE, bw_para = 0.95, bw_power = 1) {
     dr_thres_diff <- diff(death_radi_upper)
     return(death_radi_upper[which.max(dr_thres_diff)])
   } else {
-    prob <- 1 - (1 - bw_para) * length(death_radi_upper)^(bw_power - 1)
+    d <- NCOL(X)
+    n <- NROW(X)
+    # Set probability to be bw_para when n = 200
+    prob <- 1 - (1 - bw_para) * (n/200)^(d/(d+4) - 1)
     unname(quantile(death_radi_upper, probs = min(1,max(0, prob)), type = 8L))
   }
 }
