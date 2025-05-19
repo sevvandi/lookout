@@ -59,7 +59,7 @@ lookout <- function(X,
                     gpd = NULL,
                     fast = NROW(X)>1000,
                     bw_para = 0.98,
-                    bw_power = 1,
+                    bw_power = NA,
                     transformation = c("YJ","BD"),
                     version = 2) {
   transformation <- match.arg(transformation)

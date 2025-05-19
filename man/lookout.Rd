@@ -13,6 +13,7 @@ lookout(
   gpd = NULL,
   fast = NROW(X) > 1000,
   bw_para = 0.98,
+  bw_power = NA,
   transformation = c("YJ", "BD"),
   version = 2
 )

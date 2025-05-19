@@ -22,9 +22,9 @@
 #' find_tda_bw(X, fast = TRUE)
 #'
 #' @export
-find_tda_bw <- function(X, fast = TRUE, bw_para = 0.95, bw_power = 1) {
+find_tda_bw <- function(X, fast = TRUE, bw_para = 0.95, bw_power = NA) {
   stopifnot(bw_para > 0 & bw_para <= 1)
-  stopifnot(bw_power > 0 & bw_power <= 1)
+  # stopifnot(bw_power > 0 & bw_power <= 1)
   X <- as.matrix(X)
 
   # select a subset of X for tda computation
@@ -47,7 +47,9 @@ find_tda_bw <- function(X, fast = TRUE, bw_para = 0.95, bw_power = 1) {
   if (bw_para == 1) {
     dr_thres_diff <- diff(death_radi_upper)
     return(death_radi_upper[which.max(dr_thres_diff)])
-  } else {
+  }else if(is.na(bw_power)){
+    return(unname(quantile(death_radi_upper, probs = bw_para)))
+  }else{
     d <- NCOL(X)
     n <- NROW(X)
     # Set probability to be bw_para when n = 200
