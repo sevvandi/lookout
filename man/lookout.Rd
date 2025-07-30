@@ -6,30 +6,29 @@
 \usage{
 lookout(
   X,
-  alpha = 0.05,
-  unitize = TRUE,
-  normalize = FALSE,
+  alpha = 0.01,
+  beta = 0.9,
+  gamma = 0.98,
   bw = NULL,
   gpd = NULL,
+  scale = TRUE,
   fast = NROW(X) > 1000,
-  bw_para = 0.98,
-  bw_power = NA,
-  transformation = c("YJ", "BD"),
-  version = 2
+  old_version = FALSE
 )
 }
 \arguments{
 \item{X}{The numerical input data in a data.frame, matrix or tibble format.}
 
-\item{alpha}{The level of significance. Default is \code{0.05}.}
+\item{alpha}{The level of significance. Default is \code{0.01}. So there is
+a 1/100 chance of any point being falsely classified as an outlier.}
 
-\item{unitize}{If \code{TRUE}, the data is standardized so that
-each column is in the range \code{[0,1]}. Default is \code{FALSE}.}
+\item{beta}{The quantile threshold used in the GPD estimation. Default is \code{0.90}.
+To ensure there is enough data available, values greater than 0.90 are set to 0.90.}
 
-\item{normalize}{If \code{TRUE} (default), each column of the data is
-transformed to be closer to a standard normal distribution, and the data
-is rotated so that the columns are pairwise uncorrelated. This is done
-robustly using \code{\link{weird}{mvscale}}.}
+\item{gamma}{Parameter for bandwidth calculation giving the quantile of the
+Rips death radii to use for the bandwidth. Default is \code{0.95}. Ignored
+under the old version; where the lower limit of the maximum Rips death radii
+difference is used. Also ignored if \code{bw} is provided.}
 
 \item{bw}{Bandwidth parameter. If \code{NULL} (default), the bandwidth is
 found using Persistent Homology.}
@@ -37,19 +36,16 @@ found using Persistent Homology.}
 \item{gpd}{Generalized Pareto distribution parameters. If `NULL` (the
 default), these are estimated from the data.}
 
+\item{scale}{If \code{TRUE}, the data is standardized. Using the old version,
+unit scaling is applied so that each column is in the range \code{[0,1]}.
+Under the new version, robust rotation and scaling is used so that the columns
+are approximately uncorrelated with unit variance. Default is \code{TRUE}.}
+
 \item{fast}{If \code{TRUE} (default), makes the computation faster by
 sub-setting the data for the bandwidth calculation.}
 
-\item{bw_para}{Parameter for bandwidth calculation. Default is \code{0.95}.
-If set to 1, then the bandwidth corresponds to the maximum Rips death radii
-difference. If set to 0.95, then the bandwidth corresponds to the 95th
-quantile of Rips death radii. Other probabilities can be used.}
-
-\item{transformation}{Ignored if \code{normalize = FALSE}. Specifies
-either \code{YJ} for a Yeo-Johnson transformation, or \code{BD} for a
-Bickel-Doksum transformation}
-
-\item{version}{Version of the algorithm. Default is 2, which is the newer version.}
+\item{old_version}{Logical indicator of which version of the algorithm to use.
+Default is FALSE, meaning the newer version is used.}
 }
 \value{
 A list with the following components:

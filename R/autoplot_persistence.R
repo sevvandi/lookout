@@ -23,7 +23,7 @@
 #'   )
 #' )
 #' plot(X, pch = 19)
-#' outliers <- persisting_outliers(X, unitize = FALSE)
+#' outliers <- persisting_outliers(X, scale = FALSE)
 #' autoplot(outliers)
 #' @export
 autoplot.persistingoutliers <- function(object, alpha = object$alpha, ...) {
@@ -31,14 +31,16 @@ autoplot.persistingoutliers <- function(object, alpha = object$alpha, ...) {
   if (all(!which_alpha)) {
     stop("No specified alpha values available.")
   }
-  outwts <- apply(object$out[, , which_alpha, drop = FALSE], c(1, 2), sum)
+  outwts <- apply(object$out[,, which_alpha, drop = FALSE], c(1, 2), sum)
   outwtsg <- cbind.data.frame(seq(NROW(outwts)), outwts)
   colnames(outwtsg)[1] <- "Observation"
   col1 <- max(which(colSums(outwtsg) != 0))
   outwtsg <- outwtsg[, seq(col1)]
 
   # Long form
-  dfl <- tidyr::pivot_longer(outwtsg, -Observation,
+  dfl <- tidyr::pivot_longer(
+    outwtsg,
+    -Observation,
     names_to = "bw",
     values_to = "Strength"
   )
@@ -48,8 +50,16 @@ autoplot.persistingoutliers <- function(object, alpha = object$alpha, ...) {
   # Colours
   if (length(alpha) > 1) {
     col_pal1 <- c(
-      "white", "#ffffcc", "#ffeda0", "#fed976", "#feb24c",
-      "#fd8d3c", "#fc4e2a", "#e31a1c", "#bd0026", "#800026"
+      "white",
+      "#ffffcc",
+      "#ffeda0",
+      "#fed976",
+      "#feb24c",
+      "#fd8d3c",
+      "#fc4e2a",
+      "#e31a1c",
+      "#bd0026",
+      "#800026"
     )
   } else {
     col_pal1 <- c("white", "black")

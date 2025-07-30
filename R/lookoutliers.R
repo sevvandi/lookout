@@ -5,27 +5,26 @@
 #' generalized Pareto distributions to find outliers.
 #'
 #' @param X The numerical input data in a data.frame, matrix or tibble format.
-#' @param alpha The level of significance. Default is \code{0.05}.
-#' @param unitize If \code{TRUE}, the data is standardized so that
-#' each column is in the range \code{[0,1]}. Default is \code{FALSE}.
-#' @param normalize If \code{TRUE} (default), each column of the data is
-#' transformed to be closer to a standard normal distribution, and the data
-#' is rotated so that the columns are pairwise uncorrelated. This is done
-#' robustly using \code{\link{weird}{mvscale}}.
+#' @param alpha The level of significance. Default is \code{0.01}. So there is
+#' a 1/100 chance of any point being falsely classified as an outlier.
+#' @param beta The quantile threshold used in the GPD estimation. Default is \code{0.90}.
+#' To ensure there is enough data available, values greater than 0.90 are set to 0.90.
+#' @param gamma Parameter for bandwidth calculation giving the quantile of the
+#' Rips death radii to use for the bandwidth. Default is \code{0.95}. Ignored
+#' under the old version; where the lower limit of the maximum Rips death radii
+#' difference is used. Also ignored if \code{bw} is provided.
 #' @param bw Bandwidth parameter. If \code{NULL} (default), the bandwidth is
 #'   found using Persistent Homology.
 #' @param gpd Generalized Pareto distribution parameters. If `NULL` (the
 #' default), these are estimated from the data.
+#' @param scale If \code{TRUE}, the data is standardized. Using the old version,
+#' unit scaling is applied so that each column is in the range \code{[0,1]}.
+#' Under the new version, robust rotation and scaling is used so that the columns
+#' are approximately uncorrelated with unit variance. Default is \code{TRUE}.
 #' @param fast If \code{TRUE} (default), makes the computation faster by
 #' sub-setting the data for the bandwidth calculation.
-#' @param bw_para Parameter for bandwidth calculation. Default is \code{0.95}.
-#'   If set to 1, then the bandwidth corresponds to the maximum Rips death radii
-#'   difference. If set to 0.95, then the bandwidth corresponds to the 95th
-#'   quantile of Rips death radii. Other probabilities can be used.
-#' @param transformation Ignored if \code{normalize = FALSE}. Specifies
-#'  either \code{YJ} for a Yeo-Johnson transformation, or \code{BD} for a
-#'  Bickel-Doksum transformation
-#' @param version Version of the algorithm. Default is 2, which is the newer version.
+#' @param old_version Logical indicator of which version of the algorithm to use.
+#' Default is FALSE, meaning the newer version is used.
 #' @return A list with the following components:
 #' \item{\code{outliers}}{The set of outliers.}
 #' \item{\code{outlier_probability}}{The GPD probability of the data.}
@@ -51,37 +50,43 @@
 #' autoplot(lo)
 #' @export lookout
 #' @importFrom stats dist quantile median sd
-lookout <- function(X,
-                    alpha = 0.05,
-                    unitize = TRUE,
-                    normalize = FALSE,
-                    bw = NULL,
-                    gpd = NULL,
-                    fast = NROW(X)>1000,
-                    bw_para = 0.98,
-                    bw_power = NA,
-                    transformation = c("YJ","BD"),
-                    version = 2) {
-  transformation <- match.arg(transformation)
-
-  # bw_para needs to be between 0 and 1
-  if (bw_para < 0 || bw_para > 1) {
-    stop("bw_para should be between 0 and 1.")
+lookout <- function(
+  X,
+  alpha = 0.01,
+  beta = 0.90,
+  gamma = 0.98,
+  bw = NULL,
+  gpd = NULL,
+  scale = TRUE,
+  fast = NROW(X) > 1000,
+  old_version = FALSE
+) {
+  # alpha, beta and gamma need to be between 0 and 1
+  if (alpha < 0 || alpha > 1) {
+    stop("gamma should be between 0 and 1.")
+  }
+  if (beta < 0 || beta > 1) {
+    stop("gamma should be between 0 and 1.")
+  }
+  # gamma needs to be between 0 and 1
+  if (gamma < 0 || gamma > 1) {
+    stop("gamma should be between 0 and 1.")
   }
 
   # Prepare X matrix
   origX <- X
   X <- as.matrix(X)
-  if (unitize) {
-    X <- unitize(X)
-  }
-  if (normalize) {
-    X <- transform_normal(X, transformation = transformation)
+  if (scale) {
+    if (old_version) {
+      X <- unitize(X)
+    } else {
+      X <- weird::mvscale(X)
+    }
   }
 
   # Find bandwidth and scale for Epanechnikov kernel
   if (is.null(bw)) {
-    bandwidth <- find_tda_bw(X, fast = fast, bw_para, bw_power) * sqrt(5)
+    bandwidth <- find_tda_bw(X, fast = fast, gamma) * sqrt(5)
   } else {
     bandwidth <- bw
   }
@@ -91,27 +96,18 @@ lookout <- function(X,
   log_dens <- -log(kdeobj$kde)
 
   # find POT GPD parameters, threshold 0.90
-  qq <- quantile(log_dens, probs = min(0.9, 1 - alpha))
+  beta <- min(0.9, beta)
+  qq <- quantile(log_dens, probs = beta)
 
   # check if there are points above the quantile
-  if(!any(log_dens > qq)) {
+  if (!any(log_dens > qq)) {
     stop("No points above the quantile for GPD estimation")
   }
-#  len_over <- length(which(log_dens > qq))
-#  if (len_over == 0L) {
-#    rpts <- 1L
-#    while (len_over == 0L) {
-#      qq <- quantile(log_dens, probs = (0.9 - rpts * 0.05))
-#      len_over <- length(which(log_dens > qq))
-#      rpts <- rpts + 1L
-#    }
-#  }
-
 
   if (is.null(gpd)) {
     M1 <- evd::fpot(log_dens, qq, std.err = FALSE)
     gpd <- M1$estimate[1L:2L]
-    if(gpd[2] > 0 & version == 2){
+    if (gpd[2] > 0 & !old_version) {
       # This should only be done in the new lookout
       # This shows that shape is estimated to be positive.
       # This should not be the case because log densities are bounded
@@ -121,10 +117,14 @@ lookout <- function(X,
   }
   # for these Generalized Pareto distribution parameters, compute the
   # probabilities of leave-one-out kernel density estimates
-  potlookde <- evd::pgpd(-log(kdeobj$lookde),
-                         loc = qq,
-                         scale = gpd[1], shape = gpd[2], lower.tail = FALSE
-  )
+  potlookde <- evd::pgpd(
+    -log(kdeobj$lookde),
+    loc = qq,
+    scale = gpd[1],
+    shape = gpd[2],
+    lower.tail = FALSE
+  ) *
+    (1 - beta)
 
   outscores <- 1 - potlookde
   # select outliers according to threshold
@@ -132,17 +132,20 @@ lookout <- function(X,
   dfout <- cbind.data.frame(outliers, potlookde[outliers])
   colnames(dfout) <- c("Outliers", "Probability")
 
-  structure(list(
-    data = origX,
-    outliers = dfout,
-    outlier_probability = potlookde,
-    outlier_scores = outscores,
-    bandwidth = bandwidth,
-    kde = kdeobj$kde,
-    lookde = kdeobj$lookde,
-    gpd = gpd,
-    call = match.call()
-  ), class = "lookoutliers")
+  structure(
+    list(
+      data = origX,
+      outliers = dfout,
+      outlier_probability = potlookde,
+      outlier_scores = outscores,
+      bandwidth = bandwidth,
+      kde = kdeobj$kde,
+      lookde = kdeobj$lookde,
+      gpd = gpd,
+      call = match.call()
+    ),
+    class = "lookoutliers"
+  )
 }
 
 
@@ -161,7 +164,9 @@ lookde <- function(x, bandwidth, fast) {
   # Epanechnikov kernel density estimate
   dist <- RANN::nn2(x, k = kk)$nn.dists
   dist[dist > bandwidth] <- NA_real_
-  phat <- 0.75 / (nn*bandwidth) * rowSums(1 - (dist/bandwidth)^2, na.rm = TRUE)
+  phat <- 0.75 /
+    (nn * bandwidth) *
+    rowSums(1 - (dist / bandwidth)^2, na.rm = TRUE)
 
   # leave one out
   kdevalsloo <- 0.75 / ((nn - 1) * (bandwidth))
@@ -195,7 +200,8 @@ subset_for_tda <- function(X) {
   for (i in 2:n) {
     KNN <- RANN::nn2(
       data = Xu[c(exemplars, i), , drop = FALSE],
-      query = Xu[i, , drop = FALSE], k = 2
+      query = Xu[i, , drop = FALSE],
+      k = 2
     )
     m <- KNN$nn.idx[1, 2]
     d <- KNN$nn.dists[1, 2]

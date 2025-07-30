@@ -8,8 +8,9 @@ persisting_outliers(
   X,
   alpha = seq(0.01, 0.1, by = 0.01),
   st_qq = 0.9,
-  unitize = TRUE,
-  num_steps = 20
+  scale = TRUE,
+  num_steps = 20,
+  old_version = FALSE
 )
 }
 \arguments{
@@ -21,10 +22,13 @@ columns should be numeric.}
 \item{st_qq}{The starting quantile for death radii sequence. This will be
 used to compute the starting bandwidth value.}
 
-\item{unitize}{An option to normalize the data. Default is \code{TRUE},
-which normalizes each column to \code{[0,1]}.}
+\item{scale}{If \code{TRUE}, the data is scaled. Default is \code{TRUE}. Which
+scaling method is used depends on the \code{old_version} parameter.
+See \code{\link{lookout}} for details.}
 
 \item{num_steps}{The length of the bandwidth sequence.}
+
+\item{old_version}{Logical indicator of which version of the algorithm to use.}
 }
 \value{
 A list with the following components:
@@ -57,7 +61,7 @@ X <- rbind(
   )
 )
 plot(X, pch = 19)
-outliers <- persisting_outliers(X, unitize = FALSE)
+outliers <- persisting_outliers(X, scale = FALSE)
 outliers
 autoplot(outliers)
 }

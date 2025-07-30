@@ -4,7 +4,7 @@
 \alias{find_tda_bw}
 \title{Identifies bandwidth for outlier detection.}
 \usage{
-find_tda_bw(X, fast = TRUE, bw_para = 0.95, bw_power = NA)
+find_tda_bw(X, fast = TRUE, gamma = 0.95, use_differences = FALSE)
 }
 \arguments{
 \item{X}{The numerical input data in a data.frame, matrix or tibble format.}
@@ -12,10 +12,14 @@ find_tda_bw(X, fast = TRUE, bw_para = 0.95, bw_power = NA)
 \item{fast}{If \code{TRUE} (default), makes the computation faster by
 sub-setting the data for the bandwidth calculation.}
 
-\item{bw_para}{Parameter for bandwidth calculation. Default is \code{0.95}.
-If set to 1, then the bandwidth corresponds to the maximum Rips death radii
-difference. If set to 0.95, then the bandwidth corresponds to the 95th
-quantile of Rips death radii. Other probabilities can be used.}
+\item{gamma}{Parameter for bandwidth calculation giving the quantile of the
+Rips death radii to use for the bandwidth. Default is \code{0.95}. Ignored
+under the old version; where the lower limit of the maximum Rips death radii
+difference is used. Also ignored if \code{bw} is provided.}
+
+\item{use_differences}{If TRUE, the bandwidth is set to the lower point
+of the maximum Rips death radii differences. If FALSE,
+the gamma quantile of the Rips death radii is used. Default is FALSE.}
 }
 \value{
 The bandwidth

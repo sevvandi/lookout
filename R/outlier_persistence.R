@@ -10,8 +10,10 @@
 #' @param alpha Grid of significance levels.
 #' @param st_qq The starting quantile for death radii sequence. This will be
 #'   used to compute the starting bandwidth value.
-#' @param unitize An option to normalize the data. Default is \code{TRUE},
-#'   which normalizes each column to \code{[0,1]}.
+#' @param scale If \code{TRUE}, the data is scaled. Default is \code{TRUE}. Which
+#' scaling method is used depends on the \code{old_version} parameter.
+#' See \code{\link{lookout}} for details.
+#' @param old_version Logical indicator of which version of the algorithm to use.
 #' @param num_steps The length of the bandwidth sequence.
 #'
 #' @return A list with the following components:
@@ -38,17 +40,27 @@
 #'   )
 #' )
 #' plot(X, pch = 19)
-#' outliers <- persisting_outliers(X, unitize = FALSE)
+#' outliers <- persisting_outliers(X, scale = FALSE)
 #' outliers
 #' autoplot(outliers)
 #' @export
 
-persisting_outliers <- function(X, alpha = seq(0.01, 0.1, by = 0.01),
-                                st_qq = 0.9, unitize = TRUE, num_steps = 20) {
+persisting_outliers <- function(
+  X,
+  alpha = seq(0.01, 0.1, by = 0.01),
+  st_qq = 0.9,
+  scale = TRUE,
+  num_steps = 20,
+  old_version = FALSE
+) {
   # Prepare X matrix
   X <- as.matrix(X)
-  if (unitize) {
-    X <- unitize(X)
+  if (scale) {
+    if (old_version) {
+      X <- unitize(X)
+    } else {
+      X <- weird::mvscale(X)
+    }
   }
 
   # Calculate persistent homology
@@ -72,13 +84,23 @@ persisting_outliers <- function(X, alpha = seq(0.01, 0.1, by = 0.01),
   bw_fixed <- death_radi[ind] * sqrt(5)
 
   # Find outliers
-  lookoutobj1 <- lookout(X, alpha = 0.05, unitize = FALSE, bw = bw_fixed)
+  lookoutobj1 <- lookout(
+    X,
+    alpha = 0.05,
+    scale = FALSE,
+    bw = bw_fixed,
+    old_version = old_version
+  )
   paras <- lookoutobj1$gpd[1:2]
   output <- array(0, dim = c(dim(X)[1], num_steps, length(alpha)))
   for (i in seq_along(bw_vals)) {
-    lookoutobj <- lookout(X,
-      alpha = 0.05, unitize = FALSE,
-      bw = bw_vals[i], gpd = paras
+    lookoutobj <- lookout(
+      X,
+      alpha = 0.05,
+      scale = FALSE,
+      bw = bw_vals[i],
+      gpd = paras,
+      old_version = old_version
     )
     for (j in seq_along(alpha)) {
       outinds <- which(lookoutobj$outlier_probability < alpha[j])
@@ -87,12 +109,15 @@ persisting_outliers <- function(X, alpha = seq(0.01, 0.1, by = 0.01),
   }
 
   # Return results
-  structure(list(
-    out = output,
-    bw = bw_vals,
-    gpdparas = paras,
-    lookoutbw = bw_fixed,
-    alpha = alpha,
-    call = match.call()
-  ), class = "persistingoutliers")
+  structure(
+    list(
+      out = output,
+      bw = bw_vals,
+      gpdparas = paras,
+      lookoutbw = bw_fixed,
+      alpha = alpha,
+      call = match.call()
+    ),
+    class = "persistingoutliers"
+  )
 }

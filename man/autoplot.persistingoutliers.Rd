@@ -34,6 +34,6 @@ X <- rbind(
   )
 )
 plot(X, pch = 19)
-outliers <- persisting_outliers(X, unitize = FALSE)
+outliers <- persisting_outliers(X, scale = FALSE)
 autoplot(outliers)
 }
