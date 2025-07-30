@@ -26,7 +26,6 @@ Imports:
     RANN,
     ggplot2,
     tidyr,
-    bestNormalize,
     weird,
     stats
 Suggests: 
