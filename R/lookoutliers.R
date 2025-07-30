@@ -86,7 +86,13 @@ lookout <- function(
 
   # Find bandwidth and scale for Epanechnikov kernel
   if (is.null(bw)) {
-    bandwidth <- find_tda_bw(X, fast = fast, gamma) * sqrt(5)
+    bandwidth <- find_tda_bw(
+      X,
+      fast = fast,
+      gamma,
+      use_differences = old_version
+    ) *
+      sqrt(5)
   } else {
     bandwidth <- bw
   }
