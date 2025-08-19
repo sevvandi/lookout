@@ -10,7 +10,7 @@
 #' @param beta The quantile threshold used in the GPD estimation. Default is \code{0.90}.
 #' To ensure there is enough data available, values greater than 0.90 are set to 0.90.
 #' @param gamma Parameter for bandwidth calculation giving the quantile of the
-#' Rips death radii to use for the bandwidth. Default is \code{0.95}. Ignored
+#' Rips death radii to use for the bandwidth. Default is \code{0.98}. Ignored
 #' under the old version; where the lower limit of the maximum Rips death radii
 #' difference is used. Also ignored if \code{bw} is provided.
 #' @param bw Bandwidth parameter. If \code{NULL} (default), the bandwidth is
