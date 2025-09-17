@@ -19,18 +19,18 @@ mvscale(
 to NULL if no centering is required.}
 
 \item{scale}{A function to scale each numerical variable. When
-`cov = robustbase::covOGK`, it is passed as the `sigmamu` argument.}
+\code{cov = robustbase::covOGK()}, it is passed as the \code{sigmamu} argument.}
 
 \item{cov}{A function to compute the covariance matrix. Set to NULL if no rotation required.}
 
 \item{warning}{Should a warning be issued if non-numeric columns are ignored?}
 }
 \value{
-A vector, matrix or data frame of the same size and class as `object`,
+A vector, matrix or data frame of the same size and class as \code{object},
 but with numerical variables replaced by scaled versions.
 }
 \description{
-A multivariate version of `base::scale()`, that takes account
+A multivariate version of \code{\link[base:scale]{base::scale()}}, that takes account
 of the covariance matrix of the data, and uses robust estimates
 of center, scale and covariance by default. The centers are removed using medians, the
 scale function is the IQR, and the covariance matrix is estimated using a
@@ -40,23 +40,21 @@ computing pairwise Mahalanobis distances.
 }
 \details{
 Optionally, the centering and scaling can be done for each variable
-separately, so there is no rotation of the data, by setting `cov = NULL`.
-Also optionally, non-robust methods can be used by specifying `center = mean`,
-scale = `stats::sd`, and `cov = stats::cov`. Any non-numeric columns are retained
+separately, so there is no rotation of the data, by setting \code{cov = NULL}.
+Also optionally, non-robust methods can be used by specifying \code{center = mean},
+\code{scale = stats::sd()}, and \code{cov = stats::cov()}. Any non-numeric columns are retained
 with a warning.
 }
 \examples{
 # Univariate z-scores (no rotation)
-mvscale(oldfaithful, center = mean, scale = sd, cov = NULL, warning = FALSE)
+mvscale(faithful, center = mean, scale = sd, cov = NULL, warning = FALSE)
 # Non-robust scaling with rotation
-mvscale(oldfaithful, center = mean, cov = stats::cov, warning = FALSE)
-mvscale(oldfaithful, warning = FALSE)
-# Robust Mahalanobis distances
-oldfaithful |>
-  select(-time) |>
-  mvscale() |>
-  head(5) |>
-  dist()
+mvscale(faithful, center = mean, cov = stats::cov, warning = FALSE)
+# Robust scaling
+mvscale(faithful, warning = FALSE)
+}
+\seealso{
+\code{\link[base:scale]{base::scale()}}, \code{\link[stats:sd]{stats::sd()}}, \code{\link[stats:cor]{stats::cov()}}, \code{\link[robustbase:covOGK]{robustbase::covOGK()}}, \code{\link[robustbase:Qn]{robustbase::s_Qn()}}
 }
 \author{
 Rob J Hyndman

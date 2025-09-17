@@ -7,7 +7,7 @@
 \method{autoplot}{lookoutliers}(object, columns = 1:2, ...)
 }
 \arguments{
-\item{object}{The output of the function `lookout`.}
+\item{object}{The output of the function \code{lookout}.}
 
 \item{columns}{Which columns of the original data to plot
 (specified as either numbers or strings)}

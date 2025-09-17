@@ -41,7 +41,7 @@ level.}
 \item{\code{bw}}{The set of bandwidth values.}
 \item{\code{gpdparas}}{The GPD parameters used. }
 \item{\code{lookoutbw}}{The bandwidth chosen by the algorithm \code{lookout}
-  using persistent homology.}
+using persistent homology.}
 }
 \description{
 This function computes outlier persistence for a range of significance

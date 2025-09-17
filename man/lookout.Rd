@@ -33,7 +33,7 @@ difference is used. Also ignored if \code{bw} is provided.}
 \item{bw}{Bandwidth parameter. If \code{NULL} (default), the bandwidth is
 found using Persistent Homology.}
 
-\item{gpd}{Generalized Pareto distribution parameters. If `NULL` (the
+\item{gpd}{Generalized Pareto distribution parameters. If \code{NULL} (the
 default), these are estimated from the data.}
 
 \item{scale}{If \code{TRUE}, the data is standardized. Using the old version,
