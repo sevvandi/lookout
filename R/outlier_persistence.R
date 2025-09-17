@@ -46,13 +46,12 @@
 #' @export
 
 persisting_outliers <- function(
-  X,
-  alpha = seq(0.01, 0.1, by = 0.01),
-  st_qq = 0.9,
-  scale = TRUE,
-  num_steps = 20,
-  old_version = FALSE
-) {
+    X,
+    alpha = seq(0.01, 0.1, by = 0.01),
+    st_qq = 0.9,
+    scale = TRUE,
+    num_steps = 20,
+    old_version = FALSE) {
   # Prepare X matrix
   X <- as.matrix(X)
   if (scale) {

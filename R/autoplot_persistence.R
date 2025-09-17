@@ -31,7 +31,7 @@ autoplot.persistingoutliers <- function(object, alpha = object$alpha, ...) {
   if (all(!which_alpha)) {
     stop("No specified alpha values available.")
   }
-  outwts <- apply(object$out[,, which_alpha, drop = FALSE], c(1, 2), sum)
+  outwts <- apply(object$out[, , which_alpha, drop = FALSE], c(1, 2), sum)
   outwtsg <- cbind.data.frame(seq(NROW(outwts)), outwts)
   colnames(outwtsg)[1] <- "Observation"
   col1 <- max(which(colSums(outwtsg) != 0))
