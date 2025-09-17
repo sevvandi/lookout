@@ -4,24 +4,48 @@
 \alias{lookout}
 \title{Identifies outliers using the algorithm lookout.}
 \usage{
-lookout(X, alpha = 0.05, unitize = TRUE, bw = NULL, gpd = NULL, fast = TRUE)
+lookout(
+  X,
+  alpha = 0.01,
+  beta = 0.9,
+  gamma = 0.97,
+  bw = NULL,
+  gpd = NULL,
+  scale = TRUE,
+  fast = NROW(X) > 1000,
+  old_version = FALSE
+)
 }
 \arguments{
-\item{X}{The input data in a dataframe, matrix or tibble format.}
+\item{X}{The numerical input data in a data.frame, matrix or tibble format.}
 
-\item{alpha}{The level of significance. Default is \code{0.05}.}
+\item{alpha}{The level of significance. Default is \code{0.01}. So there is
+a 1/100 chance of any point being falsely classified as an outlier.}
 
-\item{unitize}{An option to normalize the data. Default is \code{TRUE},
-which normalizes each column to \code{[0,1]}.}
+\item{beta}{The quantile threshold used in the GPD estimation. Default is \code{0.90}.
+To ensure there is enough data available, values greater than 0.90 are set to 0.90.}
 
-\item{bw}{Bandwidth parameter. Default is \code{NULL} as the bandwidth is
+\item{gamma}{Parameter for bandwidth calculation giving the quantile of the
+Rips death radii to use for the bandwidth. Default is \code{0.97}. Ignored
+under the old version; where the lower limit of the maximum Rips death radii
+difference is used. Also ignored if \code{bw} is provided.}
+
+\item{bw}{Bandwidth parameter. If \code{NULL} (default), the bandwidth is
 found using Persistent Homology.}
 
-\item{gpd}{Generalized Pareto distribution parameters. If `NULL` (the
+\item{gpd}{Generalized Pareto distribution parameters. If \code{NULL} (the
 default), these are estimated from the data.}
 
-\item{fast}{If set to \code{TRUE}, makes the computation faster by sub-setting
-the data for the bandwidth calculation.}
+\item{scale}{If \code{TRUE}, the data is standardized. Using the old version,
+unit scaling is applied so that each column is in the range \code{[0,1]}.
+Under the new version, robust rotation and scaling is used so that the columns
+are approximately uncorrelated with unit variance. Default is \code{TRUE}.}
+
+\item{fast}{If \code{TRUE} (default), makes the computation faster by
+sub-setting the data for the bandwidth calculation.}
+
+\item{old_version}{Logical indicator of which version of the algorithm to use.
+Default is FALSE, meaning the newer version is used.}
 }
 \value{
 A list with the following components:
@@ -40,10 +64,14 @@ generalized Pareto distributions to find outliers.
 }
 \examples{
 X <- rbind(
-  data.frame(x = rnorm(500),
-             y = rnorm(500)),
-  data.frame(x = rnorm(5, mean = 10, sd = 0.2),
-             y = rnorm(5, mean = 10, sd = 0.2))
+  data.frame(
+    x = rnorm(500),
+    y = rnorm(500)
+  ),
+  data.frame(
+    x = rnorm(5, mean = 10, sd = 0.2),
+    y = rnorm(5, mean = 10, sd = 0.2)
+  )
 )
 lo <- lookout(X)
 lo

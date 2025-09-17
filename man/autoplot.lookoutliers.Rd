@@ -7,7 +7,7 @@
 \method{autoplot}{lookoutliers}(object, columns = 1:2, ...)
 }
 \arguments{
-\item{object}{The output of the function `lookout`.}
+\item{object}{The output of the function \code{lookout}.}
 
 \item{columns}{Which columns of the original data to plot
 (specified as either numbers or strings)}
@@ -22,10 +22,14 @@ Scatterplot of two columns from the data set with outliers highlighted.
 }
 \examples{
 X <- rbind(
-  data.frame(x = rnorm(500),
-             y = rnorm(500)),
-  data.frame(x = rnorm(5, mean = 10, sd = 0.2),
-             y = rnorm(5, mean = 10, sd = 0.2))
+  data.frame(
+    x = rnorm(500),
+    y = rnorm(500)
+  ),
+  data.frame(
+    x = rnorm(5, mean = 10, sd = 0.2),
+    y = rnorm(5, mean = 10, sd = 0.2)
+  )
 )
 lo <- lookout(X)
 autoplot(lo)

@@ -1,0 +1,30 @@
+url: https://sevvandi.github.io/lookout/
+template:
+  bootstrap: 5
+  theme: tango
+  bootswatch: flatly
+  bslib:
+    base_font: { google: "Fira Sans" }
+    heading_font: { google: "Fira Sans" }
+    code_font: "Hack, mono"
+    primary: "#234460"
+    link-color: "#234460"
+  includes:
+    in_header: <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hack-font@3/build/web/hack-subset.css">
+
+authors:
+  Sevvandi Kandanaarachchi:
+    href: https://sevvandi.github.io
+  Rob J Hyndman:
+    href: http://robjhyndman.com
+
+navbar:
+  type: light
+
+figures:
+  dev: ragg::agg_png
+  dpi: 300
+  dev.args: []
+  fig.ext: png
+  fig.width: 8
+  fig.height: 5

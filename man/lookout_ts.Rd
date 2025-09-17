@@ -4,22 +4,28 @@
 \alias{lookout_ts}
 \title{Identifies outliers in univariate time series using the algorithm lookout.}
 \usage{
-lookout_ts(x, alpha = 0.05)
+lookout_ts(x, scale = FALSE, ...)
 }
 \arguments{
 \item{x}{The input univariate time series.}
 
-\item{alpha}{The level of significance. Default is \code{0.05}.}
+\item{scale}{If \code{TRUE}, the data is standardized. Using the old version,
+unit scaling is applied so that each column is in the range \code{[0,1]}.
+Under the new version, robust rotation and scaling is used so that the columns
+are approximately uncorrelated with unit variance. Default is \code{TRUE}.}
+
+\item{...}{Other arguments are passed to \code{\link{lookout}}.}
 }
 \value{
 A lookout object.
 }
 \description{
-This is the time series implementation of lookout.
+This is the time series implementation of lookout which identifies outliers
+in the double differenced time series.
 }
 \examples{
 set.seed(1)
-x <- arima.sim(list(order = c(1,1,0), ar = 0.8), n = 200)
+x <- arima.sim(list(order = c(1, 1, 0), ar = 0.8), n = 200)
 x[50] <- x[50] + 10
 plot(x)
 lo <- lookout_ts(x)

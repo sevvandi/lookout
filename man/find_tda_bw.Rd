@@ -4,13 +4,22 @@
 \alias{find_tda_bw}
 \title{Identifies bandwidth for outlier detection.}
 \usage{
-find_tda_bw(X, fast)
+find_tda_bw(X, fast = TRUE, gamma = 0.95, use_differences = FALSE)
 }
 \arguments{
-\item{X}{The input data in a dataframe, matrix or tibble format.}
+\item{X}{The numerical input data in a data.frame, matrix or tibble format.}
 
-\item{fast}{If set to \code{TRUE}, makes the computation faster by sub-setting
-the data for the bandwidth calculation.}
+\item{fast}{If \code{TRUE} (default), makes the computation faster by
+sub-setting the data for the bandwidth calculation.}
+
+\item{gamma}{Parameter for bandwidth calculation giving the quantile of the
+Rips death radii to use for the bandwidth. Default is \code{0.97}. Ignored
+under the old version; where the lower limit of the maximum Rips death radii
+difference is used. Also ignored if \code{bw} is provided.}
+
+\item{use_differences}{If TRUE, the bandwidth is set to the lower point
+of the maximum Rips death radii differences. If FALSE,
+the gamma quantile of the Rips death radii is used. Default is FALSE.}
 }
 \value{
 The bandwidth
@@ -22,10 +31,14 @@ to find the badnwidth.
 }
 \examples{
 X <- rbind(
-  data.frame(x = rnorm(500),
-             y = rnorm(500)),
-  data.frame(x = rnorm(5, mean = 10, sd = 0.2),
-             y = rnorm(5, mean = 10, sd = 0.2))
+  data.frame(
+    x = rnorm(500),
+    y = rnorm(500)
+  ),
+  data.frame(
+    x = rnorm(5, mean = 10, sd = 0.2),
+    y = rnorm(5, mean = 10, sd = 0.2)
+  )
 )
 find_tda_bw(X, fast = TRUE)
 

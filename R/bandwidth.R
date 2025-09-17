@@ -5,26 +5,35 @@
 #' to find the badnwidth.
 #'
 #' @inheritParams lookout
+#' @param use_differences If TRUE, the bandwidth is set to the lower point
+#' of the maximum Rips death radii differences. If FALSE,
+#' the gamma quantile of the Rips death radii is used. Default is FALSE.
 #'
 #' @return The bandwidth
 #'
 #' @examples
 #' X <- rbind(
-#'   data.frame(x = rnorm(500),
-#'              y = rnorm(500)),
-#'   data.frame(x = rnorm(5, mean = 10, sd = 0.2),
-#'              y = rnorm(5, mean = 10, sd = 0.2))
+#'   data.frame(
+#'     x = rnorm(500),
+#'     y = rnorm(500)
+#'   ),
+#'   data.frame(
+#'     x = rnorm(5, mean = 10, sd = 0.2),
+#'     y = rnorm(5, mean = 10, sd = 0.2)
+#'   )
 #' )
 #' find_tda_bw(X, fast = TRUE)
 #'
 #' @export
-find_tda_bw <- function(X, fast) {
+find_tda_bw <- function(X, fast = TRUE, gamma = 0.95, use_differences = FALSE) {
+  stopifnot(gamma > 0 && gamma <= 1)
   X <- as.matrix(X)
 
   # select a subset of X for tda computation
-  if(fast){
-    Xsub <- subset_for_tda(X)
-  }else{
+  if (fast) {
+    inds <- subset_for_tda(X)
+    Xsub <- X[inds, ]
+  } else {
     Xsub <- X
   }
 
@@ -33,13 +42,23 @@ find_tda_bw <- function(X, fast) {
   } else {
     phom <- TDAstats::calculate_homology(Xsub, dim = 0)
   }
+
   death_radi <- phom[, 3L]
+
   # Added so that very small death radi are not chosen
   med_radi <- median(death_radi)
   death_radi_upper <- death_radi[death_radi >= med_radi]
-  # dr_thres_diff <- diff(death_radi_upper)
-  # return(death_radi_upper[which.max(dr_thres_diff)])
-  qq <- quantile(death_radi_upper, probs = 0.95)
-  names(qq) <- NULL
-  return(qq)
+  if (use_differences) {
+    dr_thres_diff <- diff(death_radi_upper)
+    return(death_radi_upper[which.max(dr_thres_diff)])
+  } else {
+    return(unname(quantile(death_radi_upper, probs = gamma)))
+  }
+  # else{
+  #   d <- NCOL(X)
+  #   n <- NROW(X)
+  #   # Set probability to be gamma when n = 200
+  #   prob <- 1 - (1 - gamma) * (n/200)^(d/(d+4) - 1)
+  #   unname(quantile(death_radi_upper, probs = min(1,max(0, prob)), type = 8L))
+  # }
 }

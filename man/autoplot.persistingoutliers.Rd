@@ -7,7 +7,7 @@
 \method{autoplot}{persistingoutliers}(object, alpha = object$alpha, ...)
 }
 \arguments{
-\item{object}{The output of the function `persisting_outliers`.}
+\item{object}{The output of the function \code{persisting_outliers}.}
 
 \item{alpha}{The significance levels to plot.}
 
@@ -34,6 +34,6 @@ X <- rbind(
   )
 )
 plot(X, pch = 19)
-outliers <- persisting_outliers(X, unitize = FALSE)
+outliers <- persisting_outliers(X, scale = FALSE)
 autoplot(outliers)
 }
