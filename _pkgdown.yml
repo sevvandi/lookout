@@ -15,8 +15,8 @@ template:
 authors:
   Sevvandi Kandanaarachchi:
     href: https://sevvandi.github.io
-  Rob J Hyndman:
-    href: http://robjhyndman.com
+  Rob Hyndman:
+    href: https://robjhyndman.com
 
 navbar:
   type: light

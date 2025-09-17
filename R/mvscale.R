@@ -5,8 +5,7 @@
 #' of center, scale and covariance by default. The centers are removed using medians, the
 #' scale function is the IQR, and the covariance matrix is estimated using a
 #' robust OGK estimate. The data are scaled using the Cholesky decomposition of
-#' the inverse covariance. Then the scaled data are returned. This is useful for
-#' computing pairwise Mahalanobis distances.
+#' the inverse covariance. Then the scaled data are returned.
 #'
 #' @details Optionally, the centering and scaling can be done for each variable
 #' separately, so there is no rotation of the data, by setting `cov = NULL`.
@@ -27,11 +26,11 @@
 #' @author Rob J Hyndman
 #' @examples
 #' # Univariate z-scores (no rotation)
-#' mvscale(faithful, center = mean, scale = sd, cov = NULL, warning = FALSE)
+#' z <- mvscale(faithful, center = mean, scale = sd, cov = NULL, warning = FALSE)
 #' # Non-robust scaling with rotation
-#' mvscale(faithful, center = mean, cov = stats::cov, warning = FALSE)
-#' # Robust scaling
-#' mvscale(faithful, warning = FALSE)
+#' z <- mvscale(faithful, center = mean, cov = stats::cov, warning = FALSE)
+#' # Robust scaling and rotation
+#' z <- mvscale(faithful, warning = FALSE)
 #' @export
 mvscale <- function(
   object,
