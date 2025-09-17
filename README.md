@@ -12,7 +12,7 @@
 density estimates and extreme value theory. The bandwidth for kernel
 density estimates is computed using persistent homology, a technique in
 topological data analysis. Using peak-over-threshold method, a
-generalized Pareto distribution is fitted to the log of leave-one-out
+Generalized Pareto Distribution is fitted to the log of leave-one-out
 kde values to identify outliers.
 
 See [Kandanaarachchi and Hyndman
@@ -46,12 +46,15 @@ lo
 #> Call: lookout(X = faithful)
 #> 
 #>   Outliers Probability
-#> 1       24  0.01371435
-#> 2      149  0.00000000
-#> 3      211  0.00000000
+#> 1        6 0.005553188
+#> 2       24 0.006423949
+#> 3       46 0.007934127
+#> 4      149 0.008300670
+#> 5      158 0.007242257
+#> 6      197 0.004333429
+#> 7      211 0.000000000
+#> 8      244 0.004956339
 autoplot(lo)
-#> Warning: `guides(<scale> = FALSE)` is deprecated. Please use `guides(<scale> =
-#> "none")` instead.
 ```
 
 <img src="man/figures/README-unnamed-chunk-2-1.png" width="100%" />
