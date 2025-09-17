@@ -13,7 +13,7 @@ find_tda_bw(X, fast = TRUE, gamma = 0.95, use_differences = FALSE)
 sub-setting the data for the bandwidth calculation.}
 
 \item{gamma}{Parameter for bandwidth calculation giving the quantile of the
-Rips death radii to use for the bandwidth. Default is \code{0.95}. Ignored
+Rips death radii to use for the bandwidth. Default is \code{0.97}. Ignored
 under the old version; where the lower limit of the maximum Rips death radii
 difference is used. Also ignored if \code{bw} is provided.}
 
