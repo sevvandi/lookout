@@ -32,4 +32,4 @@ Imports:
 Suggests:
     knitr,
     rmarkdown
-URL: https://sevvandi.github.io/lookout/
+URL: https://sevvandi.github.io/lookout/, https://github.com/sevvandi/lookout
