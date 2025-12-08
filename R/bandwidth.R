@@ -52,6 +52,7 @@ find_tda_bw <- function(X, fast = TRUE, gamma = 0.97, use_differences = FALSE) {
     dr_thres_diff <- diff(death_radi_upper)
     return(death_radi_upper[which.max(dr_thres_diff)])
   } else {
-    return(unname(quantile(death_radi_upper, probs = gamma)))
+    m <- NCOL(X)
+    return(unname(quantile(death_radi, probs = gamma, type = 8L)^(2/m)))
   }
 }
