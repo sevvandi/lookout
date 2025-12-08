@@ -4,7 +4,7 @@
 \alias{find_tda_bw}
 \title{Identifies bandwidth for outlier detection.}
 \usage{
-find_tda_bw(X, fast = TRUE, gamma = 0.95, use_differences = FALSE)
+find_tda_bw(X, fast = TRUE, gamma = 0.97, use_differences = FALSE)
 }
 \arguments{
 \item{X}{The numerical input data in a data.frame, matrix or tibble format.}

@@ -25,7 +25,7 @@
 #' find_tda_bw(X, fast = TRUE)
 #'
 #' @export
-find_tda_bw <- function(X, fast = TRUE, gamma = 0.95, use_differences = FALSE) {
+find_tda_bw <- function(X, fast = TRUE, gamma = 0.97, use_differences = FALSE) {
   stopifnot(gamma > 0 && gamma <= 1)
   X <- as.matrix(X)
 
@@ -46,19 +46,12 @@ find_tda_bw <- function(X, fast = TRUE, gamma = 0.95, use_differences = FALSE) {
   death_radi <- phom[, 3L]
 
   # Added so that very small death radi are not chosen
-  med_radi <- median(death_radi)
-  death_radi_upper <- death_radi[death_radi >= med_radi]
   if (use_differences) {
+    med_radi <- median(death_radi)
+    death_radi_upper <- death_radi[death_radi >= med_radi]
     dr_thres_diff <- diff(death_radi_upper)
     return(death_radi_upper[which.max(dr_thres_diff)])
   } else {
     return(unname(quantile(death_radi_upper, probs = gamma)))
   }
-  # else{
-  #   d <- NCOL(X)
-  #   n <- NROW(X)
-  #   # Set probability to be gamma when n = 200
-  #   prob <- 1 - (1 - gamma) * (n/200)^(d/(d+4) - 1)
-  #   unname(quantile(death_radi_upper, probs = min(1,max(0, prob)), type = 8L))
-  # }
 }
