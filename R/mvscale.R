@@ -40,15 +40,13 @@ mvscale <- function(
   warning = TRUE
 ) {
   d <- NCOL(object)
-  vec <- FALSE # Indicator if object is a vector
-  # We find the numerical columns and convert to a matrix
-  # First deal with vector inputs
-  if (d == 1L & !inherits(object, "matrix") & !inherits(object, "data.frame")) {
+  # Check if input is a vector
+  is_vec <- d == 1L & !inherits(object, "matrix") & !inherits(object, "data.frame")
+  if (is_vec) {
     numeric_col <- is.numeric(object)
     if (!numeric_col) {
       stop("Input must be numeric")
     }
-    vec <- TRUE
     mat <- as.matrix(object)
   } else if (inherits(object, "matrix")) {
     # It is already a matrix
