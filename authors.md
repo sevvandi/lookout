@@ -13,7 +13,7 @@
 ## Citation
 
 Source:
-[`DESCRIPTION`](https://github.com/sevvandi/lookout/blob/master/DESCRIPTION)
+[`DESCRIPTION`](https://github.com/sevvandi/lookout/blob/v2.0.0/DESCRIPTION)
 
 Kandanaarachchi S, Hyndman R (2026). *lookout: Leave One Out Kernel
 Density Estimates for Outlier Detection*. R package version 2.0.0,
