@@ -33,7 +33,14 @@
 #' \item{\code{kde}}{The kernel density estimate values.}
 #' \item{\code{lookde}}{The leave-one-out kde values.}
 #' \item{\code{gpd}}{The fitted GPD parameters.}
+#'@references Kandanaarachchi, S, and Hyndman, RJ (2022) Leave-one-out kernel
+#' density estimates for outlier detection,
+#' *J Computational & Graphical Statistics*, **31**(2), 586-599.
+#' <https://robjhyndman.com/publications/lookout/>.
 #'
+#' Hyndman, RJ, Kandanaarachchi, S, and Turner, K (2026) When lookout meets
+#' crackle: Anomaly detection using kernel density estimation, in preparation.
+#' <https://robjhyndman.com/publications/lookout2.html>
 #' @examples
 #' X <- rbind(
 #'   data.frame(
