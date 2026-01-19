@@ -10,3 +10,4 @@
 ^hex$
 .history
 ^revdep$
+^cran-comments.md
