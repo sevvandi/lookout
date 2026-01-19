@@ -86,8 +86,8 @@ mvscale <- function(
   # Scale
   if (d == 1L) {
     z <- mat / my_scale(mat)
-    if (vec) {
-      return(c(z))
+    if (is_vec) {
+      return(as.vector(z))
     }
   } else if (!is.null(cov)) {
     if (identical(cov, robustbase::covOGK)) {
