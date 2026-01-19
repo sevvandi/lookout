@@ -8,7 +8,9 @@ Generalized Pareto Distribution is fitted to the log of leave-one-out
 kde values to identify outliers.
 
 See [Kandanaarachchi and Hyndman
-(2021)](https://robjhyndman.com/publications/lookout/) for the
+(2022)](https://robjhyndman.com/publications/lookout/) and [Hyndman,
+Kandanaarachchi and Turner
+(2026)](https://robjhyndman.com/publications/lookout2.html) for the
 underlying methodology.
 
 ## Installation
@@ -23,8 +25,8 @@ You can install the released version of lookout from
 And the development version from [GitHub](https://github.com/) with:
 
 ``` r
-# install.packages("devtools")
-devtools::install_github("sevvandi/lookout")
+# install.packages("pak")
+pak::pak("sevvandi/lookout")
 ```
 
 ## Example
@@ -38,14 +40,14 @@ lo
 #> Call: lookout(X = faithful)
 #> 
 #>   Outliers Probability
-#> 1        6 0.005553188
-#> 2       24 0.006423949
-#> 3       46 0.007934127
-#> 4      149 0.008300670
-#> 5      158 0.007242257
-#> 6      197 0.004333429
+#> 1        6 0.004890854
+#> 2       24 0.005486819
+#> 3       46 0.007788668
+#> 4      149 0.006568032
+#> 5      158 0.005579415
+#> 6      197 0.004091079
 #> 7      211 0.000000000
-#> 8      244 0.004956339
+#> 8      244 0.002056726
 autoplot(lo)
 ```
 

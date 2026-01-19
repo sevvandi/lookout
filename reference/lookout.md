@@ -104,6 +104,17 @@ A list with the following components:
 
   The fitted GPD parameters.
 
+## References
+
+Kandanaarachchi, S, and Hyndman, RJ (2022) Leave-one-out kernel density
+estimates for outlier detection, *J Computational & Graphical
+Statistics*, **31**(2), 586-599.
+<https://robjhyndman.com/publications/lookout/>.
+
+Hyndman, RJ, Kandanaarachchi, S, and Turner, K (2026) When lookout meets
+crackle: Anomaly detection using kernel density estimation, in
+preparation. <https://robjhyndman.com/publications/lookout2.html>
+
 ## Examples
 
 ``` r
