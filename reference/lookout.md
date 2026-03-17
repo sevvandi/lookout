@@ -11,7 +11,7 @@ lookout(
   X,
   alpha = 0.01,
   beta = 0.9,
-  gamma = 0.97,
+  gamma = 0.98,
   bw = NULL,
   gpd = NULL,
   scale = TRUE,
@@ -40,7 +40,7 @@ lookout(
 - gamma:
 
   Parameter for bandwidth calculation giving the quantile of the Rips
-  death radii to use for the bandwidth. Default is `0.97`. Ignored under
+  death radii to use for the bandwidth. Default is `0.98`. Ignored under
   the old version; where the lower limit of the maximum Rips death radii
   difference is used. Also ignored if `bw` is provided.
 
@@ -134,17 +134,16 @@ lo
 #> 
 #> Call: lookout(X = X)
 #> 
-#>    Outliers  Probability
-#> 1        50 0.0081878350
-#> 2        53 0.0097057184
-#> 3       105 0.0006719985
-#> 4       213 0.0006719985
-#> 5       220 0.0051273188
-#> 6       298 0.0000000000
-#> 7       310 0.0000000000
-#> 8       329 0.0083820805
-#> 9       351 0.0079929599
-#> 10      472 0.0000000000
+#>   Outliers  Probability
+#> 1      105 1.710857e-03
+#> 2      213 2.880705e-04
+#> 3      220 4.790137e-03
+#> 4      298 0.000000e+00
+#> 5      310 1.088849e-06
+#> 6      329 9.808537e-03
+#> 7      351 9.915623e-03
+#> 8      472 1.820545e-04
+#> 9      503 9.930251e-03
 #> 
 autoplot(lo)
 ```

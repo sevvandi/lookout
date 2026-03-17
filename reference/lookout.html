@@ -48,7 +48,7 @@ generalized Pareto distributions to find outliers.</p>
 <span>  <span class="va">X</span>,</span>
 <span>  alpha <span class="op">=</span> <span class="fl">0.01</span>,</span>
 <span>  beta <span class="op">=</span> <span class="fl">0.9</span>,</span>
-<span>  gamma <span class="op">=</span> <span class="fl">0.97</span>,</span>
+<span>  gamma <span class="op">=</span> <span class="fl">0.98</span>,</span>
 <span>  bw <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  gpd <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  scale <span class="op">=</span> <span class="cn">TRUE</span>,</span>
@@ -77,7 +77,7 @@ To ensure there is enough data available, values greater than 0.90 are set to 0.
 
 <dt id="arg-gamma">gamma<a class="anchor" aria-label="anchor" href="#arg-gamma"></a></dt>
 <dd><p>Parameter for bandwidth calculation giving the quantile of the
-Rips death radii to use for the bandwidth. Default is <code>0.97</code>. Ignored
+Rips death radii to use for the bandwidth. Default is <code>0.98</code>. Ignored
 under the old version; where the lower limit of the maximum Rips death radii
 difference is used. Also ignored if <code>bw</code> is provided.</p></dd>
 
@@ -163,17 +163,16 @@ crackle: Anomaly detection using kernel density estimation, in preparation.
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Call: lookout(X = X)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    Outliers  Probability</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1        50 0.0081878350</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2        53 0.0097057184</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3       105 0.0006719985</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4       213 0.0006719985</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5       220 0.0051273188</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6       298 0.0000000000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 7       310 0.0000000000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8       329 0.0083820805</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 9       351 0.0079929599</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 10      472 0.0000000000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   Outliers  Probability</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1      105 1.710857e-03</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2      213 2.880705e-04</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3      220 4.790137e-03</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4      298 0.000000e+00</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5      310 1.088849e-06</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6      329 9.808537e-03</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 7      351 9.915623e-03</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 8      472 1.820545e-04</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9      503 9.930251e-03</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/autoplot.html" class="external-link">autoplot</a></span><span class="op">(</span><span class="va">lo</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="lookout-1.png" alt="" width="2400" height="1500"></span>

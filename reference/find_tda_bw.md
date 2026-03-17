@@ -7,7 +7,7 @@ analysis (TDA) to find the badnwidth.
 ## Usage
 
 ``` r
-find_tda_bw(X, fast = TRUE, gamma = 0.97, use_differences = FALSE)
+find_tda_bw(X, fast = TRUE, gamma = 0.98, use_differences = FALSE)
 ```
 
 ## Arguments
@@ -24,7 +24,7 @@ find_tda_bw(X, fast = TRUE, gamma = 0.97, use_differences = FALSE)
 - gamma:
 
   Parameter for bandwidth calculation giving the quantile of the Rips
-  death radii to use for the bandwidth. Default is `0.97`. Ignored under
+  death radii to use for the bandwidth. Default is `0.98`. Ignored under
   the old version; where the lower limit of the maximum Rips death radii
   difference is used. Also ignored if `bw` is provided.
 
@@ -52,5 +52,5 @@ X <- rbind(
   )
 )
 find_tda_bw(X, fast = TRUE)
-#> [1] 2.268524
+#> [1] 7.578481
 ```

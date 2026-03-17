@@ -44,7 +44,7 @@ to find the badnwidth.</p>
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">find_tda_bw</span><span class="op">(</span><span class="va">X</span>, fast <span class="op">=</span> <span class="cn">TRUE</span>, gamma <span class="op">=</span> <span class="fl">0.97</span>, use_differences <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">find_tda_bw</span><span class="op">(</span><span class="va">X</span>, fast <span class="op">=</span> <span class="cn">TRUE</span>, gamma <span class="op">=</span> <span class="fl">0.98</span>, use_differences <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -62,7 +62,7 @@ sub-setting the data for the bandwidth calculation.</p></dd>
 
 <dt id="arg-gamma">gamma<a class="anchor" aria-label="anchor" href="#arg-gamma"></a></dt>
 <dd><p>Parameter for bandwidth calculation giving the quantile of the
-Rips death radii to use for the bandwidth. Default is <code>0.97</code>. Ignored
+Rips death radii to use for the bandwidth. Default is <code>0.98</code>. Ignored
 under the old version; where the lower limit of the maximum Rips death radii
 difference is used. Also ignored if <code>bw</code> is provided.</p></dd>
 
@@ -91,7 +91,7 @@ the gamma quantile of the Rips death radii is used. Default is FALSE.</p></dd>
 <span class="r-in"><span>  <span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu">find_tda_bw</span><span class="op">(</span><span class="va">X</span>, fast <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 2.268524</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 7.578481</span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
