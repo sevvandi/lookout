@@ -25,7 +25,7 @@
 #' find_tda_bw(X, fast = TRUE)
 #'
 #' @export
-find_tda_bw <- function(X, fast = TRUE, gamma = 0.97, use_differences = FALSE) {
+find_tda_bw <- function(X, fast = TRUE, gamma = 0.98, use_differences = FALSE) {
   stopifnot(gamma > 0 && gamma <= 1)
   X <- as.matrix(X)
 
