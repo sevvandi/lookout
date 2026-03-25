@@ -63,12 +63,15 @@ persisting_outliers <- function(
     }
   }
 
-  # Calculate persistent homology
-  if (NCOL(X) == 1L) {
-    phom <- TDAstats::calculate_homology(dist(X), format = "distmat")
-  } else {
-    phom <- TDAstats::calculate_homology(X, dim = 0)
-  }
+  # # Calculate persistent homology
+  # if (NCOL(X) == 1L) {
+  #   phom <- TDAstats::calculate_homology(dist(X), format = "distmat")
+  # } else {
+  #   phom <- TDAstats::calculate_homology(X, dim = 0)
+  # }
+
+  # Code above replaced with much faster mlpack computation, which produces identical output
+  phom <- mlpack::emst(X)$output
 
   # Find bandwiths
   death_radi <- phom[, 3L]

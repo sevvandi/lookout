@@ -65,7 +65,7 @@ lookout <- function(
   bw = NULL,
   gpd = NULL,
   scale = TRUE,
-  fast = NROW(X) > 1000,
+  fast = NROW(X) > 100000,
   old_version = FALSE
 ) {
   # alpha, beta and gamma need to be between 0 and 1

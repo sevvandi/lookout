@@ -1,7 +1,7 @@
 Package: lookout
 Type: Package
 Title: Leave One Out Kernel Density Estimates for Outlier Detection
-Version: 2.0.0.9000
+Version: 2.0.0.9500
 Authors@R: c(
   person("Sevvandi", "Kandanaarachchi", email = "sevvandik@gmail.com",
   role = c("aut", "cre"), comment = c(ORCID = "0000-0002-0337-0395")),
@@ -23,10 +23,10 @@ BugReports: https://github.com/sevvandi/lookout/issues
 Imports:
     evd,
     ggplot2,
+    mlpack,
     RANN,
     robustbase,
     stats,
-    TDAstats,
     tidyr
 Suggests:
     knitr,

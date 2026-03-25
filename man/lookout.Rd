@@ -12,7 +12,7 @@ lookout(
   bw = NULL,
   gpd = NULL,
   scale = TRUE,
-  fast = NROW(X) > 1000,
+  fast = NROW(X) > 1e+05,
   old_version = FALSE
 )
 }
