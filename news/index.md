@@ -2,6 +2,9 @@
 
 ## lookout (development version)
 
+- find_tda_bw() now much faster, especially for large data sets, by
+  using MST instead of Rips complex to compute persistent homology.
+
 ## lookout 2.0.0
 
 CRAN release: 2026-01-19
