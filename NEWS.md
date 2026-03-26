@@ -1,5 +1,7 @@
 # lookout (development version)
 
+* find_tda_bw() now much faster, especially for large data sets, by using MST instead of Rips complex to compute persistent homology.
+
 # lookout 2.0.0
 
 * Updated lookout algorithm as per Hyndman, Kandanaarachchi and Turner (2026).
