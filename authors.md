@@ -16,13 +16,13 @@ Source:
 [`DESCRIPTION`](https://github.com/sevvandi/lookout/blob/master/DESCRIPTION)
 
 Kandanaarachchi S, Hyndman R (2026). *lookout: Leave One Out Kernel
-Density Estimates for Outlier Detection*. R package version 2.0.0.9500,
+Density Estimates for Outlier Detection*. R package version 2.0.1.00,
 <https://sevvandi.github.io/lookout/>.
 
     @Manual{,
       title = {lookout: Leave One Out Kernel Density Estimates for Outlier Detection},
       author = {Sevvandi Kandanaarachchi and Rob Hyndman},
       year = {2026},
-      note = {R package version 2.0.0.9500},
+      note = {R package version 2.0.1.00},
       url = {https://sevvandi.github.io/lookout/},
     }
