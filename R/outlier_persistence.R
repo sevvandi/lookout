@@ -71,7 +71,7 @@ persisting_outliers <- function(
   # }
 
   # Code above replaced with much faster mlpack computation, which produces identical output
-  if (packageVersion(mlpack) < "4.8.0") {
+  if (packageVersion("mlpack") < "4.8.0") {
     phom <- mlpack::emst(X)$output
   } else {
     phom <- mlpack::emst(X)

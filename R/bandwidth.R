@@ -44,7 +44,7 @@ find_tda_bw <- function(X, fast = TRUE, gamma = 0.98, use_differences = FALSE) {
   # }
 
   # Code above replaced with much faster mlpack computation, which produces identical output
-  if (packageVersion(mlpack) < "4.8.0") {
+  if (packageVersion("mlpack") < "4.8.0") {
     phom <- mlpack::emst(X)$output
   } else {
     phom <- mlpack::emst(X)
