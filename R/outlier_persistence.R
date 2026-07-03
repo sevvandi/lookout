@@ -71,7 +71,11 @@ persisting_outliers <- function(
   # }
 
   # Code above replaced with much faster mlpack computation, which produces identical output
-  phom <- mlpack::emst(X)$output
+  if (packageVersion(mlpack) < "4.8.0") {
+    phom <- mlpack::emst(X)$output
+  } else {
+    phom <- mlpack::emst(X)
+  }
 
   # Find bandwiths
   death_radi <- phom[, 3L]
