@@ -37,15 +37,14 @@ find_tda_bw <- function(X, fast = TRUE, gamma = 0.98, use_differences = FALSE) {
     Xsub <- X
   }
 
-  # if (NCOL(X) == 1L) {
-  #   phom <- TDAstats::calculate_homology(dist(Xsub), format = "distmat")
-  # } else {
-  #   phom <- TDAstats::calculate_homology(Xsub, dim = 0)
-  # }
 
   # Code above replaced with much faster mlpack computation, which produces identical output
-  phom <- mlpack::emst(X)$output
-  death_radi <- phom[, 3L]
+  # Updated with mlpack version fix
+  if (packageVersion("mlpack") < "4.8.0") {
+    death_radi <- mlpack::emst(X)$output[, 3]
+  } else {
+    death_radi <- mlpack::emst(X)[, 3]
+  }
 
   # Added so that very small death radi are not chosen
   if (use_differences) {

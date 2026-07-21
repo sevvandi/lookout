@@ -1,7 +1,7 @@
 Package: lookout
 Type: Package
 Title: Leave One Out Kernel Density Estimates for Outlier Detection
-Version: 2.0.1.00
+Version: 2.0.2
 Authors@R: c(
   person("Sevvandi", "Kandanaarachchi", email = "sevvandik@gmail.com",
   role = c("aut", "cre"), comment = c(ORCID = "0000-0002-0337-0395")),
@@ -18,7 +18,6 @@ Description: Outlier detection using leave-one-out kernel density estimates and
 License: GPL-3
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.3.3
 BugReports: https://github.com/sevvandi/lookout/issues
 Imports:
     evd,
@@ -34,3 +33,4 @@ Suggests:
     testthat (>= 3.0.0)
 URL: https://sevvandi.github.io/lookout/, https://github.com/sevvandi/lookout
 Config/testthat/edition: 3
+Config/roxygen2/version: 8.0.0

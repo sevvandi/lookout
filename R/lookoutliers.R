@@ -56,7 +56,8 @@
 #' lo
 #' autoplot(lo)
 #' @export lookout
-#' @importFrom stats dist quantile median sd
+#' @importFrom stats dist quantile median sd optimize var
+#' @importFrom utils packageVersion
 lookout <- function(
   X,
   alpha = 0.01,

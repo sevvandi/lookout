@@ -23,6 +23,7 @@ Useful links:
 
 Authors:
 \itemize{
+  \item Sevvandi Kandanaarachchi \email{sevvandik@gmail.com} (\href{https://orcid.org/0000-0002-0337-0395}{ORCID})
   \item Rob Hyndman \email{rob.hyndman@monash.edu} (\href{https://orcid.org/0000-0002-2140-5352}{ORCID})
 }
 
