@@ -19,12 +19,14 @@ You can install the released version of lookout from
 [CRAN](https://CRAN.R-project.org) with:
 
 ``` r
+
 #install.packages("lookout")
 ```
 
 And the development version from [GitHub](https://github.com/) with:
 
 ``` r
+
 # install.packages("pak")
 pak::pak("sevvandi/lookout")
 ```
@@ -32,6 +34,7 @@ pak::pak("sevvandi/lookout")
 ## Example
 
 ``` r
+
 library(lookout)
 lo <- lookout(faithful)
 lo
@@ -60,6 +63,7 @@ level of significance. If the level of significance is 0.01, then the
 strength is 10 and if it is 0.1, then the strength is 1.
 
 ``` r
+
 persistence <- persisting_outliers(faithful)
 autoplot(persistence)
 ```

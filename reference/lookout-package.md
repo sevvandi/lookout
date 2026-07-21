@@ -24,6 +24,9 @@ Useful links:
 
 Authors:
 
+- Sevvandi Kandanaarachchi <sevvandik@gmail.com>
+  ([ORCID](https://orcid.org/0000-0002-0337-0395))
+
 - Rob Hyndman <rob.hyndman@monash.edu>
   ([ORCID](https://orcid.org/0000-0002-2140-5352))
 
