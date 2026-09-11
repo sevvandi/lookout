@@ -100,7 +100,7 @@ lookout <- function(
       gamma,
       use_differences = old_version
     ) *
-      sqrt(5)
+      sqrt(NCOL(X) + 4)
   } else {
     bandwidth <- bw
   }
@@ -166,6 +166,7 @@ lookout <- function(
 lookde <- function(x, bandwidth, fast) {
   x <- as.matrix(x)
   nn <- NROW(x)
+  m <- NCOL(x)
 
   if (fast) {
     # To make the nearest neighbour distance computation faster
@@ -175,15 +176,18 @@ lookde <- function(x, bandwidth, fast) {
     kk <- nn
   }
 
-  # Epanechnikov kernel density estimate
+  # Spherically symmetric Epanechnikov kernel on the ball of radius
+  # `bandwidth` in m dimensions. Its value at the origin is k0, which reduces
+  # to 0.75 / bandwidth when m = 1.
+  vol_unit_ball <- pi^(m / 2) / gamma(m / 2 + 1)
+  k0 <- (m + 2) / (2 * vol_unit_ball * bandwidth^m)
+
   dist <- RANN::nn2(x, k = kk)$nn.dists
   dist[dist > bandwidth] <- NA_real_
-  phat <- 0.75 /
-    (nn * bandwidth) *
-    rowSums(1 - (dist / bandwidth)^2, na.rm = TRUE)
+  phat <- k0 / nn * rowSums(1 - (dist / bandwidth)^2, na.rm = TRUE)
 
   # leave one out
-  kdevalsloo <- 0.75 / ((nn - 1) * (bandwidth))
+  kdevalsloo <- k0 / (nn - 1)
   lookde <- nn * phat / (nn - 1) - kdevalsloo
 
   list(x = x, kde = phat, lookde = pmax(lookde, 0))

@@ -5,6 +5,11 @@
 #' to find the badnwidth.
 #'
 #' @inheritParams lookout
+#' @details The value returned is the raw quantile of the minimum spanning tree
+#' edge lengths. \code{\link{lookout}} multiplies it by \code{sqrt(m + 4)},
+#' where \code{m = NCOL(X)}, to obtain the support radius of the Epanechnikov
+#' kernel, so that the kernel has marginal standard deviation equal to this
+#' quantile.
 #' @param use_differences If TRUE, the bandwidth is set to the lower point
 #' of the maximum Rips death radii differences. If FALSE,
 #' the gamma quantile of the Rips death radii is used. Default is FALSE.

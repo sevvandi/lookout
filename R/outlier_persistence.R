@@ -72,8 +72,9 @@ persisting_outliers <- function(
   }
 
   # Find bandwiths
+  kernel_scale <- sqrt(NCOL(X) + 4)
   qq_st <- quantile(death_radi, probs = st_qq)
-  qq_en <- max(death_radi) * sqrt(5)
+  qq_en <- max(death_radi) * kernel_scale
   bw_vals <- seq(qq_st, qq_en, length.out = num_steps)
   q_thres <- quantile(death_radi, probs = 0.5)
   dr_thres <- death_radi[death_radi >= q_thres]
@@ -81,7 +82,7 @@ persisting_outliers <- function(
   max_persist_ind <- which.max(dr_thres_diff)
   ind1 <- min(which(death_radi >= q_thres))
   ind <- max_persist_ind + ind1 - 1L
-  bw_fixed <- death_radi[ind] * sqrt(5)
+  bw_fixed <- death_radi[ind] * kernel_scale
 
   # Find outliers
   lookoutobj1 <- lookout(
