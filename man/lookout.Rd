@@ -41,8 +41,10 @@ unit scaling is applied so that each column is in the range \code{[0,1]}.
 Under the new version, robust rotation and scaling is used so that the columns
 are approximately uncorrelated with unit variance. Default is \code{TRUE}.}
 
-\item{fast}{If \code{TRUE} (default), makes the computation faster by
-sub-setting the data for the bandwidth calculation.}
+\item{fast}{If \code{TRUE}, makes the density computation faster by using at
+most 500 nearest neighbours per observation rather than all of them. The
+default is \code{TRUE} when \code{NROW(X) > 100000}. The bandwidth
+calculation always uses all of the data.}
 
 \item{old_version}{Logical indicator of which version of the algorithm to use.
 Default is FALSE, meaning the newer version is used.}

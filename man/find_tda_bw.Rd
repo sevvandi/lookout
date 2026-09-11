@@ -9,8 +9,7 @@ find_tda_bw(X, fast = TRUE, gamma = 0.98, use_differences = FALSE)
 \arguments{
 \item{X}{The numerical input data in a data.frame, matrix or tibble format.}
 
-\item{fast}{If \code{TRUE} (default), makes the computation faster by
-sub-setting the data for the bandwidth calculation.}
+\item{fast}{deprecated and ignored}
 
 \item{gamma}{Parameter for bandwidth calculation giving the quantile of the
 Rips death radii to use for the bandwidth. Default is \code{0.98}. Ignored
@@ -28,6 +27,13 @@ The bandwidth
 This function identifies the bandwidth that is used in the kernel density
 estimate computation. The function uses topological data analysis (TDA)
 to find the badnwidth.
+}
+\details{
+The value returned is the raw quantile of the minimum spanning tree
+edge lengths. \code{\link{lookout}} multiplies it by \code{sqrt(m + 4)},
+where \code{m = NCOL(X)}, to obtain the support radius of the Epanechnikov
+kernel, so that the kernel has marginal standard deviation equal to this
+quantile.
 }
 \examples{
 X <- rbind(

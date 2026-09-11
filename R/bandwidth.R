@@ -10,6 +10,9 @@
 #' where \code{m = NCOL(X)}, to obtain the support radius of the Epanechnikov
 #' kernel, so that the kernel has marginal standard deviation equal to this
 #' quantile.
+#'
+#' @param fast Deprecated and ignored. The bandwidth is always computed
+#' using all of \code{X}.
 #' @param use_differences If TRUE, the bandwidth is set to the lower point
 #' of the maximum Rips death radii differences. If FALSE,
 #' the gamma quantile of the Rips death radii is used. Default is FALSE.
@@ -27,24 +30,21 @@
 #'     y = rnorm(5, mean = 10, sd = 0.2)
 #'   )
 #' )
-#' find_tda_bw(X, fast = TRUE)
+#' find_tda_bw(X)
 #'
 #' @export
-find_tda_bw <- function(X, fast = TRUE, gamma = 0.98, use_differences = FALSE) {
+find_tda_bw <- function(X, fast = NULL, gamma = 0.98, use_differences = FALSE) {
+  if (!is.null(fast)) {
+    warning(
+      "`fast` is deprecated and ignored: the bandwidth is always computed using all of `X`."
+    )
+  }
   stopifnot(gamma > 0 && gamma <= 1)
   X <- as.matrix(X)
 
-  # select a subset of X for tda computation
-  if (fast) {
-    inds <- subset_for_tda(X)
-    Xsub <- X[inds, ]
-  } else {
-    Xsub <- X
-  }
-
-
-  # Code above replaced with much faster mlpack computation, which produces identical output
-  # Updated with mlpack version fix
+  # The minimum spanning tree is computed on all of X. mlpack::emst is quick
+  # enough that sub-sampling is unnecessary, and sub-sampling would change the
+  # sample size on which the quantile is based, and so change its scaling in n.
   if (packageVersion("mlpack") < "4.8.0") {
     death_radi <- mlpack::emst(X)$output[, 3]
   } else {
@@ -58,7 +58,6 @@ find_tda_bw <- function(X, fast = TRUE, gamma = 0.98, use_differences = FALSE) {
     dr_thres_diff <- diff(death_radi_upper)
     return(death_radi_upper[which.max(dr_thres_diff)])
   } else {
-    m <- NCOL(X)
     return(unname(quantile(death_radi, probs = gamma, type = 8L)))
   }
 }

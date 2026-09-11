@@ -21,11 +21,17 @@
 #' unit scaling is applied so that each column is in the range \code{[0,1]}.
 #' Under the new version, robust rotation and scaling is used so that the columns
 #' are approximately uncorrelated with unit variance. Default is \code{TRUE}.
-#' @param fast If \code{TRUE} (default), makes the computation faster by
-#' sub-setting the data for the bandwidth calculation.
+#' @param fast If \code{TRUE}, each density estimate uses only the \code{k}
+#' nearest neighbours of the point, where \code{k} is between 100 and 500
+#' depending on \code{NROW(X)}, rather than all observations. This is an
+#' approximation: it is exact only when fewer than \code{k} observations lie
+#' within \code{bw} of every point, which is often false in more than two or
+#' three dimensions. Default is \code{TRUE} when \code{NROW(X) > 100000}. The
+#' bandwidth calculation always uses all of the data.
 #' @param old_version Logical indicator of which version of the algorithm to use.
 #' Default is FALSE, meaning the newer version is used.
 #' @return A list with the following components:
+#' \item{\code{data}}{The input data \code{X}, before any scaling.}
 #' \item{\code{outliers}}{The set of outliers.}
 #' \item{\code{outlier_probability}}{The GPD probability of the data.}
 #' \item{\code{outlier_scores}}{The outlier scores of the data.}
@@ -33,6 +39,7 @@
 #' \item{\code{kde}}{The kernel density estimate values.}
 #' \item{\code{lookde}}{The leave-one-out kde values.}
 #' \item{\code{gpd}}{The fitted GPD parameters.}
+#' \item{\code{call}}{The matched call.}
 #'@references Kandanaarachchi, S, and Hyndman, RJ (2022) Leave-one-out kernel
 #' density estimates for outlier detection,
 #' *J Computational & Graphical Statistics*, **31**(2), 586-599.
