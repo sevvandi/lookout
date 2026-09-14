@@ -95,18 +95,18 @@ test_that("lookout with pre-supplied gpd parameters works", {
 })
 
 test_that("lookout validates alpha range", {
-  expect_error(lookout(X_clean, alpha = -0.1))
-  expect_error(lookout(X_clean, alpha = 1.1))
+  expect_error(lookout(X_clean, alpha = -0.1), "alpha")
+  expect_error(lookout(X_clean, alpha = 1.1), "alpha")
 })
 
 test_that("lookout validates beta range", {
-  expect_error(lookout(X_clean, beta = -0.1))
-  expect_error(lookout(X_clean, beta = 1.5))
+  expect_error(lookout(X_clean, beta = -0.1), "beta")
+  expect_error(lookout(X_clean, beta = 1.5), "beta")
 })
 
 test_that("lookout validates gamma range", {
-  expect_error(lookout(X_clean, gamma = -0.1))
-  expect_error(lookout(X_clean, gamma = 1.5))
+  expect_error(lookout(X_clean, gamma = -0.1), "gamma")
+  expect_error(lookout(X_clean, gamma = 1.5), "gamma")
 })
 
 test_that("lookout works with univariate input", {
@@ -118,20 +118,22 @@ test_that("lookout works with univariate input", {
 # --- find_tda_bw() ---
 
 test_that("find_tda_bw returns a positive scalar", {
-  bw <- find_tda_bw(X_clean, fast = TRUE)
+  bw <- find_tda_bw(X_clean)
   expect_length(bw, 1L)
   expect_gt(bw, 0)
 })
 
-test_that("find_tda_bw fast and slow give similar results", {
-  bw_fast <- find_tda_bw(X_clean, fast = TRUE)
-  bw_slow <- find_tda_bw(X_clean, fast = FALSE)
-  # Should be within an order of magnitude
-  expect_true(abs(log(bw_fast) - log(bw_slow)) < log(10))
+test_that("find_tda_bw warns about the deprecated fast argument", {
+  expect_warning(bw <- find_tda_bw(X_clean, fast = TRUE), "deprecated")
+  expect_equal(bw, find_tda_bw(X_clean))
+  expect_warning(
+    expect_equal(find_tda_bw(X_clean, fast = FALSE), find_tda_bw(X_clean)),
+    "deprecated"
+  )
 })
 
 test_that("find_tda_bw use_differences = TRUE works", {
-  bw <- find_tda_bw(X_clean, fast = TRUE, use_differences = TRUE)
+  bw <- find_tda_bw(X_clean, use_differences = TRUE)
   expect_length(bw, 1L)
   expect_gt(bw, 0)
 })
@@ -139,6 +141,49 @@ test_that("find_tda_bw use_differences = TRUE works", {
 test_that("find_tda_bw validates gamma", {
   expect_error(find_tda_bw(X_clean, gamma = 0))
   expect_error(find_tda_bw(X_clean, gamma = 1.1))
+})
+
+# --- persisting_outliers() ---
+
+test_that("persisting_outliers returns correct structure", {
+  po <- persisting_outliers(X_outliers, num_steps = 5)
+  expect_s3_class(po, "persistingoutliers")
+  expect_equal(dim(po$out), c(NROW(X_outliers), 5L, 10L))
+  expect_length(po$bw, 5L)
+  expect_true(all(po$bw > 0))
+  expect_true(!is.unsorted(po$bw))
+})
+
+test_that("persisting_outliers bandwidth grid is on the kernel support scale", {
+  # Every element of `bw` is handed to lookout() as `bw`, so the whole grid
+  # must be on the Epanechnikov support scale: the death radius multiplied by
+  # sqrt(NCOL(X) + 4). The start of the grid used to be left unscaled.
+  X <- mvscale(as.matrix(X_outliers))
+  if (utils::packageVersion("mlpack") < "4.8.0") {
+    death_radi <- mlpack::emst(X)$output[, 3]
+  } else {
+    death_radi <- mlpack::emst(X)[, 3]
+  }
+  kernel_scale <- sqrt(NCOL(X) + 4)
+
+  po <- persisting_outliers(X, scale = FALSE, st_qq = 0.9, num_steps = 5)
+  expect_equal(
+    min(po$bw),
+    unname(quantile(death_radi, probs = 0.9)) * kernel_scale
+  )
+  expect_equal(max(po$bw), max(death_radi) * kernel_scale)
+
+  # st_qq = 0.9 is below lookout()'s gamma = 0.98, so the grid brackets the
+  # bandwidth lookout() picks for itself.
+  bw_lookout <- lookout(X, scale = FALSE)$bandwidth
+  expect_lt(min(po$bw), bw_lookout)
+  expect_gt(max(po$bw), bw_lookout)
+})
+
+test_that("persisting_outliers old_version works", {
+  po <- persisting_outliers(X_outliers, num_steps = 5, old_version = TRUE)
+  expect_s3_class(po, "persistingoutliers")
+  expect_true(all(po$bw > 0))
 })
 
 # --- mvscale() ---
