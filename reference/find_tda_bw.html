@@ -44,7 +44,7 @@ to find the badnwidth.</p>
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">find_tda_bw</span><span class="op">(</span><span class="va">X</span>, fast <span class="op">=</span> <span class="cn">TRUE</span>, gamma <span class="op">=</span> <span class="fl">0.98</span>, use_differences <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">find_tda_bw</span><span class="op">(</span><span class="va">X</span>, fast <span class="op">=</span> <span class="cn">NULL</span>, gamma <span class="op">=</span> <span class="fl">0.98</span>, use_differences <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -56,8 +56,8 @@ to find the badnwidth.</p>
 
 
 <dt id="arg-fast">fast<a class="anchor" aria-label="anchor" href="#arg-fast"></a></dt>
-<dd><p>If <code>TRUE</code> (default), makes the computation faster by
-sub-setting the data for the bandwidth calculation.</p></dd>
+<dd><p>Deprecated and ignored. The bandwidth is always computed
+using all of <code>X</code>.</p></dd>
 
 
 <dt id="arg-gamma">gamma<a class="anchor" aria-label="anchor" href="#arg-gamma"></a></dt>
@@ -77,6 +77,14 @@ the gamma quantile of the Rips death radii is used. Default is FALSE.</p></dd>
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
     <p>The bandwidth</p>
     </div>
+    <div class="section level2">
+    <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
+    <p>The value returned is the raw quantile of the minimum spanning tree
+edge lengths. <code><a href="lookout.html">lookout</a></code> multiplies it by <code>sqrt(m + 4)</code>,
+where <code>m = NCOL(X)</code>, to obtain the support radius of the Epanechnikov
+kernel, so that the kernel has marginal standard deviation equal to this
+quantile.</p>
+    </div>
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
@@ -90,7 +98,7 @@ the gamma quantile of the Rips death radii is used. Default is FALSE.</p></dd>
 <span class="r-in"><span>    y <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="fl">5</span>, mean <span class="op">=</span> <span class="fl">10</span>, sd <span class="op">=</span> <span class="fl">0.2</span><span class="op">)</span></span></span>
 <span class="r-in"><span>  <span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="fu">find_tda_bw</span><span class="op">(</span><span class="va">X</span>, fast <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">find_tda_bw</span><span class="op">(</span><span class="va">X</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0.4593319</span>
 <span class="r-in"><span></span></span>
 </code></pre></div>

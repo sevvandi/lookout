@@ -7,7 +7,7 @@ analysis (TDA) to find the badnwidth.
 ## Usage
 
 ``` r
-find_tda_bw(X, fast = TRUE, gamma = 0.98, use_differences = FALSE)
+find_tda_bw(X, fast = NULL, gamma = 0.98, use_differences = FALSE)
 ```
 
 ## Arguments
@@ -18,8 +18,8 @@ find_tda_bw(X, fast = TRUE, gamma = 0.98, use_differences = FALSE)
 
 - fast:
 
-  If `TRUE` (default), makes the computation faster by sub-setting the
-  data for the bandwidth calculation.
+  Deprecated and ignored. The bandwidth is always computed using all of
+  `X`.
 
 - gamma:
 
@@ -38,6 +38,15 @@ find_tda_bw(X, fast = TRUE, gamma = 0.98, use_differences = FALSE)
 
 The bandwidth
 
+## Details
+
+The value returned is the raw quantile of the minimum spanning tree edge
+lengths.
+[`lookout`](https://sevvandi.github.io/lookout/reference/lookout.md)
+multiplies it by `sqrt(m + 4)`, where `m = NCOL(X)`, to obtain the
+support radius of the Epanechnikov kernel, so that the kernel has
+marginal standard deviation equal to this quantile.
+
 ## Examples
 
 ``` r
@@ -51,6 +60,6 @@ X <- rbind(
     y = rnorm(5, mean = 10, sd = 0.2)
   )
 )
-find_tda_bw(X, fast = TRUE)
+find_tda_bw(X)
 #> [1] 0.4593319
 ```

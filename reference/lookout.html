@@ -100,8 +100,13 @@ are approximately uncorrelated with unit variance. Default is <code>TRUE</code>.
 
 
 <dt id="arg-fast">fast<a class="anchor" aria-label="anchor" href="#arg-fast"></a></dt>
-<dd><p>If <code>TRUE</code> (default), makes the computation faster by
-sub-setting the data for the bandwidth calculation.</p></dd>
+<dd><p>If <code>TRUE</code>, each density estimate uses only the <code>k</code>
+nearest neighbours of the point, where <code>k</code> is between 100 and 500
+depending on <code>NROW(X)</code>, rather than all observations. This is an
+approximation: it is exact only when fewer than <code>k</code> observations lie
+within <code>bw</code> of every point, which is often false in more than two or
+three dimensions. Default is <code>TRUE</code> when <code>NROW(X) &gt; 100000</code>. The
+bandwidth calculation always uses all of the data.</p></dd>
 
 
 <dt id="arg-old-version">old_version<a class="anchor" aria-label="anchor" href="#arg-old-version"></a></dt>
@@ -112,7 +117,10 @@ Default is FALSE, meaning the newer version is used.</p></dd>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
     <p>A list with the following components:</p>
-<dl><dt><code>outliers</code></dt>
+<dl><dt><code>data</code></dt>
+<dd><p>The input data <code>X</code>, before any scaling.</p></dd>
+
+<dt><code>outliers</code></dt>
 <dd><p>The set of outliers.</p></dd>
 
 <dt><code>outlier_probability</code></dt>
@@ -132,6 +140,9 @@ Default is FALSE, meaning the newer version is used.</p></dd>
 
 <dt><code>gpd</code></dt>
 <dd><p>The fitted GPD parameters.</p></dd>
+
+<dt><code>call</code></dt>
+<dd><p>The matched call.</p></dd>
 
 </dl></div>
     <div class="section level2">
@@ -163,16 +174,18 @@ crackle: Anomaly detection using kernel density estimation, in preparation.
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Call: lookout(X = X)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Outliers  Probability</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1      105 1.710857e-03</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2      213 2.880705e-04</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3      220 4.790137e-03</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4      298 0.000000e+00</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5      310 1.088849e-06</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6      329 9.808537e-03</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 7      351 9.915623e-03</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8      472 1.820545e-04</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 9      503 9.930251e-03</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    Outliers  Probability</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1       105 0.0026920212</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2       213 0.0006154015</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3       220 0.0051289400</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4       298 0.0000000000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5       310 0.0017968741</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6       472 0.0007241131</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 7       501 0.0094663929</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 8       502 0.0094780204</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9       503 0.0078094157</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 10      504 0.0097237152</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 11      505 0.0097534626</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/autoplot.html" class="external-link">autoplot</a></span><span class="op">(</span><span class="va">lo</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="lookout-1.png" alt="" width="2400" height="1500"></span>

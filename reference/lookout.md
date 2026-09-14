@@ -64,8 +64,13 @@ lookout(
 
 - fast:
 
-  If `TRUE` (default), makes the computation faster by sub-setting the
-  data for the bandwidth calculation.
+  If `TRUE`, each density estimate uses only the `k` nearest neighbours
+  of the point, where `k` is between 100 and 500 depending on `NROW(X)`,
+  rather than all observations. This is an approximation: it is exact
+  only when fewer than `k` observations lie within `bw` of every point,
+  which is often false in more than two or three dimensions. Default is
+  `TRUE` when `NROW(X) > 100000`. The bandwidth calculation always uses
+  all of the data.
 
 - old_version:
 
@@ -75,6 +80,10 @@ lookout(
 ## Value
 
 A list with the following components:
+
+- `data`:
+
+  The input data `X`, before any scaling.
 
 - `outliers`:
 
@@ -103,6 +112,10 @@ A list with the following components:
 - `gpd`:
 
   The fitted GPD parameters.
+
+- `call`:
+
+  The matched call.
 
 ## References
 
@@ -134,16 +147,18 @@ lo
 #> 
 #> Call: lookout(X = X)
 #> 
-#>   Outliers  Probability
-#> 1      105 1.710857e-03
-#> 2      213 2.880705e-04
-#> 3      220 4.790137e-03
-#> 4      298 0.000000e+00
-#> 5      310 1.088849e-06
-#> 6      329 9.808537e-03
-#> 7      351 9.915623e-03
-#> 8      472 1.820545e-04
-#> 9      503 9.930251e-03
+#>    Outliers  Probability
+#> 1       105 0.0026920212
+#> 2       213 0.0006154015
+#> 3       220 0.0051289400
+#> 4       298 0.0000000000
+#> 5       310 0.0017968741
+#> 6       472 0.0007241131
+#> 7       501 0.0094663929
+#> 8       502 0.0094780204
+#> 9       503 0.0078094157
+#> 10      504 0.0097237152
+#> 11      505 0.0097534626
 #> 
 autoplot(lo)
 ```
