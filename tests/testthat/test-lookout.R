@@ -221,3 +221,78 @@ test_that("mvscale warns on non-numeric columns", {
 test_that("mvscale errors on non-numeric vector", {
   expect_error(mvscale(letters[1:10]))
 })
+
+test_that("mvscale returns a vector with terms attached for vector input", {
+  z <- mvscale(X_clean$x)
+  expect_type(z, "double")
+  expect_length(z, NROW(X_clean))
+  expect_equal(median(z), 0, tolerance = 1e-6)
+  expect_equal(attr(z, "center"), median(X_clean$x))
+  expect_equal(attr(z, "scale"), robustbase::s_Qn(X_clean$x))
+  expect_equal(attr(z, "scale_inverse"), 1 / attr(z, "scale"))
+})
+
+test_that("mvscale returns the covariance and its inverse as terms", {
+  z <- mvscale(X_clean)
+  S <- attr(z, "scale")
+  Sinv <- attr(z, "scale_inverse")
+  expect_equal(dim(S), c(2L, 2L))
+  expect_equal(unname(S %*% Sinv), diag(2), tolerance = 1e-6)
+  expect_equal(attr(z, "center"), apply(X_clean, 2, median))
+})
+
+test_that("mvscale cov = NULL returns the per-column scales as terms", {
+  z <- mvscale(X_clean, cov = NULL)
+  expect_equal(attr(z, "scale"), apply(X_clean, 2, robustbase::s_Qn))
+  expect_equal(attr(z, "scale_inverse"), 1 / attr(z, "scale"))
+})
+
+test_that("mvscale renames matrix columns only when rotation is applied", {
+  z <- mvscale(as.matrix(X_clean))
+  expect_equal(colnames(z), c("z1", "z2"))
+  expect_null(names(z))
+  z <- mvscale(as.matrix(X_clean), cov = NULL)
+  expect_equal(colnames(z), names(X_clean))
+})
+
+test_that("mvscale does not rename a single column", {
+  expect_equal(names(mvscale(X_clean["x"])), "x")
+})
+
+test_that("mvscale passes alpha and extra arguments to cov()", {
+  z <- mvscale(X_clean, alpha = 0.5)
+  expect_equal(dim(z), dim(X_clean))
+  expect_false(isTRUE(all.equal(attr(z, "scale"), attr(mvscale(X_clean), "scale"))))
+  z <- mvscale(X_clean, cov = stats::cov, use = "complete.obs")
+  expect_equal(attr(z, "scale"), stats::cov(as.matrix(X_clean)))
+})
+
+test_that("mvscale omits missing values when estimating terms", {
+  X_na <- X_clean
+  X_na[3, "x"] <- NA
+  expect_equal(
+    attr(mvscale(X_na, cov = NULL), "center"),
+    apply(X_na, 2, median, na.rm = TRUE)
+  )
+  # The rotation makes the whole row missing
+  z <- mvscale(X_na)
+  expect_true(all(is.na(z[3, ])))
+  expect_false(anyNA(z[-3, ]))
+})
+
+test_that("mvscale errors on infinite values", {
+  X_inf <- X_clean
+  X_inf[1, "y"] <- Inf
+  expect_error(mvscale(X_inf), "infinite")
+  expect_error(mvscale(c(X_clean$x, -Inf)), "infinite")
+})
+
+test_that("mvscale errors on non-numeric matrices and unsupported objects", {
+  expect_error(mvscale(matrix(letters[1:10], ncol = 2)), "numeric")
+  expect_error(mvscale(array(1:24, c(2, 3, 4))), "vector, matrix or data frame")
+})
+
+test_that("mvscale errors when cov() returns no covariance matrix", {
+  expect_error(mvscale(X_clean, cov = function(x, ...) "rubbish"))
+  expect_error(mvscale(X_clean, cov = function(x, ...) list(a = 1)), "can't find")
+})

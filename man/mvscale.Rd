@@ -8,8 +8,10 @@ mvscale(
   object,
   center = stats::median,
   scale = robustbase::s_Qn,
-  cov = robustbase::covOGK,
-  warning = TRUE
+  cov = robustbase::covMcd,
+  alpha = 0.9,
+  warning = TRUE,
+  ...
 )
 }
 \arguments{
@@ -19,41 +21,54 @@ mvscale(
 to NULL if no centering is required.}
 
 \item{scale}{A function to scale each numerical variable. When
-\code{cov = robustbase::covOGK()}, it is passed as the \code{sigmamu} argument.}
+\code{cov = robustbase::covOGK()}, \code{scale} is passed as the \code{sigmamu} argument. When
+\code{cov = robustbase::covMcd()}, \code{scale} is passed as the \code{scalefn} argument.}
 
-\item{cov}{A function to compute the covariance matrix. Set to NULL if no rotation required.}
+\item{cov}{A function to compute the covariance matrix. Set to NULL if no rotation required. \code{cov()} must either return the matrix directly, or a list containing a matrix named \code{cov}.}
+
+\item{alpha}{When \code{cov = robustbase::covMcd()}, \code{alpha} controls the size of the subsets over which the determinant is minimized. Otherwise it is ignored. Set to 0.9 by default.}
 
 \item{warning}{Should a warning be issued if non-numeric columns are ignored?}
+
+\item{...}{Other arguments are passed to \code{cov()}.}
 }
 \value{
 A vector, matrix or data frame of the same size and class as \code{object},
-but with numerical variables replaced by scaled versions.
+but with numerical variables replaced by scaled versions (renamed if they have been rotated).
 }
 \description{
 A multivariate version of \code{\link[base:scale]{base::scale()}}, that takes account
-of the covariance matrix of the data, and uses robust estimates
-of center, scale and covariance by default. The centers are removed using medians, the
-scale function is the IQR, and the covariance matrix is estimated using a
-robust OGK estimate. The data are scaled using the Cholesky decomposition of
-the inverse covariance. Then the scaled data are returned.
+of the covariance matrix of the data. By default, robust estimates are used:
+the centers are removed using medians,
+the scale function for univariate data is \code{s_Qn},
+and the covariance matrix for multivariate data is estimated using a robust MCD estimate.
+The data are scaled using the Cholesky decomposition of
+the inverse (co)variance. Then the scaled data are returned.
+Details of the methods are provided by Hyndman (2026).
 }
 \details{
 Optionally, the centering and scaling can be done for each variable
-separately, so there is no rotation of the data, by setting \code{cov = NULL}.
+separately, by setting \code{cov = NULL}, so there is no rotation of the data,
 Also optionally, non-robust methods can be used by specifying \code{center = mean},
 \code{scale = stats::sd()}, and \code{cov = stats::cov()}. Any non-numeric columns are retained
 with a warning.
+Missing values are removed before the centers, scale and cov are estimated.
 }
 \examples{
-# Univariate z-scores (no rotation)
-z <- mvscale(faithful, center = mean, scale = sd, cov = NULL, warning = FALSE)
+# Univariate z-scores
+z <- mvscale(faithful$eruptions, center = mean, scale = sd)
+# Non-robust scaling with no rotation
+z <- mvscale(faithful, center = mean, scale = sd, cov = NULL)
 # Non-robust scaling with rotation
-z <- mvscale(faithful, center = mean, cov = stats::cov, warning = FALSE)
+z <- mvscale(faithful, center = mean, scale = sd, cov = stats::cov)
 # Robust scaling and rotation
-z <- mvscale(faithful, warning = FALSE)
+z <- mvscale(faithful)
+}
+\references{
+Hyndman, R J (2026) "That's weird: Anomaly detection using R", Section 3.7.
 }
 \seealso{
-\code{\link[base:scale]{base::scale()}}, \code{\link[stats:sd]{stats::sd()}}, \code{\link[stats:cov]{stats::cov()}}, \code{\link[robustbase:covOGK]{robustbase::covOGK()}}, \code{\link[robustbase:s_Qn]{robustbase::s_Qn()}}
+\code{\link[base:scale]{base::scale()}}, \code{\link[stats:sd]{stats::sd()}}, \code{\link[stats:cov]{stats::cov()}}, \code{\link[robustbase:covMcd]{robustbase::covMcd()}}, \code{\link[robustbase:covOGK]{robustbase::covOGK()}}, \code{\link[robustbase:s_Qn]{robustbase::s_Qn()}}
 }
 \author{
 Rob J Hyndman
