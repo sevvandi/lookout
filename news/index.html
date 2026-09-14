@@ -34,6 +34,8 @@
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="development version" id="lookout-development-version">lookout (development version)<a class="anchor" aria-label="anchor" href="#lookout-development-version"></a></h2>
 <ul><li>Fixed the Epanechnikov kernel scaling for multivariate data, which affected the leave-one-out density estimates when <code>NCOL(X) &gt; 1</code>.</li>
+<li>
+<code><a href="../reference/mvscale.html">mvscale()</a></code> now matches <code>weird::mvscale()</code>: the default covariance estimate is a robust MCD estimate (with new <code>alpha</code> argument) rather than OGK, extra arguments are passed to <code><a href="https://rdrr.io/r/stats/cor.html" class="external-link">cov()</a></code>, missing values are omitted when estimating the center, scale and covariance, infinite values throw an error, and the center, scale and inverse scale are returned as attributes. This changes the scaled data used by <code><a href="../reference/lookout.html">lookout()</a></code> and <code><a href="../reference/persisting_outliers.html">persisting_outliers()</a></code> when <code>scale = TRUE</code>.</li>
 <li>The <code>fast</code> argument of find_tda_bw() is deprecated and ignored.</li>
 <li>Bug fixes and documentation improvements</li>
 </ul></div>

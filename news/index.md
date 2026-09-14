@@ -4,6 +4,18 @@
 
 - Fixed the Epanechnikov kernel scaling for multivariate data, which
   affected the leave-one-out density estimates when `NCOL(X) > 1`.
+- [`mvscale()`](https://sevvandi.github.io/lookout/reference/mvscale.md)
+  now matches `weird::mvscale()`: the default covariance estimate is a
+  robust MCD estimate (with new `alpha` argument) rather than OGK, extra
+  arguments are passed to [`cov()`](https://rdrr.io/r/stats/cor.html),
+  missing values are omitted when estimating the center, scale and
+  covariance, infinite values throw an error, and the center, scale and
+  inverse scale are returned as attributes. This changes the scaled data
+  used by
+  [`lookout()`](https://sevvandi.github.io/lookout/reference/lookout.md)
+  and
+  [`persisting_outliers()`](https://sevvandi.github.io/lookout/reference/persisting_outliers.md)
+  when `scale = TRUE`.
 - The `fast` argument of find_tda_bw() is deprecated and ignored.
 - Bug fixes and documentation improvements
 

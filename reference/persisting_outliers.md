@@ -96,6 +96,6 @@ outliers
 #> 
 #> Call: persisting_outliers(X = X, scale = FALSE)
 #> 
-#> Lookout bandwidth:  3.340543 
+#> Lookout bandwidth:  2.861997 
 autoplot(outliers)
 ```
