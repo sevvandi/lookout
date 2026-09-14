@@ -4,12 +4,13 @@
 \alias{find_tda_bw}
 \title{Identifies bandwidth for outlier detection.}
 \usage{
-find_tda_bw(X, fast = TRUE, gamma = 0.98, use_differences = FALSE)
+find_tda_bw(X, fast = NULL, gamma = 0.98, use_differences = FALSE)
 }
 \arguments{
 \item{X}{The numerical input data in a data.frame, matrix or tibble format.}
 
-\item{fast}{deprecated and ignored}
+\item{fast}{Deprecated and ignored. The bandwidth is always computed
+using all of \code{X}.}
 
 \item{gamma}{Parameter for bandwidth calculation giving the quantile of the
 Rips death radii to use for the bandwidth. Default is \code{0.98}. Ignored
@@ -46,6 +47,6 @@ X <- rbind(
     y = rnorm(5, mean = 10, sd = 0.2)
   )
 )
-find_tda_bw(X, fast = TRUE)
+find_tda_bw(X)
 
 }

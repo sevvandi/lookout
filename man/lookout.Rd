@@ -41,16 +41,20 @@ unit scaling is applied so that each column is in the range \code{[0,1]}.
 Under the new version, robust rotation and scaling is used so that the columns
 are approximately uncorrelated with unit variance. Default is \code{TRUE}.}
 
-\item{fast}{If \code{TRUE}, makes the density computation faster by using at
-most 500 nearest neighbours per observation rather than all of them. The
-default is \code{TRUE} when \code{NROW(X) > 100000}. The bandwidth
-calculation always uses all of the data.}
+\item{fast}{If \code{TRUE}, each density estimate uses only the \code{k}
+nearest neighbours of the point, where \code{k} is between 100 and 500
+depending on \code{NROW(X)}, rather than all observations. This is an
+approximation: it is exact only when fewer than \code{k} observations lie
+within \code{bw} of every point, which is often false in more than two or
+three dimensions. Default is \code{TRUE} when \code{NROW(X) > 100000}. The
+bandwidth calculation always uses all of the data.}
 
 \item{old_version}{Logical indicator of which version of the algorithm to use.
 Default is FALSE, meaning the newer version is used.}
 }
 \value{
 A list with the following components:
+\item{\code{data}}{The input data \code{X}, before any scaling.}
 \item{\code{outliers}}{The set of outliers.}
 \item{\code{outlier_probability}}{The GPD probability of the data.}
 \item{\code{outlier_scores}}{The outlier scores of the data.}
@@ -58,6 +62,7 @@ A list with the following components:
 \item{\code{kde}}{The kernel density estimate values.}
 \item{\code{lookde}}{The leave-one-out kde values.}
 \item{\code{gpd}}{The fitted GPD parameters.}
+\item{\code{call}}{The matched call.}
 }
 \description{
 This function identifies outliers using the algorithm lookout, an outlier
