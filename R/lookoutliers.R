@@ -102,8 +102,7 @@ lookout <- function(
   if (is.null(bw)) {
     bandwidth <- find_tda_bw(
       X,
-      fast = fast,
-      gamma,
+      gamma = gamma,
       use_differences = old_version
     ) *
       sqrt(NCOL(X) + 4)
@@ -197,47 +196,4 @@ lookde <- function(x, bandwidth, fast) {
   lookde <- nn * phat / (nn - 1) - kdevalsloo
 
   list(x = x, kde = phat, lookde = pmax(lookde, 0))
-}
-
-
-subset_for_tda <- function(X) {
-  # Leader algorithm in HDoutliers
-  # Inserted from HDoutliers function getHDmembers
-  # We cannot call that function because the algorithm only comes to
-  # effect if the number of rows are greater than 10000
-  # And we have used RANN::nn2, which is a faster algorithm.
-
-  X <- as.matrix(X)
-
-  n <- nrow(X)
-  p <- ncol(X)
-
-  Xu <- unitize(X)
-
-  sds <- apply(Xu, 2, sd)
-  sd_radius <- sqrt(sum(sds^2))
-  radius <- min(0.1 / (log(n)^(1 / p)), sd_radius)
-  members <- rep(list(NULL), n)
-  exemplars <- 1
-  members[[1]] <- 1
-
-  for (i in 2:n) {
-    KNN <- RANN::nn2(
-      data = Xu[c(exemplars, i), , drop = FALSE],
-      query = Xu[i, , drop = FALSE],
-      k = 2
-    )
-    m <- KNN$nn.idx[1, 2]
-    d <- KNN$nn.dists[1, 2]
-    if (d < radius) {
-      curr <- length(exemplars)
-      l <- exemplars[curr]
-      members[[l]] <- c(members[[l]], i)
-      next
-    }
-    exemplars <- c(exemplars, i)
-    members[[i]] <- i
-  }
-  # X[exemplars, ]
-  exemplars
 }
