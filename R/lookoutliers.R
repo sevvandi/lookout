@@ -78,12 +78,11 @@ lookout <- function(
 ) {
   # alpha, beta and gamma need to be between 0 and 1
   if (alpha < 0 || alpha > 1) {
-    stop("gamma should be between 0 and 1.")
+    stop("alpha should be between 0 and 1.")
   }
   if (beta < 0 || beta > 1) {
-    stop("gamma should be between 0 and 1.")
+    stop("beta should be between 0 and 1.")
   }
-  # gamma needs to be between 0 and 1
   if (gamma < 0 || gamma > 1) {
     stop("gamma should be between 0 and 1.")
   }
