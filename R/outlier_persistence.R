@@ -73,7 +73,9 @@ persisting_outliers <- function(
 
   # Find bandwiths
   kernel_scale <- sqrt(NCOL(X) + 4)
-  qq_st <- quantile(death_radi, probs = st_qq)
+  # bw_vals are passed to lookout() as `bw`, so all three must be on the
+  # Epanechnikov support scale, not the raw death-radius scale.
+  qq_st <- unname(quantile(death_radi, probs = st_qq)) * kernel_scale
   qq_en <- max(death_radi) * kernel_scale
   bw_vals <- seq(qq_st, qq_en, length.out = num_steps)
   q_thres <- quantile(death_radi, probs = 0.5)
