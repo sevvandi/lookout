@@ -2,7 +2,7 @@
 % Please edit documentation in R/bandwidth.R
 \name{find_tda_bw}
 \alias{find_tda_bw}
-\title{Identifies bandwidth for outlier detection.}
+\title{Computes the bandwidth for lookout from the minimum spanning tree.}
 \usage{
 find_tda_bw(X, fast = NULL, gamma = 0.98, use_differences = FALSE)
 }
@@ -12,29 +12,52 @@ find_tda_bw(X, fast = NULL, gamma = 0.98, use_differences = FALSE)
 \item{fast}{Deprecated and ignored. The bandwidth is always computed
 using all of \code{X}.}
 
-\item{gamma}{Parameter for bandwidth calculation giving the quantile of the
-Rips death radii to use for the bandwidth. Default is \code{0.98}. Ignored
-under the old version; where the lower limit of the maximum Rips death radii
-difference is used. Also ignored if \code{bw} is provided.}
+\item{gamma}{The quantile of the minimum spanning tree edge lengths to
+return. Default is \code{0.98}. Ignored when
+\code{use_differences = TRUE}.}
 
-\item{use_differences}{If TRUE, the bandwidth is set to the lower point
-of the maximum Rips death radii differences. If FALSE,
-the gamma quantile of the Rips death radii is used. Default is FALSE.}
+\item{use_differences}{If \code{TRUE}, the value returned is the lower end
+of the largest gap between consecutive minimum spanning tree edge lengths
+among those at or above their median. If \code{FALSE} (the default), the
+\code{gamma} quantile of the edge lengths is returned.}
 }
 \value{
-The bandwidth
+A single number: the bandwidth on the scale of \code{X}, before
+multiplication by \code{sqrt(NCOL(X) + 4)}.
 }
 \description{
-This function identifies the bandwidth that is used in the kernel density
-estimate computation. The function uses topological data analysis (TDA)
-to find the badnwidth.
+This function computes the bandwidth used by \code{\link{lookout}()} for
+its kernel density estimates, from the edge lengths of the Euclidean
+minimum spanning tree of the data.
 }
 \details{
-The value returned is the raw quantile of the minimum spanning tree
-edge lengths. \code{\link{lookout}} multiplies it by \code{sqrt(m + 4)},
-where \code{m = NCOL(X)}, to obtain the support radius of the Epanechnikov
-kernel, so that the kernel has marginal standard deviation equal to this
-quantile.
+The Euclidean minimum spanning tree of the rows of \code{X} is
+computed with \code{\link[mlpack]{emst}()}, giving \code{NROW(X) - 1} edge
+lengths in increasing order. Each edge length is the distance at which two
+clusters merge under single-linkage clustering, or equivalently the death
+radius of a connected component in the Rips filtration of the data, which
+is why the function is named after topological data analysis.
+
+By default (\code{use_differences = FALSE}), the value returned is the
+\code{gamma} quantile of the edge lengths, computed with
+\code{\link[stats]{quantile}()} using \code{type = 8}. With
+\code{use_differences = TRUE}, only the edge lengths at or above their
+median are kept, and the value returned is the lower of the two consecutive
+edge lengths with the largest gap between them. This is the rule of
+Kandanaarachchi and Hyndman (2022), used by \code{lookout()} when
+\code{old_version = TRUE}.
+
+The value returned is on the scale of \code{X} and is not itself the
+support radius of the kernel. \code{\link{lookout}()} multiplies it by
+\code{sqrt(m + 4)}, where \code{m = NCOL(X)}, to obtain the support radius
+of the Epanechnikov kernel. A spherically symmetric Epanechnikov kernel with
+support radius \code{h} in \code{m} dimensions has standard deviation
+\code{h / sqrt(m + 4)} in each coordinate, so the kernel used by
+\code{lookout()} has per-coordinate standard deviation equal to the value
+returned here. Note that \code{lookout()} applies this function to the
+scaled data when \code{scale = TRUE}.
+
+The minimum spanning tree is always computed on all of \code{X}.
 }
 \examples{
 X <- rbind(
@@ -49,4 +72,14 @@ X <- rbind(
 )
 find_tda_bw(X)
 
+}
+\references{
+Kandanaarachchi, S, and Hyndman, RJ (2022) Leave-one-out kernel
+density estimates for outlier detection,
+\emph{J Computational & Graphical Statistics}, \strong{31}(2), 586-599.
+\url{https://robjhyndman.com/publications/lookout/}.
+
+Hyndman, RJ, Kandanaarachchi, S, and Turner, K (2026) Lookout 2: Anomaly
+detection via leave-one-out kernel density estimation, arXiv:2603.22636.
+\url{https://robjhyndman.com/publications/lookout2.html}
 }

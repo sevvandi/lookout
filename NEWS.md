@@ -1,10 +1,14 @@
 # lookout (development version)
 
-- Fixed the Epanechnikov kernel scaling for multivariate data, which affected the leave-one-out density estimates when `NCOL(X) > 1`.
-- `mvscale()` now matches `weird::mvscale()`: the default covariance estimate is a robust MCD estimate (with new `alpha` argument) rather than OGK, extra arguments are passed to `cov()`, missing values are omitted when estimating the center, scale and covariance, infinite values throw an error, and the center, scale and inverse scale are returned as attributes.
-  This changes the scaled data used by `lookout()` and `persisting_outliers()` when `scale = TRUE`.
-- The `fast` argument of find_tda_bw() is deprecated and ignored.
-- Bug fixes and documentation improvements
+- The exact density estimates (`fast = FALSE`) now use a fixed-radius neighbour search via `dbscan::frNN()`, so memory no longer grows with `NROW(X)^2`. Results are unchanged up to rounding.
+- Nearest neighbour searches now use dbscan rather than RANN, which is no longer imported.
+- The default is now `fast = NROW(X) > 10000`.
+- `lookout()` gives a more helpful error when the GPD cannot be fitted because too many observations have no neighbours within the bandwidth.
+- `mvscale()` now matches `weird::mvscale()`, with a robust MCD covariance estimate by default. This changes the scaled data used by `lookout()` and `persisting_outliers()` when `scale = TRUE`.
+- Fixed the Epanechnikov kernel scaling for multivariate data.
+- The `fast` argument of `find_tda_bw()` is deprecated and ignored.
+- Now requires R >= 4.1.0.
+- Bug fixes and documentation improvements.
 
 # lookout 2.0.2
 

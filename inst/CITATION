@@ -1,0 +1,43 @@
+bibentry(
+  bibtype = "Manual",
+  header = "To cite the lookout package in publications, please use:",
+  title = "{lookout}: Leave One Out Kernel Density Estimates for Outlier Detection",
+  author = c(
+    person("Sevvandi", "Kandanaarachchi"),
+    person("Rob J", "Hyndman")
+  ),
+  year = "2026",
+  note = paste("R package version", meta$Version),
+  url = "https://CRAN.R-project.org/package=lookout"
+)
+
+bibentry(
+  bibtype = "Misc",
+  header = "The methods implemented in version 2 are described in:",
+  title = "Lookout 2: Anomaly detection via leave-one-out kernel density estimation",
+  author = c(
+    person("Rob J", "Hyndman"),
+    person("Sevvandi", "Kandanaarachchi"),
+    person("Katharine", "Turner")
+  ),
+  year = "2026",
+  note = "arXiv:2603.22636",
+  url = "https://robjhyndman.com/publications/lookout2.html"
+)
+
+bibentry(
+  bibtype = "Article",
+  header = "The original method (old_version = TRUE) is described in:",
+  title = "Leave-one-out kernel density estimates for outlier detection",
+  author = c(
+    person("Sevvandi", "Kandanaarachchi"),
+    person("Rob J", "Hyndman")
+  ),
+  journal = "Journal of Computational and Graphical Statistics",
+  year = "2022",
+  volume = "31",
+  number = "2",
+  pages = "586--599",
+  doi = "10.1080/10618600.2021.2000425",
+  url = "https://robjhyndman.com/publications/lookout/"
+)

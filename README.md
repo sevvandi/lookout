@@ -11,9 +11,9 @@ status](https://www.r-pkg.org/badges/version/lookout)](https://CRAN.R-project.or
 <!-- badges: end -->
 
 **lookout** identifies outliers in data using leave-one-out kernel
-density estimates and extreme value theory. The bandwidth for kernel
-density estimates is computed using persistent homology, a technique in
-topological data analysis. Using the peak-over-threshold method, a
+density estimates and extreme value theory. The bandwidth for the
+kernel density estimates is computed from the edge lengths of the
+minimum spanning tree of the data. Using the peak-over-threshold method, a
 Generalized Pareto Distribution is fitted to the log of leave-one-out
 kde values to identify outliers.
 

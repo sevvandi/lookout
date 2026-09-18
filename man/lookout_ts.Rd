@@ -9,10 +9,11 @@ lookout_ts(x, scale = FALSE, ...)
 \arguments{
 \item{x}{The input univariate time series.}
 
-\item{scale}{If \code{TRUE}, the data is standardized. Using the old version,
-unit scaling is applied so that each column is in the range \code{[0,1]}.
-Under the new version, robust rotation and scaling is used so that the columns
-are approximately uncorrelated with unit variance. Default is \code{TRUE}.}
+\item{scale}{If \code{TRUE} (the default), the data are scaled before the
+bandwidth and density estimates are computed: with \code{\link{mvscale}()}
+when \code{old_version = FALSE}, so that the columns are approximately
+uncorrelated with unit scale, or by scaling each column to the range
+\code{[0, 1]} when \code{old_version = TRUE}.}
 
 \item{...}{Other arguments are passed to \code{\link{lookout}}.}
 }

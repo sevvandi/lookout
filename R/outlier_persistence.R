@@ -8,8 +8,11 @@
 #' @param X The input data in a matrix, data.frame, or tibble format. All
 #'   columns should be numeric.
 #' @param alpha Grid of significance levels.
-#' @param st_qq The starting quantile for death radii sequence. This will be
-#'   used to compute the starting bandwidth value.
+#' @param st_qq The quantile of the minimum spanning tree edge lengths at
+#'   which the bandwidth sequence starts. The sequence ends at the largest
+#'   edge length. Both are multiplied by \code{sqrt(NCOL(X) + 4)} to give
+#'   the support radius of the Epanechnikov kernel; see
+#'   \code{\link{find_tda_bw}()}.
 #' @param scale If \code{TRUE}, the data is scaled. Default is \code{TRUE}. Which
 #' scaling method is used depends on the \code{old_version} parameter.
 #' See \code{\link{lookout}} for details.
@@ -25,8 +28,11 @@
 #' level.}
 #' \item{\code{bw}}{The set of bandwidth values.}
 #' \item{\code{gpdparas}}{The GPD parameters used. }
-#' \item{\code{lookoutbw}}{The bandwidth chosen by the algorithm \code{lookout}
-#'   using persistent homology.}
+#' \item{\code{lookoutbw}}{The bandwidth used for the GPD fit: the lower end
+#'   of the largest gap between consecutive minimum spanning tree edge lengths
+#'   among those at or above their median (the rule used by
+#'   \code{\link{lookout}()} when \code{old_version = TRUE}), multiplied by
+#'   \code{sqrt(NCOL(X) + 4)}.}
 #'
 #' @examples
 #' X <- rbind(

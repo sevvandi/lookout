@@ -19,8 +19,11 @@ columns should be numeric.}
 
 \item{alpha}{Grid of significance levels.}
 
-\item{st_qq}{The starting quantile for death radii sequence. This will be
-used to compute the starting bandwidth value.}
+\item{st_qq}{The quantile of the minimum spanning tree edge lengths at
+which the bandwidth sequence starts. The sequence ends at the largest
+edge length. Both are multiplied by \code{sqrt(NCOL(X) + 4)} to give
+the support radius of the Epanechnikov kernel; see
+\code{\link{find_tda_bw}()}.}
 
 \item{scale}{If \code{TRUE}, the data is scaled. Default is \code{TRUE}. Which
 scaling method is used depends on the \code{old_version} parameter.
@@ -40,8 +43,11 @@ that observation is an outlier for that particular bandwidth and significance
 level.}
 \item{\code{bw}}{The set of bandwidth values.}
 \item{\code{gpdparas}}{The GPD parameters used. }
-\item{\code{lookoutbw}}{The bandwidth chosen by the algorithm \code{lookout}
-using persistent homology.}
+\item{\code{lookoutbw}}{The bandwidth used for the GPD fit: the lower end
+of the largest gap between consecutive minimum spanning tree edge lengths
+among those at or above their median (the rule used by
+\code{\link{lookout}()} when \code{old_version = TRUE}), multiplied by
+\code{sqrt(NCOL(X) + 4)}.}
 }
 \description{
 This function computes outlier persistence for a range of significance

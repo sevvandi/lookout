@@ -296,3 +296,34 @@ test_that("mvscale errors when cov() returns no covariance matrix", {
   expect_error(mvscale(X_clean, cov = function(x, ...) "rubbish"))
   expect_error(mvscale(X_clean, cov = function(x, ...) list(a = 1)), "can't find")
 })
+
+test_that("lookout uses the fast approximation by default only when n > 10000", {
+  fast_default <- formals(lookout)$fast
+  expect_false(eval(fast_default, list(X = matrix(0, 10000, 2))))
+  expect_true(eval(fast_default, list(X = matrix(0, 10001, 2))))
+})
+
+test_that("lookout explains why the GPD cannot be fitted when too many points are isolated", {
+  # 700 tightly clustered points and 300 scattered ones. With bw = 0.5 almost
+  # all of the scattered points have no other point inside the kernel support,
+  # so well over 20% of surprisals tie at their maximum, which is more than
+  # 100(1 - beta)% for both beta = 0.9 and beta = 0.8. The fast path keeps
+  # every point's nearest neighbours, so it cannot make a point isolated and
+  # fails in exactly the same way as the exact path.
+  set.seed(5)
+  X <- matrix(c(rnorm(700, sd = 0.001), runif(300, 0, 2000)), ncol = 1)
+  expect_error(
+    lookout(X, bw = 0.5, scale = FALSE, fast = FALSE),
+    "more than 10% of observations have no other observation inside the kernel support",
+    fixed = TRUE
+  )
+  expect_error(
+    lookout(X, bw = 0.5, scale = FALSE, fast = TRUE),
+    "more than 10% of observations have no other observation inside the kernel support",
+    fixed = TRUE
+  )
+  expect_error(lookout(X, bw = 0.5, scale = FALSE, beta = 0.8), "more than 20%")
+  expect_error(lookout(X, bw = 0.5, scale = FALSE), "larger `gamma`", fixed = TRUE)
+  # A wider kernel support removes the problem
+  expect_s3_class(lookout(X, bw = 30, scale = FALSE), "lookoutliers")
+})
