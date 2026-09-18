@@ -53,10 +53,11 @@ in the double differenced time series.</p>
 
 
 <dt id="arg-scale">scale<a class="anchor" aria-label="anchor" href="#arg-scale"></a></dt>
-<dd><p>If <code>TRUE</code>, the data is standardized. Using the old version,
-unit scaling is applied so that each column is in the range <code>[0,1]</code>.
-Under the new version, robust rotation and scaling is used so that the columns
-are approximately uncorrelated with unit variance. Default is <code>TRUE</code>.</p></dd>
+<dd><p>If <code>TRUE</code> (the default), the data are scaled before the
+bandwidth and density estimates are computed: with <code><a href="mvscale.html">mvscale()</a></code>
+when <code>old_version = FALSE</code>, so that the columns are approximately
+uncorrelated with unit scale, or by scaling each column to the range
+<code>[0, 1]</code> when <code>old_version = TRUE</code>.</p></dd>
 
 
 <dt id="arg--">...<a class="anchor" aria-label="anchor" href="#arg--"></a></dt>

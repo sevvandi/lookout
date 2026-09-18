@@ -7,7 +7,7 @@
 - [`autoplot(`*`<persistingoutliers>`*`)`](https://sevvandi.github.io/lookout/reference/autoplot.persistingoutliers.md)
   : Plots outlier persistence for a range of significance levels.
 - [`find_tda_bw()`](https://sevvandi.github.io/lookout/reference/find_tda_bw.md)
-  : Identifies bandwidth for outlier detection.
+  : Computes the bandwidth for lookout from the minimum spanning tree.
 - [`lookout()`](https://sevvandi.github.io/lookout/reference/lookout.md)
   : Identifies outliers using the algorithm lookout.
 - [`lookout_ts()`](https://sevvandi.github.io/lookout/reference/lookout_ts.md)

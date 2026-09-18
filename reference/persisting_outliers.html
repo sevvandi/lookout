@@ -71,8 +71,11 @@ columns should be numeric.</p></dd>
 
 
 <dt id="arg-st-qq">st_qq<a class="anchor" aria-label="anchor" href="#arg-st-qq"></a></dt>
-<dd><p>The starting quantile for death radii sequence. This will be
-used to compute the starting bandwidth value.</p></dd>
+<dd><p>The quantile of the minimum spanning tree edge lengths at
+which the bandwidth sequence starts. The sequence ends at the largest
+edge length. Both are multiplied by <code>sqrt(NCOL(X) + 4)</code> to give
+the support radius of the Epanechnikov kernel; see
+<code><a href="find_tda_bw.html">find_tda_bw()</a></code>.</p></dd>
 
 
 <dt id="arg-scale">scale<a class="anchor" aria-label="anchor" href="#arg-scale"></a></dt>
@@ -107,8 +110,11 @@ level.</p></dd>
 <dd><p>The GPD parameters used.</p></dd>
 
 <dt><code>lookoutbw</code></dt>
-<dd><p>The bandwidth chosen by the algorithm <code>lookout</code>
-using persistent homology.</p></dd>
+<dd><p>The bandwidth used for the GPD fit: the lower end
+of the largest gap between consecutive minimum spanning tree edge lengths
+among those at or above their median (the rule used by
+<code><a href="lookout.html">lookout()</a></code> when <code>old_version = TRUE</code>), multiplied by
+<code>sqrt(NCOL(X) + 4)</code>.</p></dd>
 
 </dl></div>
 

@@ -1,11 +1,16 @@
 # lookout: Leave One Out Kernel Density Estimates for Outlier Detection
 
 Outlier detection using leave-one-out kernel density estimates and
-extreme value theory. The bandwidth for kernel density estimates is
-computed using persistent homology, a technique in topological data
-analysis. Using peak-over-threshold method, a generalized Pareto
-distribution is fitted to the log of leave-one-out kde values to
-identify outliers.
+extreme value theory. The bandwidth for the kernel density estimates is
+computed from the edge lengths of the Euclidean minimum spanning tree of
+the data. Using the peak-over-threshold method, a generalized Pareto
+distribution is fitted to the negative log of the leave-one-out kernel
+density estimates to identify outliers. See Kandanaarachchi and Hyndman
+(2022)
+[doi:10.1080/10618600.2021.2000425](https://doi.org/10.1080/10618600.2021.2000425)
+and Hyndman, Kandanaarachchi and Turner (2026)
+[doi:10.48550/arXiv.2603.22636](https://doi.org/10.48550/arXiv.2603.22636)
+.
 
 ## See also
 

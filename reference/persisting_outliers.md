@@ -31,8 +31,11 @@ persisting_outliers(
 
 - st_qq:
 
-  The starting quantile for death radii sequence. This will be used to
-  compute the starting bandwidth value.
+  The quantile of the minimum spanning tree edge lengths at which the
+  bandwidth sequence starts. The sequence ends at the largest edge
+  length. Both are multiplied by `sqrt(NCOL(X) + 4)` to give the support
+  radius of the Epanechnikov kernel; see
+  [`find_tda_bw()`](https://sevvandi.github.io/lookout/reference/find_tda_bw.md).
 
 - scale:
 
@@ -72,8 +75,11 @@ A list with the following components:
 
 - `lookoutbw`:
 
-  The bandwidth chosen by the algorithm `lookout` using persistent
-  homology.
+  The bandwidth used for the GPD fit: the lower end of the largest gap
+  between consecutive minimum spanning tree edge lengths among those at
+  or above their median (the rule used by
+  [`lookout()`](https://sevvandi.github.io/lookout/reference/lookout.md)
+  when `old_version = TRUE`), multiplied by `sqrt(NCOL(X) + 4)`.
 
 ## Examples
 

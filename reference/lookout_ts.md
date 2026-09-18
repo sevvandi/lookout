@@ -17,11 +17,12 @@ lookout_ts(x, scale = FALSE, ...)
 
 - scale:
 
-  If `TRUE`, the data is standardized. Using the old version, unit
-  scaling is applied so that each column is in the range `[0,1]`. Under
-  the new version, robust rotation and scaling is used so that the
-  columns are approximately uncorrelated with unit variance. Default is
-  `TRUE`.
+  If `TRUE` (the default), the data are scaled before the bandwidth and
+  density estimates are computed: with
+  [`mvscale()`](https://sevvandi.github.io/lookout/reference/mvscale.md)
+  when `old_version = FALSE`, so that the columns are approximately
+  uncorrelated with unit scale, or by scaling each column to the range
+  `[0, 1]` when `old_version = TRUE`.
 
 - ...:
 

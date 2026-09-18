@@ -52,7 +52,7 @@ generalized Pareto distributions to find outliers.</p>
 <span>  bw <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  gpd <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  scale <span class="op">=</span> <span class="cn">TRUE</span>,</span>
-<span>  fast <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">NROW</a></span><span class="op">(</span><span class="va">X</span><span class="op">)</span> <span class="op">&gt;</span> <span class="fl">1e+05</span>,</span>
+<span>  fast <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">NROW</a></span><span class="op">(</span><span class="va">X</span><span class="op">)</span> <span class="op">&gt;</span> <span class="fl">10000</span>,</span>
 <span>  old_version <span class="op">=</span> <span class="cn">FALSE</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
@@ -76,15 +76,16 @@ To ensure there is enough data available, values greater than 0.90 are set to 0.
 
 
 <dt id="arg-gamma">gamma<a class="anchor" aria-label="anchor" href="#arg-gamma"></a></dt>
-<dd><p>Parameter for bandwidth calculation giving the quantile of the
-Rips death radii to use for the bandwidth. Default is <code>0.98</code>. Ignored
-under the old version; where the lower limit of the maximum Rips death radii
-difference is used. Also ignored if <code>bw</code> is provided.</p></dd>
+<dd><p>The quantile of the minimum spanning tree edge lengths used to
+compute the bandwidth. Default is <code>0.98</code>. Ignored if <code>bw</code> is
+provided, and ignored when <code>old_version = TRUE</code>, where the largest gap
+between consecutive edge lengths is used instead. See Details.</p></dd>
 
 
 <dt id="arg-bw">bw<a class="anchor" aria-label="anchor" href="#arg-bw"></a></dt>
-<dd><p>Bandwidth parameter. If <code>NULL</code> (default), the bandwidth is
-found using Persistent Homology.</p></dd>
+<dd><p>The support radius of the Epanechnikov kernel, on the scale of the
+data after any scaling. If <code>NULL</code> (default), it is computed from the
+minimum spanning tree of the data as described in Details.</p></dd>
 
 
 <dt id="arg-gpd">gpd<a class="anchor" aria-label="anchor" href="#arg-gpd"></a></dt>
@@ -93,25 +94,41 @@ default), these are estimated from the data.</p></dd>
 
 
 <dt id="arg-scale">scale<a class="anchor" aria-label="anchor" href="#arg-scale"></a></dt>
-<dd><p>If <code>TRUE</code>, the data is standardized. Using the old version,
-unit scaling is applied so that each column is in the range <code>[0,1]</code>.
-Under the new version, robust rotation and scaling is used so that the columns
-are approximately uncorrelated with unit variance. Default is <code>TRUE</code>.</p></dd>
+<dd><p>If <code>TRUE</code> (the default), the data are scaled before the
+bandwidth and density estimates are computed: with <code><a href="mvscale.html">mvscale()</a></code>
+when <code>old_version = FALSE</code>, so that the columns are approximately
+uncorrelated with unit scale, or by scaling each column to the range
+<code>[0, 1]</code> when <code>old_version = TRUE</code>.</p></dd>
 
 
 <dt id="arg-fast">fast<a class="anchor" aria-label="anchor" href="#arg-fast"></a></dt>
-<dd><p>If <code>TRUE</code>, each density estimate uses only the <code>k</code>
-nearest neighbours of the point, where <code>k</code> is between 100 and 500
-depending on <code>NROW(X)</code>, rather than all observations. This is an
-approximation: it is exact only when fewer than <code>k</code> observations lie
-within <code>bw</code> of every point, which is often false in more than two or
-three dimensions. Default is <code>TRUE</code> when <code>NROW(X) &gt; 100000</code>. The
-bandwidth calculation always uses all of the data.</p></dd>
+<dd><p>If <code>TRUE</code>, each kernel density estimate is a sum over the
+<code>k</code> nearest neighbours of the point only, including the point itself,
+where <code>k = min(max(ceiling(n / 200), 100), n, 500)</code> and
+<code>n = NROW(X)</code>; so <code>k</code> is between 100 and 500, and equals 100
+whenever <code>100 &lt;= n &lt;= 20000</code>. Wherever more than <code>k - 1</code> other
+observations lie inside the kernel support, which is typical in the bulk
+of the data in three or more dimensions, the sum is truncated and the
+estimate is lower than the exact one. Sparse observations, which are the
+candidates for outliers, have fewer than <code>k</code> neighbours inside the
+support and their estimates are unchanged, although the GPD threshold and
+fit can still differ. If <code>FALSE</code>, each kernel is summed over exactly
+the observations inside its support, found with a fixed-radius search
+(<code><a href="https://rdrr.io/pkg/dbscan/man/frNN.html" class="external-link">frNN()</a></code>). The time and memory of this exact
+computation are proportional to the number of pairs of observations within
+<code>bw</code> of each other. In two dimensions this is usually modest, but in
+three or more dimensions the kernel support in the bulk of the data can
+contain thousands of observations, so the exact computation is still of
+order <code>n^2</code> in the worst case and <code>fast = TRUE</code> remains the
+practical choice for large <code>n</code>. Default is <code>TRUE</code> when
+<code>NROW(X) &gt; 10000</code>. The bandwidth calculation always uses all of the
+data.</p></dd>
 
 
 <dt id="arg-old-version">old_version<a class="anchor" aria-label="anchor" href="#arg-old-version"></a></dt>
-<dd><p>Logical indicator of which version of the algorithm to use.
-Default is FALSE, meaning the newer version is used.</p></dd>
+<dd><p>If <code>TRUE</code>, the algorithm of Kandanaarachchi and
+Hyndman (2022) is used. Default is <code>FALSE</code>, giving the algorithm of
+Hyndman, Kandanaarachchi and Turner (2026). See Details.</p></dd>
 
 </dl></div>
     <div class="section level2">
@@ -130,7 +147,9 @@ Default is FALSE, meaning the newer version is used.</p></dd>
 <dd><p>The outlier scores of the data.</p></dd>
 
 <dt><code>bandwidth</code></dt>
-<dd><p>The bandwdith selected using persistent homology.</p></dd>
+<dd><p>The support radius of the Epanechnikov kernel:
+either <code>bw</code>, or the value computed from the minimum spanning tree
+multiplied by <code>sqrt(NCOL(X) + 4)</code>.</p></dd>
 
 <dt><code>kde</code></dt>
 <dd><p>The kernel density estimate values.</p></dd>
@@ -146,13 +165,52 @@ Default is FALSE, meaning the newer version is used.</p></dd>
 
 </dl></div>
     <div class="section level2">
+    <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
+    <p>The algorithm has three steps.</p>
+<p><strong>Scaling.</strong> When <code>scale = TRUE</code>, the data are first scaled with
+<code><a href="mvscale.html">mvscale()</a></code>: each column is centred at its median, and the data
+are rotated and scaled using the Cholesky factor of the inverse of a robust
+(MCD) covariance estimate, so that the columns are approximately
+uncorrelated with unit scale.</p>
+<p><strong>Leave-one-out density estimates.</strong> A kernel density estimate is
+computed at each observation using a spherically symmetric Epanechnikov
+kernel with support radius <code>bw</code>, and the contribution of the
+observation itself is then removed to give a leave-one-out estimate. When
+<code>bw = NULL</code>, the bandwidth is computed from the Euclidean minimum
+spanning tree of the (scaled) data by <code><a href="find_tda_bw.html">find_tda_bw()</a></code>: the
+<code>gamma</code> quantile (type 8) of the tree's edge lengths is multiplied by
+<code>sqrt(m + 4)</code>, where <code>m = NCOL(X)</code>. A spherically symmetric
+Epanechnikov kernel with support radius <code>h</code> in <code>m</code> dimensions has
+standard deviation <code>h / sqrt(m + 4)</code> in each coordinate, so this
+scaling makes the kernel's per-coordinate standard deviation equal to the
+quantile. When <code>fast = TRUE</code>, each kernel is summed over the <code>k</code>
+nearest neighbours of the point only; see the <code>fast</code> argument.</p>
+<p><strong>Extreme value model.</strong> The negative logarithms of the density
+estimates (the surprisals) above their <code>beta</code> quantile are modelled
+with a generalized Pareto distribution (GPD), fitted by maximum likelihood
+using <code><a href="https://rdrr.io/pkg/evd/man/fpot.html" class="external-link">fpot()</a></code>. Because the surprisals are bounded, the
+shape parameter is constrained to be at most zero: if the unconstrained
+estimate is positive, the GPD is refitted with the shape fixed at zero. The
+fitted GPD gives, for each observation, the probability of a leave-one-out
+surprisal at least as large as the one observed, multiplied by
+<code>1 - beta</code>. Observations whose probability is below <code>alpha</code> are
+declared outliers.</p>
+<p>Setting <code>old_version = TRUE</code> gives the algorithm of Kandanaarachchi and
+Hyndman (2022) instead. It differs in three places: the data are scaled so
+that each column lies in <code>[0, 1]</code>, rather than with
+<code><a href="mvscale.html">mvscale()</a></code>; the bandwidth is the lower end of the largest gap
+between consecutive minimum spanning tree edge lengths among those at or
+above their median, rather than the <code>gamma</code> quantile, again multiplied
+by <code>sqrt(m + 4)</code>; and the GPD shape parameter is not constrained.</p>
+    </div>
+    <div class="section level2">
     <h2 id="references">References<a class="anchor" aria-label="anchor" href="#references"></a></h2>
     <p>Kandanaarachchi, S, and Hyndman, RJ (2022) Leave-one-out kernel
 density estimates for outlier detection,
 <em>J Computational &amp; Graphical Statistics</em>, <strong>31</strong>(2), 586-599.
 <a href="https://robjhyndman.com/publications/lookout/" class="external-link">https://robjhyndman.com/publications/lookout/</a>.</p>
-<p>Hyndman, RJ, Kandanaarachchi, S, and Turner, K (2026) When lookout meets
-crackle: Anomaly detection using kernel density estimation, in preparation.
+<p>Hyndman, RJ, Kandanaarachchi, S, and Turner, K (2026) Lookout 2: Anomaly
+detection via leave-one-out kernel density estimation, arXiv:2603.22636.
 <a href="https://robjhyndman.com/publications/lookout2.html" class="external-link">https://robjhyndman.com/publications/lookout2.html</a></p>
     </div>
 
